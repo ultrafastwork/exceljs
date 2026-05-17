@@ -1,0 +1,121 @@
+# ExcelJS (Fork) Project Rules for AI Agents
+
+## Project Overview
+
+This project is a fork of **exceljs/exceljs**, a robust Excel Workbook Manager. It is maintained for reliable use across client projects, as the original repository's maintenance has slowed down.
+
+### Purpose
+- **Excel Workbook Management**: Read and write xlsx and csv files.
+- **Client Project Stability**: Ensure long-term stability, performance, and security for client deployments.
+- **Bug Fixes & Maintenance**: Address issues and merge critical updates left unresolved in the upstream repository.
+
+### Tech Stack
+- **Environment**: Node.js
+- **Build Tool**: Grunt, Babel, Browserify
+- **Testing**: Mocha, Chai
+- **Language**: JavaScript (ES6+), TypeScript (types and specs)
+
+---
+
+## Package Management
+
+- **Package Manager**: Use `pnpm`.
+- **Commands**:
+  - Install: `pnpm install`
+  - Add package: `pnpm add <package>`
+  - Add dev package: `pnpm add -D <package>`
+
+---
+
+## Stability & Compatibility
+
+- **Highest Priority**: Backward compatibility and stability are the foundation of this fork.
+- **API Consistency**: Avoid breaking changes to the public API to ensure smooth integration with existing client projects.
+- **Performance**: Maintain or improve the speed and memory efficiency of reading/writing large Excel files.
+
+---
+
+## Code Quality Standards
+
+### 1. Structure
+- Follow the established architecture in the `lib/` directory.
+- Maintain clear separation between CSV and XLSX parsing/writing logic.
+- Keep tests updated for any bug fixes or new features in the `spec/` directory.
+
+### 2. JavaScript / TypeScript
+- Maintain ES5 compatibility when required by the build process.
+- Use strict typing when modifying `.ts` declaration files or specs.
+
+### 3. Formatting and linting
+- Run `pnpm lint` and `pnpm lint:fix` to check and fix ESLint/Prettier issues.
+- Maintain existing code style as defined in `.eslintrc` and `.prettierignore`.
+
+---
+
+## Documentation Updates
+
+### Handoff (End of Session)
+
+- **1. Update Handoff File**:
+  - Update `ai-docs/{developer}/progress-handoffs/progress-handoff.md`.
+  - **Status**: Mark as `Completed` (for this session).
+  - **Accomplishments**: List what YOU did.
+  - **Next Steps**: List what the NEXT agent should do.
+- **2. Archive Handoff**:
+  - Read the `Current Session` version from the file (e.g., `v1.56.0+1`).
+  - Save a copy as `progress-handoffs/progress-handoff-{version}-complete.md`.
+- **3. Archive Prompt**:
+  - Archive the current `agent-prompts/prompt.md` to `agent-prompts/prompt-{version}.md`.
+- **4. Renew Handoff**:
+  - Update `progress-handoff.md` to prepare for the _next_ session.
+  - **Status**: Set to `Active`.
+  - **Current Session**: Increment the version (e.g., `v1.56.0+1` -> `v1.56.0+2`).
+  - **Content**: Clear "Recent Accomplishments" and move "Next Steps" to "Pending Tasks".
+- **5. Renew Prompt**:
+  - **Update** `agent-prompts/prompt.md` with the **Objective** and **Instructions** for the _next_ session (based on your "Next Steps").
+- **6. Suggest What are Next For Next Agent's Works**
+- **7. Show the copy-able prompt for the next agent** with following wording: "Please execute the instructions in: ai-docs/{developer}/agent-prompts/prompt.md".
+
+---
+
+## Project Structure
+
+```
+exceljs/
+├── ai-docs/
+│   ├── {developer}/
+│   │   ├── agent-prompts/        # Archived and current agent prompts
+│   │   ├── progress-handoffs/    # Archived and current progress handoffs
+│   ├── features.md               # Implemented features
+│   └── planned.md                # Future roadmap
+├── dist/                         # Browser builds
+├── lib/                          # Core JavaScript source files
+├── spec/                         # Tests (unit, integration, e2e)
+├── package.json
+└── README.md
+```
+
+---
+
+## Git Commit Rules
+
+- **Git repository location:** "." (root directory)
+- **Commit Message (Summary):** Must be fewer than 50 characters. Use imperative mood (e.g., `fix: resolve memory leak`).
+- **Commit Description:** Can contain more structured and detailed explanation, but maintain conciseness.
+- **Trigger:** If the user request implies a git commit, always adhere to these rules.
+
+---
+
+## Available Tools
+
+- Terminal (pnpm, git)
+- Browser Testing tools
+
+---
+
+## Important
+
+- Maintain clarity and request confirmation when needed.
+- Ensure high-quality, reliable implementations, as client projects depend on this fork.
+- Regularly report progress during multi-step tasks.
+- **Stability First**: Prioritize non-breaking changes and thorough testing.
