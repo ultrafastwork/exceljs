@@ -18,9 +18,7 @@ describe('Anchor', () => {
       worksheet.addColumn(anchor.nativeCol + 1, {
         width: 10,
       });
-      expect(anchor.colWidth).to.equal(
-        worksheet.getColumn(anchor.nativeCol + 1).width * 10000
-      );
+      expect(anchor.colWidth).to.equal(Math.floor(worksheet.getColumn(anchor.nativeCol + 1).width * (640000 / 8.43)));
     });
   });
   describe('rowHeight', () => {
@@ -37,7 +35,7 @@ describe('Anchor', () => {
       worksheet.getRow(1).height = 10;
 
       const anchor = new Anchor(worksheet);
-      expect(anchor.rowHeight).to.equal(worksheet.getRow(1).height * 10000);
+      expect(anchor.rowHeight).to.equal(Math.floor(worksheet.getRow(1).height * (180000 / 15)));
     });
   });
   describe('resize worksheet`s cells', () => {
@@ -54,13 +52,13 @@ describe('Anchor', () => {
       const pre = context.anchor.colWidth;
       context.worksheet.getColumn(1).width *= 2;
       expect(context.anchor.colWidth).to.not.equal(pre);
-      expect(context.anchor.colWidth).to.equal(pre * 2);
+      expect(context.anchor.colWidth).to.equal(Math.floor(context.worksheet.getColumn(1).width * (640000 / 8.43)));
     });
     it('should update rowHeight', () => {
       const pre = context.anchor.rowHeight;
       context.worksheet.getRow(1).height *= 2;
       expect(context.anchor.rowHeight).to.not.equal(pre);
-      expect(context.anchor.rowHeight).to.equal(pre * 2);
+      expect(context.anchor.rowHeight).to.equal(Math.floor(context.worksheet.getRow(1).height * (180000 / 15)));
     });
     it('should recalculate col', () => {
       const pre = context.anchor.col;

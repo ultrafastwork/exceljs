@@ -290,6 +290,52 @@ describe('Workbook', () => {
           expect(Buffer.compare(imageData, image2.buffer)).to.equal(0);
         });
     });
+
+    it('stores embedded image with custom column width and row height', () => {
+      const wb = new ExcelJS.Workbook();
+      const ws = wb.addWorksheet('blort');
+
+      ws.getColumn(1).width = 12;
+      ws.getRow(1).height = 24;
+
+      const imageId = wb.addImage({
+        filename: IMAGE_FILENAME,
+        extension: 'jpeg',
+      });
+
+      // Add image positioned using a range covering row 1 & column 1
+      ws.addImage(imageId, {
+        tl: {col: 0, row: 0, colOff: 10000, rowOff: 10000},
+        br: {col: 1, row: 1, colOff: 10000, rowOff: 10000},
+      });
+
+      return wb.xlsx
+        .writeFile(TEST_XLSX_FILE_NAME)
+        .then(() => {
+          const wb2 = new ExcelJS.Workbook();
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+        })
+        .then(wb2 => {
+          const ws2 = wb2.getWorksheet('blort');
+          expect(ws2).to.not.be.undefined();
+
+          const col1 = ws2.getColumn(1);
+          const row1 = ws2.getRow(1);
+          expect(col1.width).to.equal(12);
+          expect(row1.height).to.equal(24);
+
+          const images = ws2.getImages();
+          expect(images.length).to.equal(1);
+
+          const imageDesc = images[0];
+          expect(imageDesc.range.tl).to.not.be.undefined();
+          expect(imageDesc.range.br).to.not.be.undefined();
+
+          // Verify scaling calculations are accurate upon reload
+          expect(imageDesc.range.tl.colWidth).to.equal(Math.floor(12 * (640000 / 8.43)));
+          expect(imageDesc.range.tl.rowHeight).to.equal(Math.floor(24 * (180000 / 15)));
+        });
+    });
   });
 
   describe('Image Manipulation', () => {

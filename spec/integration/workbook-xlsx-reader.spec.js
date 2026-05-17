@@ -330,9 +330,7 @@ describe('WorkbookReader', () => {
           const col = ws.getColumn(image.range.tl.nativeCol + 1);
 
           if (col.isCustomWidth) {
-            expect(image.range.tl.colWidth).to.equal(
-              Math.floor(col.width * 10000)
-            );
+            expect(image.range.tl.colWidth).to.equal(Math.floor(col.width * (640000 / 8.43)));
           } else {
             expect(image.range.tl.colWidth).to.equal(640000);
           }
@@ -345,9 +343,7 @@ describe('WorkbookReader', () => {
           const row = ws.getRow(image.range.tl.nativeRow + 1);
 
           if (row.height) {
-            expect(image.range.tl.rowHeight).to.equal(
-              Math.floor(row.height * 10000)
-            );
+            expect(image.range.tl.rowHeight).to.equal(Math.floor(row.height * (180000 / 15)));
           } else {
             expect(image.range.tl.rowHeight).to.equal(180000);
           }
@@ -377,9 +373,7 @@ describe('WorkbookReader', () => {
           const col = ws.getColumn(image.range.br.nativeCol + 1);
 
           if (col.isCustomWidth) {
-            expect(image.range.br.colWidth).to.equal(
-              Math.floor(col.width * 10000)
-            );
+            expect(image.range.br.colWidth).to.equal(Math.floor(col.width * (640000 / 8.43)));
           } else {
             expect(image.range.br.colWidth).to.equal(640000);
           }
@@ -392,9 +386,7 @@ describe('WorkbookReader', () => {
           const row = ws.getRow(image.range.br.nativeRow + 1);
 
           if (row.height) {
-            expect(image.range.br.rowHeight).to.equal(
-              Math.floor(row.height * 10000)
-            );
+            expect(image.range.br.rowHeight).to.equal(Math.floor(row.height * (180000 / 15)));
           } else {
             expect(image.range.br.rowHeight).to.equal(180000);
           }
