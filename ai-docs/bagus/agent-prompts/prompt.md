@@ -27,5 +27,11 @@ Implement and verify support for PR #3019 / Issue #3015: Add default values for 
 ### 3. Formatting
 - Run `pnpm lint` and `pnpm lint:fix` to ensure formatting compliance.
 
-### 4. Session Handoff
+### 4. Update PR Status & Documentation
+- Follow the new **Marking PRs as Completed** instructions in [.windsurfrules](file:///d:/projects/exceljs/.windsurfrules):
+  - Mark status as `DONE` in `ai-docs/prs/pr-3019.md`.
+  - Add the `✅` checkmark to `#3019` in `ai-docs/prs/README.md`.
+  - Prepended `[DONE]` to the header `## [#3019]` in `ai-docs/prs/all_prs_consolidated.md`.
+
+### 5. Session Handoff
 - Follow the **Handoff (End of Session)** rules in [.windsurfrules](file:///d:/projects/exceljs/.windsurfrules) to update the handoff file.

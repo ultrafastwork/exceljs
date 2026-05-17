@@ -4,7 +4,7 @@ This file contains the full details of all **135** open pull requests from the o
 
 ---
 
-## [#3031] fix:  terminates early on macOS with Node.js 22, causing  to fail for…
+## [DONE] [#3031] fix:  terminates early on macOS with Node.js 22, causing  to fail for…
 
 - **GitHub URL:** [PR #3031 on GitHub](https://github.com/exceljs/exceljs/pull/3031)
 - **Author:** [@tkambler](https://github.com/tkambler) (Tim Ambler)
@@ -51,7 +51,7 @@ entry order (un-ignored in `.gitignore`)
 
 ---
 
-## [#3020] Fix #3014: Add support for HAN CELL Excel files
+## [DONE] [#3020] Fix #3014: Add support for HAN CELL Excel files
 
 - **GitHub URL:** [PR #3020 on GitHub](https://github.com/exceljs/exceljs/pull/3020)
 - **Author:** [@protobi-pieter](https://github.com/protobi-pieter) (Pieter Sheth-Voss)
@@ -1034,7 +1034,7 @@ This is a very minor change. There is no attempt to add dynamic filter support i
 
 ---
 
-## [#2962] fix: handle missing r attribute in row and cell elements (#2961)
+## [DONE] [#2962] fix: handle missing r attribute in row and cell elements (#2961)
 
 - **GitHub URL:** [PR #2962 on GitHub](https://github.com/exceljs/exceljs/pull/2962)
 - **Author:** [@Diluka](https://github.com/Diluka) (Diluka)
@@ -1175,7 +1175,7 @@ If a non-numeric value is passed to dateToExcel(), like when it's called because
 
 ---
 
-## [#2924] Fix Anchor Column and Row Positioning by Adjusting Scaling for Excel Defaults
+## [DONE] [#2924] Fix Anchor Column and Row Positioning by Adjusting Scaling for Excel Defaults
 
 - **GitHub URL:** [PR #2924 on GitHub](https://github.com/exceljs/exceljs/pull/2924)
 - **Author:** [@stany-bns](https://github.com/stany-bns) (Stany Bibwangu)
@@ -1227,7 +1227,7 @@ Improves placement precision for images and anchored objects.
 
 ---
 
-## [#2920] fix: inefficient merge check for large amount of merged cells
+## [DONE] [#2920] fix: inefficient merge check for large amount of merged cells
 
 - **GitHub URL:** [PR #2920 on GitHub](https://github.com/exceljs/exceljs/pull/2920)
 - **Author:** [@3ximus](https://github.com/3ximus) (Fabio)
@@ -1243,7 +1243,7 @@ Thank you
 
 ---
 
-## [#2915] Resolved the issue in WorkbookReader where cell values were being interpreted as sharedString instead of the actual value.
+## [DONE] [#2915] Resolved the issue in WorkbookReader where cell values were being interpreted as sharedString instead of the actual value.
 
 - **GitHub URL:** [PR #2915 on GitHub](https://github.com/exceljs/exceljs/pull/2915)
 - **Author:** [@AnechaS](https://github.com/AnechaS) (Anecha Kuekharem)
@@ -1302,7 +1302,7 @@ Fix a constant identifier naming error in the Chinese documentation。
 
 ---
 
-## [#2903] Add support for removing images from Worksheet
+## [DONE] [#2903] Add support for removing images from Worksheet
 
 - **GitHub URL:** [PR #2903 on GitHub](https://github.com/exceljs/exceljs/pull/2903)
 - **Author:** [@wwwxy80s](https://github.com/wwwxy80s) (wwwxy)
@@ -1335,7 +1335,7 @@ solve https://github.com/exceljs/exceljs/issues/1533
 
 ---
 
-## [#2894] Fix parse-sax.js broke utf8 string bug
+## [DONE] [#2894] Fix parse-sax.js broke utf8 string bug
 
 - **GitHub URL:** [PR #2894 on GitHub](https://github.com/exceljs/exceljs/pull/2894)
 - **Author:** [@maoxian-1](https://github.com/maoxian-1) (毛线)

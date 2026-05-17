@@ -76,6 +76,13 @@ This project is a fork of **exceljs/exceljs**, a robust Excel Workbook Manager. 
 - **6. Suggest What are Next For Next Agent's Works**
 - **7. Show the copy-able prompt for the next agent** with following wording: "Please execute the instructions in: ai-docs/{developer}/agent-prompts/prompt.md".
 
+### Marking PRs as Completed
+
+When completing the implementation and verification of a pull request, the agent **MUST** update the PR documentation:
+1. **Update Individual PR File**: Add `- **Status:** **DONE** (Implemented locally)` to the metadata block of `ai-docs/prs/pr-<number>.md`.
+2. **Update Index (README.md)**: Prepended `**✅ #<number>**` in the "Open Pull Requests Directory" catalog table in [README.md](file:///d:/projects/exceljs/ai-docs/prs/README.md).
+3. **Update Consolidated File**: Prepended `[DONE]` to the PR's header in [all_prs_consolidated.md](file:///d:/projects/exceljs/ai-docs/prs/all_prs_consolidated.md) (e.g., `## [DONE] [#<number>]`).
+
 ---
 
 ## Project Structure

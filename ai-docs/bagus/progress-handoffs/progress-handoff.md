@@ -11,3 +11,4 @@
 - [ ] Add integration test for end-to-end workflow in `spec/integration/workbook-xlsx-writer/workbook-xlsx-writer.spec.js`.
 - [ ] Run unit and integration tests (`pnpm test:unit`, `pnpm test:integration`) to ensure zero regressions and 100% green suites.
 - [ ] Run `pnpm lint` and `pnpm lint:fix` to ensure clean styling and compliance.
+- [ ] Update PR documentation (individual detail file, index `README.md`, and `all_prs_consolidated.md` file) to mark PR #3019 as **DONE** upon successful completion.

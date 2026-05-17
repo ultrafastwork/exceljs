@@ -38,8 +38,8 @@ gh pr checkout <number> --repo exceljs/exceljs -b pr-<number>-branch
 
 | Number | Title | Author | Labels | Created Date | Local Detail |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| #3031 | [fix:  terminates early on macOS with Node.js 22, causing  to fail for…](https://github.com/exceljs/exceljs/pull/3031) | [@tkambler](https://github.com/tkambler) | *None* | Apr 1, 2026 | [Detail Link](./pr-3031.md) |
-| #3020 | [Fix #3014: Add support for HAN CELL Excel files](https://github.com/exceljs/exceljs/pull/3020) | [@protobi-pieter](https://github.com/protobi-pieter) | *None* | Jan 27, 2026 | [Detail Link](./pr-3020.md) |
+| **✅ #3031** | [fix:  terminates early on macOS with Node.js 22, causing  to fail for…](https://github.com/exceljs/exceljs/pull/3031) | [@tkambler](https://github.com/tkambler) | *None* | Apr 1, 2026 | [Detail Link](./pr-3031.md) |
+| **✅ #3020** | [Fix #3014: Add support for HAN CELL Excel files](https://github.com/exceljs/exceljs/pull/3020) | [@protobi-pieter](https://github.com/protobi-pieter) | *None* | Jan 27, 2026 | [Detail Link](./pr-3020.md) |
 | #3019 | [Fix #3015: Add default values for data bar conditional formatting](https://github.com/exceljs/exceljs/pull/3019) | [@protobi-pieter](https://github.com/protobi-pieter) | *None* | Jan 27, 2026 | [Detail Link](./pr-3019.md) |
 | #3011 | [README.md: Formulas: Add note about not including '='](https://github.com/exceljs/exceljs/pull/3011) | [@moshekaplan](https://github.com/moshekaplan) | *None* | Dec 25, 2025 | [Detail Link](./pr-3011.md) |
 | #3003 | [fix typo in comment](https://github.com/exceljs/exceljs/pull/3003) | [@divingbeetle](https://github.com/divingbeetle) | *None* | Nov 13, 2025 | [Detail Link](./pr-3003.md) |
@@ -55,15 +55,15 @@ gh pr checkout <number> --repo exceljs/exceljs -b pr-<number>-branch
 | #2978 | [Fix undefined column assignment autofilter](https://github.com/exceljs/exceljs/pull/2978) | [@hypesystem](https://github.com/hypesystem) | *None* | Sep 25, 2025 | [Detail Link](./pr-2978.md) |
 | #2977 | [Fix large validation ranges by clamping range to highest row in actual data](https://github.com/exceljs/exceljs/pull/2977) | [@hypesystem](https://github.com/hypesystem) | *None* | Sep 25, 2025 | [Detail Link](./pr-2977.md) |
 | #2973 | [Fix parsing error for dynamicFilter nodes in Excel tables](https://github.com/exceljs/exceljs/pull/2973) | [@johnnyoshika](https://github.com/johnnyoshika) | *None* | Sep 23, 2025 | [Detail Link](./pr-2973.md) |
-| #2962 | [fix: handle missing r attribute in row and cell elements (#2961)](https://github.com/exceljs/exceljs/pull/2962) | [@Diluka](https://github.com/Diluka) | *None* | Aug 25, 2025 | [Detail Link](./pr-2962.md) |
+| **✅ #2962** | [fix: handle missing r attribute in row and cell elements (#2961)](https://github.com/exceljs/exceljs/pull/2962) | [@Diluka](https://github.com/Diluka) | *None* | Aug 25, 2025 | [Detail Link](./pr-2962.md) |
 | #2956 | [Fix the return value from dateToExcel() when it's passed a non-numeric value.](https://github.com/exceljs/exceljs/pull/2956) | [@davepuchyr](https://github.com/davepuchyr) | *None* | Aug 12, 2025 | [Detail Link](./pr-2956.md) |
 | #2930 | [Update content-types.01.xml](https://github.com/exceljs/exceljs/pull/2930) | [@MatheusdeArmas](https://github.com/MatheusdeArmas) | *None* | May 20, 2025 | [Detail Link](./pr-2930.md) |
-| #2924 | [Fix Anchor Column and Row Positioning by Adjusting Scaling for Excel Defaults](https://github.com/exceljs/exceljs/pull/2924) | [@stany-bns](https://github.com/stany-bns) | *None* | Apr 27, 2025 | [Detail Link](./pr-2924.md) |
-| #2920 | [fix: inefficient merge check for large amount of merged cells](https://github.com/exceljs/exceljs/pull/2920) | [@3ximus](https://github.com/3ximus) | *None* | Apr 17, 2025 | [Detail Link](./pr-2920.md) |
-| #2915 | [Resolved the issue in WorkbookReader where cell values were being interpreted as sharedString instead of the actual value.](https://github.com/exceljs/exceljs/pull/2915) | [@AnechaS](https://github.com/AnechaS) | *None* | Apr 9, 2025 | [Detail Link](./pr-2915.md) |
+| **✅ #2924** | [Fix Anchor Column and Row Positioning by Adjusting Scaling for Excel Defaults](https://github.com/exceljs/exceljs/pull/2924) | [@stany-bns](https://github.com/stany-bns) | *None* | Apr 27, 2025 | [Detail Link](./pr-2924.md) |
+| **✅ #2920** | [fix: inefficient merge check for large amount of merged cells](https://github.com/exceljs/exceljs/pull/2920) | [@3ximus](https://github.com/3ximus) | *None* | Apr 17, 2025 | [Detail Link](./pr-2920.md) |
+| **✅ #2915** | [Resolved the issue in WorkbookReader where cell values were being interpreted as sharedString instead of the actual value.](https://github.com/exceljs/exceljs/pull/2915) | [@AnechaS](https://github.com/AnechaS) | *None* | Apr 9, 2025 | [Detail Link](./pr-2915.md) |
 | #2912 | [Fix a constant identifier naming error in the Chinese documentation](https://github.com/exceljs/exceljs/pull/2912) | [@yusn](https://github.com/yusn) | *None* | Apr 2, 2025 | [Detail Link](./pr-2912.md) |
-| #2903 | [Add support for removing images from Worksheet](https://github.com/exceljs/exceljs/pull/2903) | [@wwwxy80s](https://github.com/wwwxy80s) | *None* | Mar 20, 2025 | [Detail Link](./pr-2903.md) |
-| #2894 | [Fix parse-sax.js broke utf8 string bug](https://github.com/exceljs/exceljs/pull/2894) | [@maoxian-1](https://github.com/maoxian-1) | *None* | Mar 3, 2025 | [Detail Link](./pr-2894.md) |
+| **✅ #2903** | [Add support for removing images from Worksheet](https://github.com/exceljs/exceljs/pull/2903) | [@wwwxy80s](https://github.com/wwwxy80s) | *None* | Mar 20, 2025 | [Detail Link](./pr-2903.md) |
+| **✅ #2894** | [Fix parse-sax.js broke utf8 string bug](https://github.com/exceljs/exceljs/pull/2894) | [@maoxian-1](https://github.com/maoxian-1) | *None* | Mar 3, 2025 | [Detail Link](./pr-2894.md) |
 | #2891 | [#2878: dependencies bump and code fix](https://github.com/exceljs/exceljs/pull/2891) | [@rengare](https://github.com/rengare) | *None* | Feb 19, 2025 | [Detail Link](./pr-2891.md) |
 | #2885 | [feat: add 'count' metric for pivot table](https://github.com/exceljs/exceljs/pull/2885) | [@dsilva01](https://github.com/dsilva01) | *None* | Feb 6, 2025 | [Detail Link](./pr-2885.md) |
 | #2883 | [Make to work with expressions with no formulae](https://github.com/exceljs/exceljs/pull/2883) | [@AndresDSoto](https://github.com/AndresDSoto) | *None* | Jan 29, 2025 | [Detail Link](./pr-2883.md) |
