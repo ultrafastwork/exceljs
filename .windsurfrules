@@ -102,13 +102,14 @@ exceljs/
 - **Git repository location:** "." (root directory)
 - **Commit Message (Summary):** Must be fewer than 50 characters. Use imperative mood (e.g., `fix: resolve memory leak`).
 - **Commit Description:** Can contain more structured and detailed explanation, but maintain conciseness.
+- **PR / Issue Reference:** If the work is related to a specific Pull Request or Issue, include the reference (e.g., `#123` or a PR link). This reference can be placed either in the **Commit Message (Summary)** or the **Commit Description**.
 - **Trigger:** If the user request implies a git commit, always adhere to these rules.
 
 ---
 
 ## Available Tools
 
-- Terminal (pnpm, git)
+- Terminal (pnpm, git, gh)
 - Browser Testing tools
 
 ---
