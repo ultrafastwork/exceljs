@@ -2090,6 +2090,18 @@ worksheet.addImage(imageId2, {
 });
 ```
 
+### Remove image from worksheet[⬆](#contents)<!-- Link generated with jump2header -->
+
+Using the `sheetImageId` returned from `worksheet.addImage` or `worksheet.addBackgroundImage`, an image can be removed from the worksheet.
+
+```javascript
+// Add an image and get its sheetImageId
+const sheetImageId = worksheet.addImage(imageId, 'B2:D6');
+
+// Remove the image
+worksheet.removeImage(sheetImageId);
+```
+
 ## Sheet Protection[⬆](#contents)<!-- Link generated with jump2header -->
 
 Worksheets can be protected from modification by adding a password.

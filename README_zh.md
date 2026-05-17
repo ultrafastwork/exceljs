@@ -2020,6 +2020,18 @@ worksheet.addImage(imageId2, {
 });
 ```
 
+### 从工作表中删除图片[⬆](#目录)<!-- Link generated with jump2header -->
+
+可以使用 `worksheet.addImage` 或 `worksheet.addBackgroundImage` 返回的 `sheetImageId` 从工作表中删除图片。
+
+```javascript
+// 添加图片并获取其 sheetImageId
+const sheetImageId = worksheet.addImage(imageId, 'B2:D6');
+
+// 删除图片
+worksheet.removeImage(sheetImageId);
+```
+
 ## 工作表保护[⬆](#目录)<!-- Link generated with jump2header -->
 
 可以通过添加密码来保护工作表免受修改。
