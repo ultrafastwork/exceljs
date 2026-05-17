@@ -1,15 +1,15 @@
-# progress-handoff (v1.0.0+5) - Active
+# progress-handoff (v1.0.0+6) - Active
 
 ## Status
 - **Status**: Active
-- **Current Session**: `v1.0.0+5`
+- **Current Session**: `v1.0.0+6`
 - **Developer**: bagus
 
 ## Pending Tasks
-- [ ] Read the details of **PR #2915** ("Resolved the issue in WorkbookReader where cell values were being interpreted as sharedString instead of the actual value") in [pr-2915.md](file:///d:/projects/exceljs/ai-docs/prs/pr-2915.md).
-- [ ] **PR Assessment & Verification**: Check whether the PR is needed, whether it should be implemented, and whether/how its proposed design can be improved.
-- [ ] Locate the target file `lib/stream/xlsx/workbook-reader.js`.
-- [ ] Implement the PR fix: pipe zip directly (`const zip = stream.pipe(unzip.Parse({forceStream: true}));`) and change loop to iterate zip directly (`for await (const entry of zip)`).
-- [ ] Add unit or integration tests to verify that the fix correctly resolves the issue with WorkbookReader interpreting values as sharedString index.
-- [ ] Verify using the test suites (`pnpm test:unit` and `pnpm test:integration`).
-- [ ] Commit the changes to git adhering to project commit rules in `.windsurfrules`.
+- [ ] Read the details of **PR #2920** ("fix: inefficient merge check for large amount of merged cells") in [pr-2920.md](file:///d:/projects/exceljs/ai-docs/prs/pr-2920.md) and its predecessor [pr-2691.md](file:///d:/projects/exceljs/ai-docs/prs/pr-2691.md).
+- [ ] Locate the target file `lib/doc/worksheet.js` (specifically `_mergeCellsInternal` method).
+- [ ] Research why conflict checking is slow for worksheets with tens of thousands of merged cells.
+- [ ] Implement an optimized conflict check or lookup method (e.g. maintaining a cell-to-merged-range map or accelerating spatial boundary checks) to speed up `_mergeCellsInternal`.
+- [ ] Run the full unit (`pnpm test:unit`) and integration (`pnpm test:integration`) test suites to ensure correctness and zero regressions.
+- [ ] Verify that parsing files with massive numbers of merged cells is optimized and executes in seconds instead of minutes.
+- [ ] Stage and commit the changes to Git following the project guidelines in `.windsurfrules`.
