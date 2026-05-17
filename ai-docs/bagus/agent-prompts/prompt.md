@@ -1,35 +1,38 @@
-# AI Agent Prompt: Implement and Verify PR #2903
+# AI Agent Prompt: Implement and Verify PR #2915
 
 ## Objective
-Your goal is to inspect, implement, and verify **Pull Request #2903** ("Add support for removing images from Worksheet") from the upstream repository. This feature resolves Issue #1533, enabling developers to cleanly remove images from worksheets.
+Your goal is to inspect, implement, and verify **Pull Request #2915** ("Resolved the issue in WorkbookReader where cell values were being interpreted as sharedString instead of the actual value") from the upstream repository. This is an important fix resolving a bug where cell values are returned as their sharedString raw index instead of the actual text value during streaming.
 
 ## Context & Details
-- **PR Detail Document**: Read [pr-2903.md](file:///d:/projects/exceljs/ai-docs/prs/pr-2903.md) for description and context.
-- **Rules File**: Always adhere to the project rules in [.windsurfrules](file:///d:/projects/exceljs/.windsurfrules).
+- **PR Detail Document**: Read [pr-2915.md](file:///d:/projects/exceljs/ai-docs/prs/pr-2915.md) for full description and context.
+- **Rules File**: Always adhere to the project rules in [.windsurfrules](file:///d:/projects/exceljs/.windsurfrules) (e.g. using `pnpm`, backward compatibility priority, git commit structure, and progress handoffs).
 
 ## Instructions
 
 ### 1. Research & Analysis
-- Open and read [pr-2903.md](file:///d:/projects/exceljs/ai-docs/prs/pr-2903.md).
-- **PR Evaluation & Assessment**: Before doing any code implementation, carefully check:
-  1. **Is this PR needed?** (Examine the issue context, does it resolve a real pain point?).
-  2. **Should this PR be implemented?** (Consider stability, performance, and backward compatibility).
-  3. **Can/Should the PR's solution be improved?** (Inspect the PR author's proposed solution. Identify any fragility, security, or design issues, and see if there is a cleaner, more standard, or robust way to implement it).
-- Examine how images are added to worksheets, how they are managed inside `lib/` (e.g. `lib/doc/worksheet.js` or `lib/xlsx/xform/sheet/worksheet-xform.js`), and identify the structures holding images (e.g. `_media`, images array).
-- Study how we can cleanly remove an image by index or ID, including updating drawings/media relationships if necessary.
+- Open and read [pr-2915.md](file:///d:/projects/exceljs/ai-docs/prs/pr-2915.md).
+- Locate the target file `lib/stream/xlsx/workbook-reader.js`.
+- Analyze the zip and parsing stream loop in the `parse()` method.
+- Check how `iterateStream(zip)` behaves, and why referencing zip directly via `for await (const entry of zip)` solves the sharedString indexing issue.
 
 ### 2. Implementation
-- Implement `removeImage` on the Worksheet class (e.g. `worksheet.removeImage(index)` or similar logic from the PR).
-- Ensure references to the removed image are cleaned up and no corrupted XML/zip structure is produced on write.
+- Update the zip stream pipeline setup:
+  ```javascript
+  const zip = stream.pipe(unzip.Parse({forceStream: true}));
+  ```
+- Change the loop iterating entries to consume the zip stream directly instead of wrapping with `iterateStream`:
+  ```javascript
+  for await (const entry of zip) {
+  ```
 
 ### 3. Verification
-- Create a test spec file or add to existing tests (e.g., in `spec/integration/` or `spec/unit/`) to verify that removing an image works perfectly.
-- Run the full test suite (`pnpm test:unit` and `pnpm test:integration`).
+- Verify using unit and integration tests (`pnpm test:unit` and `pnpm test:integration`).
+- Ensure no regressions occur in the WorkbookReader's behavior across all platforms.
 - Run `pnpm lint` and `npx eslint` to verify that formatting is clean.
 
 ### 4. Git Commit
 - Once verified, commit the changes to git.
-- **Commit message constraint**: Use a summary under 50 characters in imperative mood (e.g., `feat: support removing images from worksheet`).
+- **Commit message constraint**: Use a summary under 50 characters in imperative mood (e.g., `fix: resolve sharedString interpretation in WorkbookReader`). Add issue/PR references in the commit body description.
 
 ### 5. Documentation & Handoff
-- Follow the **Handoff (End of Session)** rules in [.windsurfrules](file:///d:/projects/exceljs/.windsurfrules) to update the handoff file and prepare for the next session.
+- Follow the **Handoff (End of Session)** rules in [.windsurfrules](file:///d:/projects/exceljs/.windsurfrules) to update the handoff file.
