@@ -1,32 +1,31 @@
-# AI Agent Prompt: Implement and Verify PR #3031
+# AI Agent Prompt: Implement and Verify PR #2894
 
 ## Objective
-Your goal is to inspect, implement, and verify **Pull Request #3031** ("fix: terminates early on macOS with Node.js 22, causing to fail for...") from the upstream repository. This is a critical modern stability fix that prevents `WorkbookReader` from crashing silently when parsing zip-entry order worksheets under Node 22 (macOS).
+Your goal is to inspect, implement, and verify **Pull Request #2894** ("Fix parse-sax.js broke utf8 string bug") from the upstream repository. This critical bug (Issue #2084) causes Chinese or other multi-byte Unicode strings to be corrupted and split incorrectly when they span across stream chunk boundaries inside `lib/utils/parse-sax.js`.
 
 ## Context & Details
-- **PR Detail Document**: Read [pr-3031.md](file:///d:/projects/exceljs/ai-docs/prs/pr-3031.md) for full description and context.
-- **Rules File**: Always adhere to the project rules in [.windsurfrules](file:///d:/projects/exceljs/.windsurfrules) (e.g., using `pnpm`, backward compatibility priority, git commit structure, and progress handoffs).
+- **PR Detail Document**: Read [pr-2894.md](file:///d:/projects/exceljs/ai-docs/prs/pr-2894.md) for description and context.
+- **Target File**: Locate `lib/utils/parse-sax.js` and analyze how buffers are converted to strings using `bufferToString(chunk)` inside the chunk iteration loop.
+- **Rules File**: Always adhere to the project rules in [.windsurfrules](file:///d:/projects/exceljs/.windsurfrules).
 
 ## Instructions
 
 ### 1. Research & Analysis
-- Open and read [pr-3031.md](file:///d:/projects/exceljs/ai-docs/prs/pr-3031.md).
-- Locate the target file `lib/utils/iterate-stream.js`. Analyze the `iterateStream` function and where `stream.pause()` is called.
-- Understand the regression fixture setup mentioned in the PR.
+- Open and read [pr-2894.md](file:///d:/projects/exceljs/ai-docs/prs/pr-2894.md).
+- Examine `lib/utils/parse-sax.js` to understand the root cause of the bug. Specifically, investigate how `bufferToString(chunk)` fails when multi-byte UTF-8 characters are split across raw buffer chunks.
+- Explore alternative/standard solution: Node's `StringDecoder` from the core `string_decoder` module, which is robust and standard.
 
 ### 2. Implementation
-- Safely remove the `stream.pause()` call in `lib/utils/iterate-stream.js`.
-- Implement a regression spec at `spec/integration/issues/iterate-stream-worksheet-before-workbook.spec.js` using Mocha/Chai to read a test fixture with worksheets ordered before `workbook.xml`.
-- If you need a zip/xlsx test fixture with specific sheet ordering, create one or use existing test fixtures if applicable.
+- Safely implement the fix in `lib/utils/parse-sax.js`.
+- Create a regression test file: `spec/integration/issues/parse-sax-utf8-characters.spec.js` using Mocha/Chai. In the test, construct a stream that emits chunks splitting a Chinese/Unicode character across chunk boundaries, and verify that `parseSax` parses it without corrupting the string.
 
 ### 3. Verification
-- Install dependencies using `pnpm install` if needed.
-- Run tests (e.g., using the appropriate project test commands, check `package.json`).
-- Ensure the fix passes successfully and no existing tests are broken.
+- Run the new test and the full test suite (`pnpm test:unit` and `pnpm test:integration`).
+- Run `pnpm lint` and `npx eslint` to verify that formatting is clean.
 
 ### 4. Git Commit
 - Once verified, commit the changes to git.
-- **Commit message constraint**: Use the format: `fix: remove stream pause in WorkbookReader for Node 22` (fewer than 50 chars for summary).
+- **Commit message constraint**: Use a summary under 50 characters in imperative mood (e.g., `fix: resolve multibyte utf8 split in parse-sax`).
 
 ### 5. Documentation & Handoff
-- Follow the **Handoff (End of Session)** rules in [.windsurfrules](file:///d:/projects/exceljs/.windsurfrules) to update the handoff file.
+- Follow the **Handoff (End of Session)** rules in [.windsurfrules](file:///d:/projects/exceljs/.windsurfrules) to update the handoff file and prepare for the next session.
