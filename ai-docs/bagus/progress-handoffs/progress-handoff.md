@@ -1,12 +1,13 @@
-# progress-handoff (v1.0.0+15) - Active
+# progress-handoff (v1.0.0+16) - Active
 
 ## Status
 - **Status**: Active
-- **Current Session**: `v1.0.0+15`
+- **Current Session**: `v1.0.0+16`
 - **Developer**: bagus
 
 ## Pending Tasks
-- [ ] Implement support for retrieving merged cell information in stream processing `WorksheetReader` (`lib/stream/xlsx/worksheet-reader.js`).
-- [ ] Add integration test (`spec/integration/pr/test-pr-3002.spec.js`) and test spreadsheet (`spec/integration/data/test-issue-3000.xlsx`).
-- [ ] Run verification tests and code linter.
-- [ ] Update PR status files: `ai-docs/prs/pr-3002.md`, `ai-docs/prs/README.md`, and `ai-docs/prs/all_prs_consolidated.md`.
+- [ ] Implement support for `getTable().addRow()` workflow for loaded tables (PR #2998 / Issue #2987).
+- [ ] Modify `lib/doc/table.js` and `lib/doc/worksheet.js` to correctly initialize, map and update table refs when rows are added.
+- [ ] Add the test script `test/test-table-addrow.js`.
+- [ ] Run unit and integration tests and code linter.
+- [ ] Update PR status files: `ai-docs/prs/pr-2998.md`, `ai-docs/prs/README.md`, and `ai-docs/prs/all_prs_consolidated.md`.

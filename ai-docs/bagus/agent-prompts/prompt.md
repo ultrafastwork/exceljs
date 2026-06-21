@@ -1,43 +1,55 @@
-# AI Agent Prompt: PR #3002 - Support Merged Cells Event in stream processing WorksheetReader
+# AI Agent Prompt: PR #2998 - Fix getTable().addRow() workflow for loaded tables
 
 ## Objective
-Implement and verify support for PR #3002 / Issue #3000: Under stream processing, support retrieving information about merged cells.
+Implement and verify support for PR #2998 / Issue #2987: Fix getTable().addRow() workflow for loaded tables, which crashes or doesn't expand reference/preserve filter buttons correctly.
 
 ## Context & Details
-- **The Problem**: When reading xlsx files in streaming mode via `WorkbookReader` / `WorksheetReader`, the reader parses XML SAX events but does not emit/expose information about merged cells (`<mergeCell ref="..."/>`), making it impossible to obtain merged cells under stream processing.
-- **The Solution**: 
-  1. Modify `lib/stream/xlsx/worksheet-reader.js`:
-     - Maintain a `mergeCell` reference value during SAX parsing.
-     - When starting a `mergeCell` element, record `mergeCell = node.attributes.ref`.
-     - When ending a `mergeCell` element, push a new event `{eventType: 'mergeCell', value: mergeCell}` to `worksheetEvents`.
-  2. Implement/Add test coverage:
-     - Check out or download `spec/integration/data/test-issue-3000.xlsx` from PR #3002 (`gh pr checkout 3002 --repo exceljs/exceljs -b pr-3002-branch` and copy the file, or generate/mock it).
-     - Add integration test `spec/integration/pr/test-pr-3002.spec.js` that checks if the `mergeCell` event correctly yields `'A2:C4'`.
+- **The Problem**: The `getTable().addRow()` workflow fails when working with tables loaded from Excel files, throwing:
+  `TypeError: Cannot read properties of undefined (reading 'length')`
+  Additionally:
+  - Table references don't expand dynamically when rows are added.
+  - Excel filter buttons disappear after save/load cycle.
+  - Missing worksheet references cause inconsistent behavior.
+- **The Solution**:
+  1. Modify `lib/doc/table.js`:
+     - Fix `autoFilterRef` to target header row only.
+     - Add `_updateTableRef()` method to dynamically update table ranges when rows change.
+     - Modify `addRow()` to update table references and call `commit()` to re-render properly.
+     - Modify `removeRows()` to update table references after removal.
+     - Add `_writeRowToWorksheet()` helper for targeted row writes.
+     - Add `autoFilterRef` getter/setter.
+  2. Modify `lib/doc/worksheet.js`:
+     - Map `tableRef` to `ref` for Excel format compatibility when loading.
+     - Add empty `rows` array for loaded tables.
+     - Auto-detect `headerRow` when columns have names.
+     - Enable `filterButton: true` on columns when `autoFilterRef` exists.
+  3. Create test coverage:
+     - Recreate or retrieve `test/test-table-addrow.js`.
 - **Target Files**:
-  - `lib/stream/xlsx/worksheet-reader.js`
-  - `spec/integration/data/test-issue-3000.xlsx` (New)
-  - `spec/integration/pr/test-pr-3002.spec.js` (New)
+  - `lib/doc/table.js`
+  - `lib/doc/worksheet.js`
+  - `test/test-table-addrow.js` (New)
 - **Rules File**: Always adhere to the project rules in [.windsurfrules](file:///d:/projects/exceljs/.windsurfrules).
 
 ## Instructions
 
 ### 1. Selection & Research
-- Read `ai-docs/prs/pr-3002.md` and check the diff from GitHub using `gh pr diff 3002 --repo exceljs/exceljs`.
-- Create a design and implementation plan, detailing the implementation of the SAX parse events and how to retrieve/mock the test spreadsheet.
+- Read `ai-docs/prs/pr-2998.md` and fetch/check the diff from GitHub using `gh pr diff 2998 --repo exceljs/exceljs`.
+- Create a design and implementation plan, detailing the modifications in `lib/doc/table.js` and `lib/doc/worksheet.js`.
 
 ### 2. Implementation & Verification
 - Obtain user approval for your implementation plan.
-- Implement the changes in `lib/stream/xlsx/worksheet-reader.js`.
-- Retrieve/recreate the test file `spec/integration/data/test-issue-3000.xlsx`.
-- Write the integration test under `spec/integration/pr/test-pr-3002.spec.js`.
-- Verify tests pass with `pnpm test:unit` and `pnpm test:integration`.
+- Implement the changes in `lib/doc/table.js` and `lib/doc/worksheet.js`.
+- Write the test script under `test/test-table-addrow.js`.
+- Run the test script using `node test/test-table-addrow.js` and verify it passes.
+- Verify unit and integration tests pass with `pnpm test:unit` and `pnpm test:integration`.
 - Check and fix formatting/lint issues using `pnpm lint`.
 
 ### 3. Update PR Status & Documentation
 - Follow the **Marking PRs as Completed** instructions in [.windsurfrules](file:///d:/projects/exceljs/.windsurfrules):
-  - Mark status as `DONE` in `ai-docs/prs/pr-3002.md`.
-  - Add the `✅` checkmark to `#3002` in `ai-docs/prs/README.md`.
-  - Prepend `[DONE]` to the header `## [#3002]` in `ai-docs/prs/all_prs_consolidated.md`.
+  - Mark status as `DONE` in `ai-docs/prs/pr-2998.md`.
+  - Add the `✅` checkmark to `#2998` in `ai-docs/prs/README.md`.
+  - Prepend `[DONE]` to the header `## [#2998]` in `ai-docs/prs/all_prs_consolidated.md`.
 
 ### 4. Session Handoff
 - Follow the **Handoff (End of Session)** rules in [.windsurfrules](file:///d:/projects/exceljs/.windsurfrules) to update the handoff file.

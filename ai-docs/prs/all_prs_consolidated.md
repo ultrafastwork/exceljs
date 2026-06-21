@@ -205,7 +205,7 @@ fix typo: definde -> defined
 
 ---
 
-## [#3002] Under stream processing, the information of the merged cells in the table cannot be obtained
+## [DONE] [#3002] Under stream processing, the information of the merged cells in the table cannot be obtained
 
 - **GitHub URL:** [PR #3002 on GitHub](https://github.com/exceljs/exceljs/pull/3002)
 - **Author:** [@halvee-tech](https://github.com/halvee-tech) (halvee)
