@@ -6,5 +6,6 @@
 - **Developer**: bagus
 
 ## Pending Tasks
-- [ ] Select a new pending pull request from the pull requests directory (`ai-docs/prs/README.md`) to port and implement.
-- [ ] Create an implementation plan for the selected pull request and obtain user approval.
+- [ ] Correct the typo `definde` -> `defined` on line 1170 of `index.d.ts`.
+- [ ] Run linting/formatting checks (`pnpm lint`).
+- [ ] Update PR status files: `ai-docs/prs/pr-3003.md`, `ai-docs/prs/README.md`, and `ai-docs/prs/all_prs_consolidated.md`.

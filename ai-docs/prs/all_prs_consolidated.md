@@ -190,7 +190,7 @@ N/A
 
 ---
 
-## [#3003] fix typo in comment
+## [DONE] [#3003] fix typo in comment
 
 - **GitHub URL:** [PR #3003 on GitHub](https://github.com/exceljs/exceljs/pull/3003)
 - **Author:** [@divingbeetle](https://github.com/divingbeetle) (LEE,SEUNGMIN)
