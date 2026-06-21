@@ -37,6 +37,31 @@ const expectations = [
     tests: ['render', 'parse'],
   },
   {
+    title: 'Empty/Minimal (Defaults)',
+    create() {
+      return new DatabarExtXform();
+    },
+    preparedModel: {},
+    xml: `
+      <x14:dataBar minLength="0" maxLength="100">
+        <x14:cfvo type="min" />
+        <x14:cfvo type="max" />
+      </x14:dataBar>
+    `,
+    parsedModel: {
+      minLength: 0,
+      maxLength: 100,
+      border: false,
+      gradient: true,
+      negativeBarColorSameAsPositive: true,
+      negativeBarBorderColorSameAsPositive: true,
+      axisPosition: 'auto',
+      direction: 'leftToRight',
+      cfvo: [{type: 'min'}, {type: 'max'}],
+    },
+    tests: ['render'],
+  },
+  {
     title: 'Non Default Set',
     create() {
       return new DatabarExtXform();

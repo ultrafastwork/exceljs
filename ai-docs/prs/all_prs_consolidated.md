@@ -94,7 +94,7 @@ Fixes #3014
 
 ---
 
-## [#3019] Fix #3015: Add default values for data bar conditional formatting
+## [DONE] [#3019] Fix #3015: Add default values for data bar conditional formatting
 
 - **GitHub URL:** [PR #3019 on GitHub](https://github.com/exceljs/exceljs/pull/3019)
 - **Author:** [@protobi-pieter](https://github.com/protobi-pieter) (Pieter Sheth-Voss)

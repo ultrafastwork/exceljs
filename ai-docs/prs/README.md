@@ -40,7 +40,7 @@ gh pr checkout <number> --repo exceljs/exceljs -b pr-<number>-branch
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **✅ #3031** | [fix:  terminates early on macOS with Node.js 22, causing  to fail for…](https://github.com/exceljs/exceljs/pull/3031) | [@tkambler](https://github.com/tkambler) | *None* | Apr 1, 2026 | [Detail Link](./pr-3031.md) |
 | **✅ #3020** | [Fix #3014: Add support for HAN CELL Excel files](https://github.com/exceljs/exceljs/pull/3020) | [@protobi-pieter](https://github.com/protobi-pieter) | *None* | Jan 27, 2026 | [Detail Link](./pr-3020.md) |
-| #3019 | [Fix #3015: Add default values for data bar conditional formatting](https://github.com/exceljs/exceljs/pull/3019) | [@protobi-pieter](https://github.com/protobi-pieter) | *None* | Jan 27, 2026 | [Detail Link](./pr-3019.md) |
+| **✅ #3019** | [Fix #3015: Add default values for data bar conditional formatting](https://github.com/exceljs/exceljs/pull/3019) | [@protobi-pieter](https://github.com/protobi-pieter) | *None* | Jan 27, 2026 | [Detail Link](./pr-3019.md) |
 | #3011 | [README.md: Formulas: Add note about not including '='](https://github.com/exceljs/exceljs/pull/3011) | [@moshekaplan](https://github.com/moshekaplan) | *None* | Dec 25, 2025 | [Detail Link](./pr-3011.md) |
 | #3003 | [fix typo in comment](https://github.com/exceljs/exceljs/pull/3003) | [@divingbeetle](https://github.com/divingbeetle) | *None* | Nov 13, 2025 | [Detail Link](./pr-3003.md) |
 | #3002 | [Under stream processing, the information of the merged cells in the table cannot be obtained](https://github.com/exceljs/exceljs/pull/3002) | [@halvee-tech](https://github.com/halvee-tech) | *None* | Nov 10, 2025 | [Detail Link](./pr-3002.md) |
