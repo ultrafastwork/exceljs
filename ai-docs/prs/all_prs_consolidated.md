@@ -166,7 +166,7 @@ Fixes #3015
 
 ---
 
-## [#3011] README.md: Formulas: Add note about not including '='
+## [DONE] [#3011] README.md: Formulas: Add note about not including '='
 
 - **GitHub URL:** [PR #3011 on GitHub](https://github.com/exceljs/exceljs/pull/3011)
 - **Author:** [@moshekaplan](https://github.com/moshekaplan) (Moshe Kaplan)

@@ -4,7 +4,7 @@
 Select, port, and implement the next pull request from the open pull requests directory cataloged in `ai-docs/prs/README.md`.
 
 ## Context & Details
-- We have successfully implemented and verified PR #3011.
+- We have successfully implemented and verified PR #3019.
 - You must review `ai-docs/prs/README.md` to identify the next open pull request that has not been marked as DONE (lacking the `✅` checkmark).
 - Adhere strictly to the project rules in [.windsurfrules](file:///d:/projects/exceljs/.windsurfrules).
 
