@@ -228,7 +228,7 @@ https://github.com/exceljs/exceljs/pull/3002
 
 ---
 
-## [#2999] Removed critical vulnerabilities from the package.
+## [DONE] [#2999] Removed critical vulnerabilities from the package.
 
 - **GitHub URL:** [PR #2999 on GitHub](https://github.com/exceljs/exceljs/pull/2999)
 - **Author:** [@peterv959](https://github.com/peterv959) (Peter R. Vermilye)
