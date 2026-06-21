@@ -1,55 +1,43 @@
-# AI Agent Prompt: PR #2998 - Fix getTable().addRow() workflow for loaded tables
+# AI Agent Prompt: PR #2999 - Removed critical vulnerabilities from the package.
 
 ## Objective
-Implement and verify support for PR #2998 / Issue #2987: Fix getTable().addRow() workflow for loaded tables, which crashes or doesn't expand reference/preserve filter buttons correctly.
+Implement and verify support for PR #2999: Removed critical vulnerabilities from the package, which updates dependencies and devDependencies to reduce vulnerability counts, removes unused `grunt-exorcise` build plugin, and updates the TypeScript spec file stream helper.
 
 ## Context & Details
-- **The Problem**: The `getTable().addRow()` workflow fails when working with tables loaded from Excel files, throwing:
-  `TypeError: Cannot read properties of undefined (reading 'length')`
-  Additionally:
-  - Table references don't expand dynamically when rows are added.
-  - Excel filter buttons disappear after save/load cycle.
-  - Missing worksheet references cause inconsistent behavior.
+- **The Problem**: Pre-existing dependencies in the package have critical vulnerabilities.
 - **The Solution**:
-  1. Modify `lib/doc/table.js`:
-     - Fix `autoFilterRef` to target header row only.
-     - Add `_updateTableRef()` method to dynamically update table ranges when rows change.
-     - Modify `addRow()` to update table references and call `commit()` to re-render properly.
-     - Modify `removeRows()` to update table references after removal.
-     - Add `_writeRowToWorksheet()` helper for targeted row writes.
-     - Add `autoFilterRef` getter/setter.
-  2. Modify `lib/doc/worksheet.js`:
-     - Map `tableRef` to `ref` for Excel format compatibility when loading.
-     - Add empty `rows` array for loaded tables.
-     - Auto-detect `headerRow` when columns have names.
-     - Enable `filterButton: true` on columns when `autoFilterRef` exists.
-  3. Create test coverage:
-     - Recreate or retrieve `test/test-table-addrow.js`.
+  1. Modify `package.json`:
+     - Update dependencies: `archiver` from `^5.0.0` to `^5.3.2`, `readable-stream` from `^3.6.0` to `^3.6.2`, `unzipper` from `^0.10.11` to `^0.10.14`, `uuid` from `^8.3.0` to `^8.3.2`.
+     - Add override: `"glob": "^10.4.5"`.
+     - Update devDependencies: `@types/chai` to `^5.2.3`, `@types/mocha` to `^10.0.10`, `@types/node` to `^24.10.0`, `browserify` to `^17.0.1`, `chai` to `^4.5.0`, `grunt-browserify` to `^6.0.0`, `grunt-contrib-jasmine` to `^4.0.0`, `grunt-terser` to `^2.0.0`, `mocha` to `^11.7.5`, `regenerator-runtime` to `^0.14.1`, `ts-node` to `^10.9.2`, `typescript` to `^5.9.3`.
+  2. Modify `gruntfile.js`:
+     - Remove `grunt-exorcise` task loader and execution from the `build` task pipeline.
+  3. Modify `spec/typescript/exceljs.spec.ts`:
+     - Replace workbook stream reading with standard `stream.PassThrough` to write and read from stream concurrently.
 - **Target Files**:
-  - `lib/doc/table.js`
-  - `lib/doc/worksheet.js`
-  - `test/test-table-addrow.js` (New)
+  - `package.json`
+  - `gruntfile.js`
+  - `spec/typescript/exceljs.spec.ts`
 - **Rules File**: Always adhere to the project rules in [.windsurfrules](file:///d:/projects/exceljs/.windsurfrules).
 
 ## Instructions
 
 ### 1. Selection & Research
-- Read `ai-docs/prs/pr-2998.md` and fetch/check the diff from GitHub using `gh pr diff 2998 --repo exceljs/exceljs`.
-- Create a design and implementation plan, detailing the modifications in `lib/doc/table.js` and `lib/doc/worksheet.js`.
+- Read `ai-docs/prs/pr-2999.md` and fetch/check the diff from GitHub using `gh pr diff 2999 --repo exceljs/exceljs`.
+- Create a design and implementation plan, detailing the modifications in the target files.
 
 ### 2. Implementation & Verification
 - Obtain user approval for your implementation plan.
-- Implement the changes in `lib/doc/table.js` and `lib/doc/worksheet.js`.
-- Write the test script under `test/test-table-addrow.js`.
-- Run the test script using `node test/test-table-addrow.js` and verify it passes.
+- Implement the changes in `package.json`, `gruntfile.js`, and `spec/typescript/exceljs.spec.ts`.
+- Run `pnpm install` to update lockfile and node_modules.
 - Verify unit and integration tests pass with `pnpm test:unit` and `pnpm test:integration`.
 - Check and fix formatting/lint issues using `pnpm lint`.
 
 ### 3. Update PR Status & Documentation
 - Follow the **Marking PRs as Completed** instructions in [.windsurfrules](file:///d:/projects/exceljs/.windsurfrules):
-  - Mark status as `DONE` in `ai-docs/prs/pr-2998.md`.
-  - Add the `✅` checkmark to `#2998` in `ai-docs/prs/README.md`.
-  - Prepend `[DONE]` to the header `## [#2998]` in `ai-docs/prs/all_prs_consolidated.md`.
+  - Mark status as `DONE` in `ai-docs/prs/pr-2999.md`.
+  - Add the `✅` checkmark to `#2999` in `ai-docs/prs/README.md`.
+  - Prepend `[DONE]` to the header `## [#2999]` in `ai-docs/prs/all_prs_consolidated.md`.
 
 ### 4. Session Handoff
 - Follow the **Handoff (End of Session)** rules in [.windsurfrules](file:///d:/projects/exceljs/.windsurfrules) to update the handoff file.

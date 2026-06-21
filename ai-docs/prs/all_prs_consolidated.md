@@ -258,7 +258,7 @@ The output from the `npm run test:full`
 
 ---
 
-## [#2998] Fix getTable().addRow() workflow for loaded tables
+## [DONE] [#2998] Fix getTable().addRow() workflow for loaded tables
 
 - **GitHub URL:** [PR #2998 on GitHub](https://github.com/exceljs/exceljs/pull/2998)
 - **Author:** [@protobi-pieter](https://github.com/protobi-pieter) (Pieter Sheth-Voss)
