@@ -116,7 +116,7 @@ exceljs/
 
 ## Available Tools
 
-- Terminal (pnpm, git, gh)
+- Terminal (fnm, node, pnpm, git, gh)
 - Browser Testing tools
 
 ---

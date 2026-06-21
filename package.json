@@ -56,12 +56,8 @@
     "build": "grunt build",
     "install-build": "npm install && grunt build",
     "preversion": "npm run clean && npm run build && npm run test:version",
-    "postversion": "git push --no-verify && git push --tags --no-verify"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "postversion": "git push --no-verify && git push --tags --no-verify",
+    "prepare": "husky"
   },
   "lint-staged": {
     "*.js": [
@@ -136,7 +132,7 @@
     "grunt-contrib-watch": "^1.1.0",
     "grunt-exorcise": "^2.1.1",
     "grunt-terser": "^1.0.0",
-    "husky": "^4.3.0",
+    "husky": "^9.1.7",
     "lint-staged": "^10.2.13",
     "mocha": "^7.2.0",
     "prettier-eslint": "^11.0.0",
