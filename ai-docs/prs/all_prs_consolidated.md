@@ -895,7 +895,7 @@ Allow automated checks to compile code, see if any builds or automated tests bre
 
 ---
 
-## [#2983] Add ImageEditAs type and update addImage method to support 'twoCell' option
+## [DONE] [#2983] Add ImageEditAs type and update addImage method to support 'twoCell' option
 
 - **GitHub URL:** [PR #2983 on GitHub](https://github.com/exceljs/exceljs/pull/2983)
 - **Author:** [@hshoja](https://github.com/hshoja) (Hamid Shoja)

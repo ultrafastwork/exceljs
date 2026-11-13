@@ -912,9 +912,12 @@ export class Anchor implements IAnchor {
 
 	constructor(model?: IAnchor | object);
 }
+export type ImageEditAs = 'twoCell' | 'oneCell' | 'absolute';
+
 export interface ImageRange {
 	tl: Anchor;
 	br: Anchor;
+	editAs?: ImageEditAs;
 }
 
 export interface ImagePosition {
@@ -1339,7 +1342,7 @@ export interface Worksheet {
 	 * embed an image within the worksheet to cover a range
 	 * Returns the sheetImageId of the embedded image
 	 */
-	addImage(imageId: number, range: string | { editAs?: string; } & ImageRange & { hyperlinks?: ImageHyperlinkValue } | { editAs?: string; } & ImagePosition & { hyperlinks?: ImageHyperlinkValue }): string;
+	addImage(imageId: number, range: string | { editAs?: ImageEditAs; } & ImageRange & { hyperlinks?: ImageHyperlinkValue } | { editAs?: ImageEditAs; } & ImagePosition & { hyperlinks?: ImageHyperlinkValue }): string;
 
 	/**
 	 * Using the sheetImageId from `Worksheet.addImage` or `Worksheet.addBackgroundImage`,

@@ -138,6 +138,47 @@ describe('Workbook', () => {
         });
     });
 
+    it('stores embedded image with twoCell', () => {
+      const wb = new ExcelJS.Workbook();
+      const ws = wb.addWorksheet('blort');
+      let wb2;
+      let ws2;
+
+      const imageId = wb.addImage({
+        filename: IMAGE_FILENAME,
+        extension: 'jpeg',
+      });
+
+      ws.addImage(imageId, {
+        tl: {col: 0.1125, row: 0.4},
+        br: {col: 2.101046875, row: 3.4},
+        editAs: 'twoCell',
+      });
+
+      return wb.xlsx
+        .writeFile(TEST_XLSX_FILE_NAME)
+        .then(() => {
+          wb2 = new ExcelJS.Workbook();
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+        })
+        .then(() => {
+          ws2 = wb2.getWorksheet('blort');
+          expect(ws2).to.not.be.undefined();
+
+          return fsReadFileAsync(IMAGE_FILENAME);
+        })
+        .then(imageData => {
+          const images = ws2.getImages();
+          expect(images.length).to.equal(1);
+
+          const imageDesc = images[0];
+          expect(imageDesc.range.editAs).to.equal('twoCell');
+
+          const image = wb2.getImage(imageDesc.imageId);
+          expect(Buffer.compare(imageData, image.buffer)).to.equal(0);
+        });
+    });
+
     it('stores embedded image with one-cell-anchor', () => {
       const wb = new ExcelJS.Workbook();
       const ws = wb.addWorksheet('blort');
@@ -332,8 +373,12 @@ describe('Workbook', () => {
           expect(imageDesc.range.br).to.not.be.undefined();
 
           // Verify scaling calculations are accurate upon reload
-          expect(imageDesc.range.tl.colWidth).to.equal(Math.floor(12 * (640000 / 8.43)));
-          expect(imageDesc.range.tl.rowHeight).to.equal(Math.floor(24 * (180000 / 15)));
+          expect(imageDesc.range.tl.colWidth).to.equal(
+            Math.floor(12 * (640000 / 8.43))
+          );
+          expect(imageDesc.range.tl.rowHeight).to.equal(
+            Math.floor(24 * (180000 / 15))
+          );
         });
     });
   });
