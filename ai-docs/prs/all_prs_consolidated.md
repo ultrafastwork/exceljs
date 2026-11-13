@@ -391,7 +391,7 @@ This is a critical fix for enterprise/production use cases where Excel templates
 
 ---
 
-## [#2997] feat: Add applyWidthHeightFormats option for pivot table column widths
+## [DONE] [#2997] feat: Add applyWidthHeightFormats option for pivot table column widths
 
 - **GitHub URL:** [PR #2997 on GitHub](https://github.com/exceljs/exceljs/pull/2997)
 - **Author:** [@protobi-pieter](https://github.com/protobi-pieter) (Pieter Sheth-Voss)
@@ -547,7 +547,7 @@ This is a standard Excel feature exposed through the OOXML format.
 
 ---
 
-## [#2996] fix: Handle XML special characters and null values in pivot tables
+## [DONE] [#2996] fix: Handle XML special characters and null values in pivot tables
 
 - **GitHub URL:** [PR #2996 on GitHub](https://github.com/exceljs/exceljs/pull/2996)
 - **Author:** [@protobi-pieter](https://github.com/protobi-pieter) (Pieter Sheth-Voss)
@@ -698,7 +698,7 @@ These fixes address common production scenarios:
 
 ---
 
-## [#2995] feat: Support multiple pivot tables from same source data
+## [DONE] [#2995] feat: Support multiple pivot tables from same source data
 
 - **GitHub URL:** [PR #2995 on GitHub](https://github.com/exceljs/exceljs/pull/2995)
 - **Author:** [@protobi-pieter](https://github.com/protobi-pieter) (Pieter Sheth-Voss)

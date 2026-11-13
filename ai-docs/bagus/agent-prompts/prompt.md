@@ -1,40 +1,29 @@
-# AI Agent Prompt: PR #2997 - feat: Add applyWidthHeightFormats option for pivot table column widths
+# AI Agent Prompt: PR #2991 - feat: add getFirstWorksheet() method to safely get first existing worksheet
 
 ## Objective
-Implement and verify support for PR #2997: feat: Add applyWidthHeightFormats option for pivot table column widths.
+Implement and verify support for PR #2991: `feat: add getFirstWorksheet() method to safely get first existing worksheet`.
 
 ## Context & Details
-- **The Problem**: Excel pivot table styles override and reset custom worksheet column widths, making custom sizing on worksheets containing pivot tables impossible.
-- **The Solution**:
-  1. Modify `lib/doc/pivot-table.js`:
-     - Accept the optional `applyWidthHeightFormats` parameter in the pivot table model.
-     - Default it to `'1'` (Excel's standard behavior to apply styling widths) for backwards compatibility.
-  2. Modify `lib/xlsx/xform/pivot-table/pivot-table-xform.js`:
-     - Render/pass `applyWidthHeightFormats` attribute in the generated pivot table definition XML.
-- **Target Files**:
-  - `lib/doc/pivot-table.js`
-  - `lib/xlsx/xform/pivot-table/pivot-table-xform.js`
-  - `test/test-pivot-table.js`
-- **Rules File**: Always adhere to the project rules in [.windsurfrules](file:///d:/projects/exceljs/.windsurfrules).
+- **Rules File**: Always adhere to the project rules in [AGENTS.md](file:///d:/projects/exceljs/AGENTS.md) and [.windsurfrules](file:///d:/projects/exceljs/.windsurfrules).
 
 ## Instructions
 
 ### 1. Selection & Research
-- Read `ai-docs/prs/pr-2997.md` and fetch/check the diff from GitHub using `gh pr diff 2997 --repo exceljs/exceljs`.
-- Create a design and implementation plan, detailing the modifications in the target files.
+- Read `ai-docs/prs/pr-2991.md` and inspect `lib/doc/workbook.js`, `index.d.ts`, and relevant workbook tests (`spec/unit/doc/workbook.spec.js`, `spec/integration/workbook/*`).
+- Create a design and implementation plan detailing the modifications in the target files.
 
 ### 2. Implementation & Verification
 - Obtain user approval for your implementation plan.
-- Implement the changes in `lib/doc/pivot-table.js` and `lib/xlsx/xform/pivot-table/pivot-table-xform.js`.
-- Write/update the test cases in `test/test-pivot-table.js` to verify custom width preservation.
+- Implement `getFirstWorksheet()` on `Workbook` (and TypeScript declarations in `index.d.ts` if applicable).
+- Add automated unit/integration tests covering edge cases (e.g., deleted first worksheet, empty workbook).
 - Verify unit and integration tests pass with `pnpm test:unit` and `pnpm test:integration`.
-- Check and fix formatting/lint issues using `pnpm lint`.
+- Check and fix formatting/lint issues on modified files using ESLint.
 
 ### 3. Update PR Status & Documentation
-- Follow the **Marking PRs as Completed** instructions in [.windsurfrules](file:///d:/projects/exceljs/.windsurfrules):
-  - Mark status as `DONE` in `ai-docs/prs/pr-2997.md`.
-  - Add the `✅` checkmark to `#2997` in `ai-docs/prs/README.md`.
-  - Prepend `[DONE]` to the header `## [#2997]` in `ai-docs/prs/all_prs_consolidated.md`.
+- Follow the **Marking PRs as Completed** instructions in [AGENTS.md](file:///d:/projects/exceljs/AGENTS.md):
+  - Mark status as `DONE` in `ai-docs/prs/pr-2991.md`.
+  - Add the `✅` checkmark to `#2991` in `ai-docs/prs/README.md`.
+  - Prepend `[DONE]` to the header `## [#2991]` in `ai-docs/prs/all_prs_consolidated.md`.
 
 ### 4. Session Handoff
-- Follow the **Handoff (End of Session)** rules in [.windsurfrules](file:///d:/projects/exceljs/.windsurfrules) to update the handoff file.
+- Follow the **Handoff (End of Session)** rules in [AGENTS.md](file:///d:/projects/exceljs/AGENTS.md) to update the handoff file.

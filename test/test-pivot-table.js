@@ -23,6 +23,8 @@ function main(filepath) {
   ]);
 
   const worksheet2 = workbook.addWorksheet('Sheet2');
+  worksheet2.getColumn(1).width = 30;
+  worksheet2.getColumn(2).width = 15;
   worksheet2.addPivotTable({
     // Source of data: the entire sheet range is taken;
     // akin to `worksheet1.getSheetValues()`.
@@ -33,6 +35,7 @@ function main(filepath) {
     columns: ['C', 'D'],
     values: ['H'], // only 1 item possible for now
     metric: 'sum', // only 'sum' possible for now
+    applyWidthHeightFormats: '0',
   });
 
   save(workbook, filepath);
