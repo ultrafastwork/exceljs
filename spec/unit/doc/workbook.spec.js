@@ -217,6 +217,55 @@ describe('Workbook', () => {
     expect(wb.getWorksheet(1) === sheet).to.equal(true);
   });
 
+  describe('getFirstWorksheet', () => {
+    it('returns undefined when no worksheets exist', () => {
+      const wb = new Excel.Workbook();
+      expect(wb.getFirstWorksheet()).to.equal(undefined);
+    });
+
+    it('returns the first worksheet normally', () => {
+      const wb = new Excel.Workbook();
+      const ws1 = wb.addWorksheet('first');
+      wb.addWorksheet('second');
+
+      expect(wb.getFirstWorksheet()).to.equal(ws1);
+    });
+
+    it('returns the next existing worksheet after deleting the first', () => {
+      const wb = new Excel.Workbook();
+      wb.addWorksheet('first');
+      const ws2 = wb.addWorksheet('second');
+
+      wb.removeWorksheet(1);
+
+      expect(wb.getWorksheet(1)).to.equal(undefined);
+      expect(wb.getFirstWorksheet()).to.equal(ws2);
+    });
+
+    it('returns the correct worksheet after multiple deletions', () => {
+      const wb = new Excel.Workbook();
+      wb.addWorksheet('first');
+      wb.addWorksheet('second');
+      const ws3 = wb.addWorksheet('third');
+
+      wb.removeWorksheet(1);
+      wb.removeWorksheet('second');
+
+      expect(wb.getFirstWorksheet()).to.equal(ws3);
+    });
+
+    it('returns undefined after all worksheets are deleted', () => {
+      const wb = new Excel.Workbook();
+      wb.addWorksheet('first');
+      wb.addWorksheet('second');
+
+      wb.removeWorksheet(1);
+      wb.removeWorksheet(2);
+
+      expect(wb.getFirstWorksheet()).to.equal(undefined);
+    });
+  });
+
   describe('duplicateRows', () => {
     it('inserts duplicates', () => {
       const wb = new Excel.Workbook();

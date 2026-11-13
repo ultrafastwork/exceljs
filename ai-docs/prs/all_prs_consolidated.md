@@ -828,7 +828,7 @@ await workbook.xlsx.writeFile('multiple-pivots.xlsx');
 
 ---
 
-## [#2991] feat: add getFirstWorksheet() method to safely get first existing worksheet 
+## [DONE] [#2991] feat: add getFirstWorksheet() method to safely get first existing worksheet 
 
 - **GitHub URL:** [PR #2991 on GitHub](https://github.com/exceljs/exceljs/pull/2991)
 - **Author:** [@freepad](https://github.com/freepad) (Damir)

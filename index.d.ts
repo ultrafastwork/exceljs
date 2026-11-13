@@ -1773,6 +1773,11 @@ export class Workbook {
 	getWorksheet(indexOrName?: number | string): Worksheet | undefined;
 
 	/**
+	 * fetch the first existing worksheet in the workbook
+	 */
+	getFirstWorksheet(): Worksheet | undefined;
+
+	/**
 	 * Iterate over all sheets.
 	 *
 	 * Note: `workbook.worksheets.forEach` will still work but this is better.
