@@ -111,8 +111,7 @@ module.exports = function(grunt) {
 
     jasmine: {
       options: {
-        version: '3.8.0',
-        customBootFile: '.grunt/grunt-contrib-jasmine/boot.js',
+        version: '4.6.1',
         noSandbox: true,
       },
       dev: {
