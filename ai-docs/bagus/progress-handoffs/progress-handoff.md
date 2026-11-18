@@ -1,10 +1,10 @@
-# progress-handoff (v1.0.0+86) - Active
+# progress-handoff (v1.0.0+87) - Active
 
 ## Status
 - **Status**: Active
-- **Current Session**: `v1.0.0+86`
+- **Current Session**: `v1.0.0+87`
 - **Developer**: bagus
 
 ## Pending Tasks
-- [ ] Run end-to-end, dist, and browser Jasmine test suites (`pnpm test:end-to-end`, `pnpm test:dist`, `pnpm test:jasmine`) to verify browser and bundle artifacts end-to-end.
-- [ ] Review and update `ai-docs/features.md` and `ai-docs/planned.md` to reflect completion of all 135 upstream PRs and prepare release notes / version bump checklist if needed.
+- [ ] Run `pnpm test:all` (native + ES5 test suites) and `pnpm pack --dry-run` to verify the publishable package contents.
+- [ ] Prepare release notes (`CHANGELOG.md`) and confirm target version bump from `4.4.0` in `package.json` with the user before committing/tagging.
