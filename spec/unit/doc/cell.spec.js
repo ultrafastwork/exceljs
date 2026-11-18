@@ -438,10 +438,7 @@ describe('Cell', () => {
     expect(a1.model.comment.note.protection).to.deep.equal(comment.protection);
     expect(a1.model.comment.note.margins.insetmode).to.equal('auto');
     expect(a1.model.comment.note.margins.inset).to.deep.equal([
-      0.13,
-      0.13,
-      0.25,
-      0.25,
+      0.13, 0.13, 0.25, 0.25,
     ]);
     expect(a1.model.comment.note.editAs).to.equal('absolute');
   });
@@ -542,5 +539,37 @@ describe('Cell', () => {
       fgColor: {argb: 'FF789ABC'},
     });
     expect(b1.fill).to.be.undefined();
+  });
+
+  it('merges style with row and column styles via addStyle (PR #2867)', () => {
+    const row = sheetMock.getRow(1);
+    const column = sheetMock.getColumn(1);
+
+    column.style = {
+      numFmt: '0.00',
+      font: fonts.arialBlackUI14,
+    };
+    row.style = {
+      font: fonts.broadwayRedOutline20,
+      alignment: {horizontal: 'center'},
+    };
+
+    const a1 = sheetMock.getCell('A1');
+    a1.addStyle({
+      fill: {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: {argb: 'FF123456'},
+      },
+    });
+
+    expect(a1.numFmt).to.equal('0.00');
+    expect(a1.font).to.deep.equal(fonts.broadwayRedOutline20);
+    expect(a1.alignment).to.deep.equal({horizontal: 'center'});
+    expect(a1.fill).to.deep.equal({
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: {argb: 'FF123456'},
+    });
   });
 });

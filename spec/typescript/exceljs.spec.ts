@@ -659,5 +659,15 @@ describe('typescript', () => {
       font: {bold: true, color: {argb: 'FF3366FF'}},
     });
     expect(styledCell.font?.bold).to.equal(true);
+    styledCell.addStyle({
+      numFmt: '0.00',
+    });
+    expect(styledCell.numFmt).to.equal('0.00');
+
+    const fastCacheStreamWb = new ExcelJS.stream.xlsx.WorkbookWriter({
+      useStyles: true,
+      stylesCacheMode: 'FAST_MAP',
+    });
+    expect(fastCacheStreamWb).to.be.an('object');
   });
 });

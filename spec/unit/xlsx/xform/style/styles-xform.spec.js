@@ -64,5 +64,25 @@ describe('StylesXform', () => {
 
       expect(xmlStream.xml).to.include('formatCode="0.00%"');
     });
+
+    it('Supports stylesCacheMode FAST_MAP, JSON_MAP, WEAK_MAP, and NO_CACHE (PR #2867)', () => {
+      ['WEAK_MAP', 'JSON_MAP', 'FAST_MAP', 'NO_CACHE'].forEach(mode => {
+        const stylesXform = new StylesXform(true, mode);
+        const style1 = {
+          font: {name: 'Arial', size: 12, bold: true},
+          numFmt: '0.00',
+        };
+        const style2 = {
+          font: {name: 'Arial', size: 12, bold: true},
+          numFmt: '0.00',
+        };
+
+        const id1 = stylesXform.addStyleModel(style1);
+        const id2 = stylesXform.addStyleModel(style2);
+
+        expect(id1).to.equal(id2);
+        expect(stylesXform.model.styles.length).to.equal(2);
+      });
+    });
   });
 });

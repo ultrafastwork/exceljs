@@ -792,5 +792,41 @@ describe('WorkbookWriter', () => {
       const ws2 = wb2.getWorksheet('test sheet');
       expect(ws2.pageSetup.printArea).to.equal('A1:B5&&A6:B10');
     });
+
+    it('writes styled workbooks with stylesCacheMode FAST_MAP and JSON_MAP (PR #2867)', async () => {
+      for (const mode of ['FAST_MAP', 'JSON_MAP', 'NO_CACHE', 'WEAK_MAP']) {
+        const wb = new ExcelJS.stream.xlsx.WorkbookWriter({
+          filename: TEST_XLSX_FILE_NAME,
+          useStyles: true,
+          stylesCacheMode: mode,
+        });
+        const ws = wb.addWorksheet('Styled');
+        ws.getColumn(1).style = {numFmt: '0.00'};
+        const row = ws.addRow([42.5, 'Text']);
+        row.getCell(1).addStyle({font: {bold: true, name: 'Arial', size: 12}});
+        row.getCell(2).style = {
+          alignment: {horizontal: 'center'},
+          fill: {
+            type: 'pattern',
+            pattern: 'solid',
+            fgColor: {argb: 'FFFF0000'},
+          },
+        };
+        row.commit();
+        ws.commit();
+        // eslint-disable-next-line no-await-in-loop
+        await wb.commit();
+
+        const wb2 = new ExcelJS.Workbook();
+        // eslint-disable-next-line no-await-in-loop
+        await wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+        const ws2 = wb2.getWorksheet('Styled');
+        expect(ws2.getCell('A1').value).to.equal(42.5);
+        expect(ws2.getCell('A1').numFmt).to.equal('0.00');
+        expect(ws2.getCell('A1').font.bold).to.equal(true);
+        expect(ws2.getCell('B1').alignment.horizontal).to.equal('center');
+        expect(ws2.getCell('B1').fill.fgColor.argb).to.equal('FFFF0000');
+      }
+    });
   });
 });

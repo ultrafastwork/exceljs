@@ -500,6 +500,11 @@ export interface Cell extends Style, Address {
 	 */
 	setStyle(style: Partial<Style>): void;
 
+	/**
+	 * Merge style attributes with row and column styles into cell style
+	 */
+	addStyle(style: Partial<Style>): void;
+
 	addName(name: string): void;
 
 	/**
@@ -2164,6 +2169,12 @@ export namespace stream {
 			 * Styles can add some performance overhead. Default is false
 			 */
 			useStyles: boolean;
+
+			/**
+			 * Specifies the caching mode for styles for performance fine tuning. Default is WEAK_MAP for backwards compatibility.
+			 */
+			stylesCacheMode?: 'WEAK_MAP' | 'JSON_MAP' | 'FAST_MAP' | 'NO_CACHE';
+			styleCacheMode?: 'WEAK_MAP' | 'JSON_MAP' | 'FAST_MAP' | 'NO_CACHE';
 		}
 
 		interface ArchiverZipOptions {
@@ -2244,7 +2255,7 @@ export namespace stream {
 		}
 
 		class WorkbookReader extends Workbook {
-			constructor(input: string | import('stream').Stream, options?: Partial<WorkbookStreamReaderOptions>);
+			constructor(input: string | import('stream').Stream | Blob, options?: Partial<WorkbookStreamReaderOptions>);
 			read(): Promise<void>;
 			[Symbol.asyncIterator](): AsyncGenerator<WorksheetReader>;
 			parse(): AsyncIterator<any>;
