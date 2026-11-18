@@ -12,17 +12,17 @@
 - [x] Wire the jszip CSP patch via `patchedDependencies` in `pnpm-workspace.yaml` (now tracked in git).
 
 ## Known Environment Caveats
-- `pnpm test:jasmine` fails to load on **Node.js 26** (`require is not defined in ES module scope` from Puppeteer 19's `yargs`), and Puppeteer's postinstall cannot download Chromium there. Run browser tests on Node 24 (`fnm exec --using=v24.22.2 node node_modules/grunt/bin/grunt jasmine`).
+- `pnpm test:jasmine` runs on **Node.js 26** (Jasmine 4.6.1, Puppeteer overridden to `^24` in `pnpm-workspace.yaml`). However, Puppeteer's browser download silently fails to extract the Chrome zip on Node 26. If `Could not find Chrome` appears, delete any partial `~/.cache/puppeteer/{chrome,chrome-headless-shell}/win64-<ver>` folders and run the installer once on Node 24: `fnm exec --using=v24.22.2 node <path-to>/node_modules/puppeteer/install.mjs` (path: `node_modules/.pnpm/puppeteer@24*/node_modules/puppeteer`).
 - `package.json` scripts use POSIX `export EXCEL_BUILD=es5`; on Windows set `$env:EXCEL_BUILD = "es5"` and run the individual `test:*` scripts.
-- `package.json` still uses the name `exceljs` and the upstream repository URL, so it cannot be published to npm as-is. Consumers install from git tags.
+- **Distribution decision (2026-11-19):** keep git-tag installs (`github:ultrafastwork/exceljs#vX.Y.Z`), with no rename and no npm publish. `repository.url` now points to the fork. Gap: `dist/` is gitignored, so git-tag consumers get no browser bundle (`browser` field) and no `dist/es5`. The jszip CSP patch also only applies inside this workspace.
 
 ## Future Maintenance & Backlog
 1. **Pivot Table Refactoring & Metrics**:
    - Convert `makePivotTable` in `lib/doc/pivot-table.js` into a proper class constructor (tracked via `TK(2023-10-10)` comment in source).
    - Evaluate additional aggregation metrics beyond `'sum'` and `'count'`.
 2. **Browser Test Tooling Modernization**:
-   - Upgrade `jasmine` from `3.8.0` to `4.x` in `gruntfile.js` (removing the `customBootFile` workaround and updating `spec/browser/exceljs.spec.js` if needed) and opt into Puppeteer's `headless: 'new'` mode.
-   - Upgrade `grunt-contrib-jasmine` / Puppeteer so browser tests run on Node.js 26.
+   - [x] Jasmine `3.8.0` → `4.6.1`, `customBootFile` removed, Puppeteer `19` → `24` via pnpm override (new headless mode is the default since Puppeteer 22, so no `headless` option is needed). Done in session `v1.0.0+88`.
+   - `grunt-contrib-jasmine@4.0.0` is the final release and is unmaintained. Consider replacing it with a direct Puppeteer/`jasmine-browser-runner` setup, and drop the override once that is done.
 3. **ZIP Dependency & Node Engine Strategy**:
    - Monitor `unzipper` (`^0.10.14`) and `archiver` (`^5.3.2`) for security/maintenance updates or revisit a streaming alternative such as `yauzl-promise` (see `#2687` / `#2869`).
    - Evaluate bumping minimum supported Node.js version in `package.json` (`engines.node: ">=8.3.0"`) and deprecating legacy `dist/es5` polyfill targets in a future major release.

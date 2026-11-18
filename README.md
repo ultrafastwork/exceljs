@@ -16,6 +16,14 @@ Reverse engineered from Excel spreadsheet files as a project.
 npm install exceljs
 ```
 
+This fork (`ultrafastwork/exceljs`) is distributed through git tags rather than npm. The package name stays `exceljs`, so `require('exceljs')` is unchanged:
+
+```shell
+pnpm add github:ultrafastwork/exceljs#v4.5.0
+```
+
+Note: `dist/` (browser bundles and `exceljs/dist/es5`) is not committed. Git-tag installs currently provide the Node.js entry point only.
+
 # New Features!
 
 * Merged [Add pivot table with limitations #2551](https://github.com/exceljs/exceljs/pull/2551). <br/> Many thanks to Protobi and <a href="https://github.com/mikez">Michael</a> for this contribution!
