@@ -279,5 +279,42 @@ describe('Workbook', () => {
         testUtils.styles.fills.redGreenDarkTrellis
       );
     });
+
+    it('supports quotePrefix style on cells, rows, and columns', async () => {
+      const wb = new ExcelJS.Workbook();
+      const ws = wb.addWorksheet('quote-prefix');
+
+      const a1 = ws.getCell('A1');
+      a1.value = '=SUM(B1:B2)';
+      a1.quotePrefix = true;
+
+      const a2 = ws.getCell('A2');
+      a2.value = 'plain';
+
+      ws.getRow(3).quotePrefix = true;
+      ws.getCell('A3').value = '=1+1';
+
+      ws.getColumn(2).quotePrefix = true;
+      ws.getCell('B4').value = '=2+2';
+
+      await wb.xlsx.writeFile(TEST_XLSX_FILE_NAME);
+
+      const wb2 = new ExcelJS.Workbook();
+      await wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+
+      const ws2 = wb2.getWorksheet('quote-prefix');
+      expect(ws2.getCell('A1').value).to.equal('=SUM(B1:B2)');
+      expect(ws2.getCell('A1').quotePrefix).to.equal(true);
+      expect(ws2.getCell('A1').style.quotePrefix).to.equal(true);
+
+      expect(ws2.getCell('A2').value).to.equal('plain');
+      expect(ws2.getCell('A2').quotePrefix).to.be.undefined();
+
+      expect(ws2.getCell('A3').value).to.equal('=1+1');
+      expect(ws2.getCell('A3').quotePrefix).to.equal(true);
+
+      expect(ws2.getCell('B4').value).to.equal('=2+2');
+      expect(ws2.getCell('B4').quotePrefix).to.equal(true);
+    });
   });
 });

@@ -1,4 +1,5 @@
 const fs = require('fs');
+const tmp = require('tmp');
 
 const testutils = require('../utils/index');
 
@@ -129,6 +130,19 @@ describe('WorkbookReader', () => {
           fs.createReadStream('./spec/integration/data/fibonacci.xlsx'),
           {maxRows: 20}
         );
+      });
+    });
+
+    describe('Big file support', () => {
+      it('should read large file stream correctly', function() {
+        this.timeout(20000);
+        const workbook = new ExcelJS.Workbook();
+        return workbook.xlsx
+          .read(fs.createReadStream('./spec/integration/data/test-issue-880.xlsx'))
+          .then(result => {
+            expect(result.worksheets[0]._rows.length).to.equal(30);
+            expect(result.worksheets[0].getCell('A2').value).to.equal('Kosten');
+          });
       });
     });
   });
@@ -331,6 +345,8 @@ describe('WorkbookReader', () => {
 
           if (col.isCustomWidth) {
             expect(image.range.tl.colWidth).to.equal(Math.floor(col.width * (640000 / 8.43)));
+          } else if (ws.properties && ws.properties.defaultColWidth) {
+            expect(image.range.tl.colWidth).to.equal(Math.floor(ws.properties.defaultColWidth * (640000 / 8.43)));
           } else {
             expect(image.range.tl.colWidth).to.equal(640000);
           }
@@ -344,6 +360,8 @@ describe('WorkbookReader', () => {
 
           if (row.height) {
             expect(image.range.tl.rowHeight).to.equal(Math.floor(row.height * (180000 / 15)));
+          } else if (ws.properties && ws.properties.defaultRowHeight) {
+            expect(image.range.tl.rowHeight).to.equal(Math.floor(ws.properties.defaultRowHeight * (180000 / 15)));
           } else {
             expect(image.range.tl.rowHeight).to.equal(180000);
           }
@@ -374,6 +392,8 @@ describe('WorkbookReader', () => {
 
           if (col.isCustomWidth) {
             expect(image.range.br.colWidth).to.equal(Math.floor(col.width * (640000 / 8.43)));
+          } else if (ws.properties && ws.properties.defaultColWidth) {
+            expect(image.range.br.colWidth).to.equal(Math.floor(ws.properties.defaultColWidth * (640000 / 8.43)));
           } else {
             expect(image.range.br.colWidth).to.equal(640000);
           }
@@ -387,6 +407,8 @@ describe('WorkbookReader', () => {
 
           if (row.height) {
             expect(image.range.br.rowHeight).to.equal(Math.floor(row.height * (180000 / 15)));
+          } else if (ws.properties && ws.properties.defaultRowHeight) {
+            expect(image.range.br.rowHeight).to.equal(Math.floor(ws.properties.defaultRowHeight * (180000 / 15)));
           } else {
             expect(image.range.br.rowHeight).to.equal(180000);
           }
@@ -400,6 +422,106 @@ describe('WorkbookReader', () => {
       return workbook.xlsx.read(
         fs.createReadStream('./spec/integration/data/bogus-defined-name.xlsx')
       );
+    });
+  });
+
+  describe('Hidden', () => {
+    const fileList = [
+      'google-sheets',
+      'libre-calc-as-excel-2007-365',
+      'libre-calc-as-office-open-xml-spreadsheet',
+    ];
+
+    for (const file of fileList) {
+      it(`Should set hidden attribute correctly (${file})`, async () => {
+        const wb = new ExcelJS.stream.xlsx.WorkbookReader(
+          `./spec/integration/data/hidden-test/${file}.xlsx`,
+          {worksheets: 'emit'}
+        );
+        const rows = [];
+        let worksheet;
+        for await (const worksheetReader of wb) {
+          worksheet = worksheetReader;
+          for await (const row of worksheetReader) {
+            rows[row.number] = row;
+          }
+        }
+
+        // Check rows
+        expect(rows[1].hidden, `${file} : Row 1`).to.equal(false);
+        expect(rows[2].hidden, `${file} : Row 2`).to.equal(true);
+        expect(rows[3].hidden, `${file} : Row 3`).to.equal(false);
+
+        // Check columns
+        expect(worksheet.getColumn(1).hidden, `${file} : Column 1`).to.equal(
+          false
+        );
+        expect(worksheet.getColumn(2).hidden, `${file} : Column 2`).to.equal(
+          true
+        );
+        expect(worksheet.getColumn(3).hidden, `${file} : Column 3`).to.equal(
+          false
+        );
+      });
+    }
+  });
+
+  describe('cleanup temporary files', () => {
+    let origTmpFile = null;
+    let cleanupCalled = false;
+
+    beforeEach(() => {
+      cleanupCalled = false;
+      origTmpFile = tmp.file;
+
+      tmp.file = function(cb) {
+        origTmpFile((err, path, fd, cleanupCallback) => {
+          cb(err, path, fd, () => {
+            cleanupCalled = true;
+            cleanupCallback();
+          });
+        });
+      };
+    });
+
+    afterEach(() => {
+      tmp.file = origTmpFile;
+      origTmpFile = null;
+      cleanupCalled = false;
+    });
+
+    it('should cleanup temporary files if parse() is not fully iterated', async () => {
+      const workbookReader = new ExcelJS.stream.xlsx.WorkbookReader(
+        fs.createReadStream('./spec/integration/data/test-row-styles.xlsx')
+      );
+      // eslint-disable-next-line no-unused-vars
+      for await (const _ of workbookReader) {
+        break;
+      }
+
+      expect(cleanupCalled).to.equal(true);
+    });
+  });
+
+  describe('with rich text to describe a hyperlink', () => {
+    it('should parse with no errors', () => {
+      const workbook = new ExcelJS.Workbook();
+      return workbook.xlsx.read(
+        fs.createReadStream('./spec/integration/data/xlsx-parse-test.xlsx')
+      );
+    });
+  });
+
+  describe('with hyperlink containing a hash', () => {
+    it('should preserve hash in hyperlink value', async () => {
+      const workbook = new ExcelJS.Workbook();
+      await workbook.xlsx.readFile('./spec/integration/data/linkhash.xlsx');
+      const worksheet = workbook.getWorksheet('Sheet1');
+      const cell = worksheet.getCell('A1');
+      expect(cell.value).to.deep.equal({
+        text: 'link',
+        hyperlink: 'http://localhost/#myhash',
+      });
     });
   });
 });

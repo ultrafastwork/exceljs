@@ -2,6 +2,11 @@ const fs = require('fs');
 const {promisify} = require('util');
 
 const testUtils = require('../../utils/index');
+const {
+  addTable,
+  checkTable,
+  defaultTableValues,
+} = require('../../unit/doc/worksheet-table.spec');
 
 const ExcelJS = verquire('exceljs');
 
@@ -266,6 +271,84 @@ describe('WorkbookWriter', () => {
         });
     });
 
+    it('table', () => {
+      const options = {
+        filename: TEST_XLSX_FILE_NAME,
+        useStyles: true,
+      };
+      const wb = new ExcelJS.stream.xlsx.WorkbookWriter(options);
+      const ws = wb.addWorksheet('Hello');
+      addTable('A1', ws);
+
+      ws.commit();
+      return wb
+        .commit()
+        .then(() => {
+          const wb2 = new ExcelJS.Workbook();
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+        })
+        .then(wb2 => {
+          const ws2 = wb2.getWorksheet('Hello');
+          checkTable('A1', ws2, defaultTableValues);
+        });
+    });
+
+    it('table commiting', () => {
+      const options = {
+        filename: TEST_XLSX_FILE_NAME,
+        useStyles: true,
+      };
+      const wb = new ExcelJS.stream.xlsx.WorkbookWriter(options);
+      const ws = wb.addWorksheet('Hello');
+      const table = addTable('A1', ws);
+
+      expect(() => {
+        table.headerRow = false;
+      }).to.throw();
+
+      expect(() => {
+        table.ref = 'A2';
+      }).to.throw();
+
+      expect(() => {
+        table.addColumn({name: 'Some extra column'});
+      }).to.throw();
+
+      expect(() => {
+        table.removeColumns(2);
+      }).to.throw();
+
+      expect(() => {
+        table.removeRows(-1);
+      }).to.throw();
+
+      expect(() => {
+        table.addRow(defaultTableValues[1], 0);
+      }).to.throw();
+
+      table.addRow(defaultTableValues[1]);
+      table.addRow(defaultTableValues[2], 4);
+      table.addRow(defaultTableValues[3], 4);
+      table.addRow(defaultTableValues[4], 4);
+
+      table.commit();
+      ws.commit();
+      return wb
+        .commit()
+        .then(() => {
+          const wb2 = new ExcelJS.Workbook();
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+        })
+        .then(wb2 => {
+          const ws2 = wb2.getWorksheet('Hello');
+          const rows = [...defaultTableValues]
+            .splice(0, 5)
+            .concat([...defaultTableValues].splice(1, 4).reverse())
+            .concat([defaultTableValues[5]]);
+          checkTable('A1', ws2, rows);
+        });
+    });
+
     it('A lot of sheets', function() {
       this.timeout(5000);
 
@@ -494,6 +577,7 @@ describe('WorkbookWriter', () => {
           lockText: 'False',
         },
         editAs: 'oneCells',
+        autoShape: true,
       };
       ws.getCell('D2').value = 7;
       ws.getCell('D2').note = note;
@@ -612,6 +696,101 @@ describe('WorkbookWriter', () => {
         expect(rule.style.numFmt.id).to.be.a('number');
         expect(rule.style.numFmt.formatCode).to.be.a('string');
       });
+    });
+
+    it('with images added to worksheet (PR #2201)', async () => {
+      const options = {
+        filename: TEST_XLSX_FILE_NAME,
+        useStyles: true,
+      };
+      const wb = new ExcelJS.stream.xlsx.WorkbookWriter(options);
+      const ws1 = wb.addWorksheet('Sheet1');
+      const ws2 = wb.addWorksheet('Sheet2');
+
+      const imageId = wb.addImage({
+        filename: IMAGE_FILENAME,
+        extension: 'png',
+      });
+
+      const sheetImageId1 = ws1.addImage(imageId, 'B2:D6');
+      expect(sheetImageId1).to.be.a('string');
+      expect(ws1.getImages().length).to.equal(1);
+
+      const sheetImageId2 = ws2.addImage(imageId, {
+        tl: {col: 0.25, row: 0.7},
+        ext: {width: 160, height: 60},
+      });
+      expect(sheetImageId2).to.be.a('string');
+      expect(ws2.getImages().length).to.equal(1);
+
+      await ws1.commit();
+      await ws2.commit();
+      await wb.commit();
+
+      const wb2 = new ExcelJS.Workbook();
+      await wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+
+      const readWs1 = wb2.getWorksheet('Sheet1');
+      const readWs2 = wb2.getWorksheet('Sheet2');
+
+      const images1 = readWs1.getImages();
+      expect(images1.length).to.equal(1);
+      expect(images1[0].imageId).to.equal(imageId);
+      expect(images1[0].range.tl.nativeCol).to.equal(1);
+      expect(images1[0].range.tl.nativeRow).to.equal(1);
+      expect(images1[0].range.br.nativeCol).to.equal(4);
+      expect(images1[0].range.br.nativeRow).to.equal(6);
+
+      const images2 = readWs2.getImages();
+      expect(images2.length).to.equal(1);
+      expect(images2[0].imageId).to.equal(imageId);
+      expect(images2[0].range.tl.nativeCol).to.equal(0);
+      expect(images2[0].range.tl.nativeRow).to.equal(0);
+      expect(images2[0].range.ext.width).to.equal(160);
+      expect(images2[0].range.ext.height).to.equal(60);
+
+      const readImage = wb2.getImage(images1[0].imageId);
+      const expectedImageData = await fsReadFileAsync(IMAGE_FILENAME);
+      expect(Buffer.compare(expectedImageData, readImage.buffer)).to.equal(0);
+    });
+
+    it('writes rows asynchronously with await row.commit() and await worksheet.commit() (PR #2558)', async () => {
+      const writeStream = fs.createWriteStream(TEST_XLSX_FILE_NAME, {
+        flags: 'w',
+      });
+      const wb = new ExcelJS.stream.xlsx.WorkbookWriter({stream: writeStream});
+      const ws = wb.addWorksheet('test');
+
+      const headers = Array.from({length: 10}, (_, i) => `test${i + 1}`);
+      for (let i = 0; i < 50; i++) {
+        const rowValues = headers.map(header => `${header}|${i}`);
+        // eslint-disable-next-line no-await-in-loop
+        await ws.addRow(rowValues).commit();
+      }
+
+      await ws.commit();
+      await wb.commit();
+
+      const wb2 = new ExcelJS.Workbook();
+      await wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+      const ws2 = wb2.getWorksheet('test');
+      expect(ws2.rowCount).to.equal(50);
+      expect(ws2.getCell('A1').value).to.equal('test1|0');
+      expect(ws2.getCell('J50').value).to.equal('test10|49');
+    });
+
+    it('preserves multiple print areas across write and read (PR #1971)', async () => {
+      const wb = new ExcelJS.Workbook();
+      const ws = wb.addWorksheet('test sheet');
+      ws.getCell('A1').value = 'Header';
+      ws.pageSetup.printArea = 'A1:B5&&A6:B10';
+
+      await wb.xlsx.writeFile(TEST_XLSX_FILE_NAME);
+
+      const wb2 = new ExcelJS.Workbook();
+      await wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+      const ws2 = wb2.getWorksheet('test sheet');
+      expect(ws2.pageSetup.printArea).to.equal('A1:B5&&A6:B10');
     });
   });
 });

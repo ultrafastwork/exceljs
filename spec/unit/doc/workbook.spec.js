@@ -375,5 +375,78 @@ describe('Workbook', () => {
         testUtils.styles.fonts.broadwayRedOutline20
       );
     });
+
+    it('duplicates multiple rows with duplicateRows', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('test');
+
+      ws.addRow(['r1c1', 'r1c2']);
+      ws.addRow(['r2c1', 'r2c2']);
+      ws.addRow(['r3c1', 'r3c2']);
+      ws.getRow(1).height = 25;
+      ws.getRow(2).height = 30;
+      ws.getCell('A1').font = testUtils.styles.fonts.arialBlackUI14;
+
+      ws.duplicateRows({
+        initialRow: 1,
+        length: 2,
+        firstRowToPaste: 3,
+        copiesAmount: 2,
+      });
+
+      expect(ws.getRow(1).values).to.deep.equal([, 'r1c1', 'r1c2']);
+      expect(ws.getRow(2).values).to.deep.equal([, 'r2c1', 'r2c2']);
+      expect(ws.getRow(3).values).to.deep.equal([, 'r3c1', 'r3c2']);
+
+      expect(ws.getRow(4).values).to.deep.equal([, 'r1c1', 'r1c2']);
+      expect(ws.getRow(4).height).to.equal(25);
+      expect(ws.getCell('A4').font).to.deep.equal(
+        testUtils.styles.fonts.arialBlackUI14
+      );
+      expect(ws.getRow(5).values).to.deep.equal([, 'r2c1', 'r2c2']);
+      expect(ws.getRow(5).height).to.equal(30);
+
+      expect(ws.getRow(6).values).to.deep.equal([, 'r1c1', 'r1c2']);
+      expect(ws.getRow(6).height).to.equal(25);
+      expect(ws.getCell('A6').font).to.deep.equal(
+        testUtils.styles.fonts.arialBlackUI14
+      );
+      expect(ws.getRow(7).values).to.deep.equal([, 'r2c1', 'r2c2']);
+      expect(ws.getRow(7).height).to.equal(30);
+    });
+  });
+
+  describe('outlineProperties', () => {
+    it('defaults to summaryBelow: true, summaryRight: true', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('test');
+      expect(ws.properties.outlineProperties).to.deep.equal({
+        summaryBelow: true,
+        summaryRight: true,
+      });
+    });
+
+    it('allows customizing outlineProperties via options', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('test', {
+        properties: {
+          outlineProperties: {
+            summaryBelow: false,
+          },
+        },
+      });
+      expect(ws.properties.outlineProperties).to.deep.equal({
+        summaryBelow: false,
+      });
+    });
+
+    it('allows modifying outlineProperties on existing worksheet', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('test');
+      ws.properties.outlineProperties.summaryBelow = false;
+      ws.properties.outlineProperties.summaryRight = false;
+      expect(ws.properties.outlineProperties.summaryBelow).to.equal(false);
+      expect(ws.properties.outlineProperties.summaryRight).to.equal(false);
+    });
   });
 });

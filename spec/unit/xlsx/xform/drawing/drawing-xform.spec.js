@@ -19,11 +19,24 @@ const expectations = [
     create() {
       return new DrawingXform({tag: 'xdr:from'});
     },
-    initialModel: require('./data/drawing.1.0.js'),
-    preparedModel: require('./data/drawing.1.1.js'),
+    initialModel: require('./data/drawing.1.0'),
+    preparedModel: require('./data/drawing.1.1'),
     xml: fs.readFileSync(`${__dirname}/data/drawing.1.2.xml`).toString(),
-    parsedModel: require('./data/drawing.1.3.js'),
-    reconciledModel: require('./data/drawing.1.4.js'),
+    parsedModel: require('./data/drawing.1.3'),
+    reconciledModel: require('./data/drawing.1.4'),
+    tests: ['prepare', 'render', 'renderIn', 'parse', 'reconcile'],
+    options,
+  },
+  {
+    title: 'Drawing 2 (Shapes)',
+    create() {
+      return new DrawingXform();
+    },
+    initialModel: require('./data/drawing.2.0'),
+    preparedModel: require('./data/drawing.2.1'),
+    xml: fs.readFileSync(`${__dirname}/data/drawing.2.2.xml`).toString(),
+    parsedModel: require('./data/drawing.2.3'),
+    reconciledModel: require('./data/drawing.2.3'),
     tests: ['prepare', 'render', 'renderIn', 'parse', 'reconcile'],
     options,
   },

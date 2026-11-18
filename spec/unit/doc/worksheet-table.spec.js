@@ -212,5 +212,170 @@ describe('Worksheet', () => {
 
       checkTable('A1', ws, newValues);
     });
+
+    it('throws error when rows is empty', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
+      expect(() =>
+        ws.addTable({
+          name: 'TestTable',
+          ref: 'A1',
+          columns: [{name: 'Col1'}, {name: 'Col2'}],
+          rows: [],
+        })
+      ).to.throw('Table must have row definitions');
+    });
+
+    it('throws error when rows is missing or null', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
+      expect(() =>
+        ws.addTable({
+          name: 'TestTable',
+          ref: 'A1',
+          columns: [{name: 'Col1'}, {name: 'Col2'}],
+        })
+      ).to.throw('Table must have row definitions');
+      expect(() =>
+        ws.addTable({
+          name: 'TestTable2',
+          ref: 'A1',
+          columns: [{name: 'Col1'}, {name: 'Col2'}],
+          rows: null,
+        })
+      ).to.throw('Table must have row definitions');
+    });
+
+    it('throws error when removing all rows and committing', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
+      const table = addTable('A1', ws);
+
+      table.removeRows(0, 4);
+      expect(() => table.commit()).to.throw('Table must have row definitions');
+    });
+
+    it('merges column style into cell.style without overwriting existing cell style', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
+      ws.getCell('C2').fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: {argb: 'FFFF0000'},
+      };
+
+      ws.addTable({
+        name: 'FlexReport',
+        ref: 'A1',
+        headerRow: true,
+        totalsRow: true,
+        style: {
+          theme: 'TableStyleMedium9',
+          showRowStripes: true,
+        },
+        columns: [
+          {name: 'ID', filterButton: true},
+          {name: 'Name', filterButton: true},
+          {
+            name: 'value',
+            filterButton: true,
+            totalsRowFunction: 'sum',
+            style: {numFmt: '#,#00.00', font: {bold: true}},
+          },
+        ],
+        rows: [
+          [1, 'One', 10.5],
+          [2, 'Two', 20.25],
+        ],
+      });
+
+      expect(ws.getCell('C1').style.numFmt).to.equal('#,#00.00');
+      expect(ws.getCell('C1').style.font).to.deep.equal({bold: true});
+      expect(ws.getCell('C2').style.numFmt).to.equal('#,#00.00');
+      expect(ws.getCell('C2').style.font).to.deep.equal({bold: true});
+      expect(ws.getCell('C2').style.fill).to.deep.equal({
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: {argb: 'FFFF0000'},
+      });
+      expect(ws.getCell('C3').style.numFmt).to.equal('#,#00.00');
+      expect(ws.getCell('C4').style.numFmt).to.equal('#,#00.00');
+    });
+
+    it('defines a table over existing worksheet data using tableRef', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
+      ws.getCell('A1').value = 'Col1';
+      ws.getCell('B1').value = 'Col2';
+      ws.getCell('A2').value = 'val1';
+      ws.getCell('B2').value = 10;
+      ws.getCell('A3').value = 'val2';
+      ws.getCell('B3').value = 20;
+
+      const table = ws.addTable({
+        name: 'ExistingDataTable',
+        tableRef: 'A1:B3',
+        columns: [{name: 'Col1'}, {name: 'Col2'}],
+      });
+
+      expect(table.table.rows).to.deep.equal([
+        ['val1', 10],
+        ['val2', 20],
+      ]);
+      expect(table.getTableRange(true)).to.deep.equal({
+        startRow: 2,
+        startColumn: 1,
+        endRow: 3,
+        endColumn: 2,
+      });
+      expect(table.getTableRange(false)).to.deep.equal({
+        startRow: 1,
+        startColumn: 1,
+        endRow: 3,
+        endColumn: 2,
+      });
+    });
+
+    it('removes a table with and without destroying cell data', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
+      addTable('A1', ws);
+
+      ws.removeTable('TestTable', false);
+      expect(ws.getTable('TestTable')).to.be.undefined();
+      expect(ws.getCell('A1').value).to.equal('Date');
+
+      addTable('A1', ws);
+      ws.removeTable('TestTable', true);
+      expect(ws.getTable('TestTable')).to.be.undefined();
+      expect(ws.getCell('A1').value).to.be.null();
+      expect(ws.getCell('B2').value).to.be.null();
+      expect(ws.getCell('A6').value).to.be.null();
+    });
+
+    it('fills cells in a range with cloned or shared fill object', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
+      const fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: {argb: 'FFFF0000'},
+      };
+
+      ws.fillCells('A1:B2', fill, true);
+      expect(ws.getCell('A1').fill).to.deep.equal(fill);
+      expect(ws.getCell('B2').fill).to.deep.equal(fill);
+      expect(ws.getCell('A1').fill).to.not.equal(ws.getCell('B2').fill);
+
+      ws.fillCells('C1:D2', fill, false);
+      expect(ws.getCell('C1').fill).to.equal(fill);
+      expect(ws.getCell('D2').fill).to.equal(fill);
+    });
   });
 });
+
+module.exports = {
+  defaultTableValues: values,
+  addTable,
+  checkTable,
+};

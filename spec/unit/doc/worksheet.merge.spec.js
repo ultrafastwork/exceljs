@@ -244,5 +244,40 @@ describe('Worksheet', () => {
       expect(nNumberVals).to.deep.equal(1);
       expect(nMergeVals).to.deep.equal(3);
     });
+
+    it('does not leave partial merge state when an overlap throws', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('atomicMerge');
+
+      ws.mergeCells('C3:D4');
+
+      expect(() => {
+        ws.mergeCells('B2:D4');
+      }).to.throw('Cannot merge already merged cells');
+
+      expect(ws.findCell(2, 2)).to.equal(undefined);
+      expect(ws.findCell(2, 3)).to.equal(undefined);
+      expect(ws.getCell('C3').isMerged).to.equal(true);
+      expect(ws.getCell('D4').master.address).to.equal('C3');
+      expect(Object.keys(ws._merges)).to.deep.equal(['C3']);
+    });
+
+    it('efficiently merges a large number of ranges', function() {
+      this.timeout(5000);
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('largeMerges');
+      const count = 30000;
+
+      for (let i = 1; i <= count; i++) {
+        ws.mergeCells(i, 1, i, 2);
+      }
+
+      expect(Object.keys(ws._merges).length).to.equal(count);
+      expect(ws.getCell('B1').master.address).to.equal('A1');
+      expect(ws.getCell(`B${count}`).master.address).to.equal(`A${count}`);
+      expect(() => {
+        ws.mergeCells(`B${count}:C${count}`);
+      }).to.throw('Cannot merge already merged cells');
+    });
   });
 });

@@ -20,6 +20,19 @@ describe('Anchor', () => {
       });
       expect(anchor.colWidth).to.equal(Math.floor(worksheet.getColumn(anchor.nativeCol + 1).width * (640000 / 8.43)));
     });
+    it('should colWidth equals defaultColWidth when worksheet.properties.defaultColWidth is set', () => {
+      const worksheet = createSheetMock();
+      worksheet.properties.defaultColWidth = 20;
+      const anchor = new Anchor(worksheet);
+      expect(anchor.colWidth).to.equal(Math.floor(20 * (640000 / 8.43)));
+    });
+    it('should custom column width take precedence over defaultColWidth', () => {
+      const worksheet = createSheetMock();
+      worksheet.properties.defaultColWidth = 20;
+      worksheet.addColumn(1, {width: 12});
+      const anchor = new Anchor(worksheet);
+      expect(anchor.colWidth).to.equal(Math.floor(12 * (640000 / 8.43)));
+    });
   });
   describe('rowHeight', () => {
     it('should rowHeight equals 180000 when worksheet is undefined', () => {
@@ -36,6 +49,19 @@ describe('Anchor', () => {
 
       const anchor = new Anchor(worksheet);
       expect(anchor.rowHeight).to.equal(Math.floor(worksheet.getRow(1).height * (180000 / 15)));
+    });
+    it('should rowHeight equals defaultRowHeight when worksheet.properties.defaultRowHeight is set', () => {
+      const worksheet = createSheetMock();
+      worksheet.properties.defaultRowHeight = 100;
+      const anchor = new Anchor(worksheet);
+      expect(anchor.rowHeight).to.equal(Math.floor(100 * (180000 / 15)));
+    });
+    it('should custom row height take precedence over defaultRowHeight', () => {
+      const worksheet = createSheetMock();
+      worksheet.properties.defaultRowHeight = 100;
+      worksheet.getRow(1).height = 30;
+      const anchor = new Anchor(worksheet);
+      expect(anchor.rowHeight).to.equal(Math.floor(30 * (180000 / 15)));
     });
   });
   describe('resize worksheet`s cells', () => {

@@ -59,4 +59,18 @@ describe('StreamBuf', () => {
       );
     }
   });
+
+  it('returns destination stream when piping', done => {
+    const stream1 = new StreamBuf();
+    const stream2 = new StreamBuf();
+    const result = stream1.pipe(stream2);
+    expect(result).to.equal(stream2);
+    result.on('finish', () => {
+      const chunk = stream2.read();
+      expect(chunk.toString('UTF8')).to.equal('Hello, World!');
+      done();
+    });
+    stream1.write('Hello, World!');
+    stream1.end();
+  });
 });

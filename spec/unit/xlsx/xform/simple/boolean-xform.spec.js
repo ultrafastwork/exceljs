@@ -33,6 +33,42 @@ const expectations = [
     xml: '',
     tests: ['render', 'renderIn'],
   },
+  {
+    title: 'val="0"',
+    create() {
+      return new BooleanXform({tag: 'boolean', attr: 'val'});
+    },
+    parsedModel: false,
+    xml: '<boolean val="0"/>',
+    tests: ['parse'],
+  },
+  {
+    title: 'val="false"',
+    create() {
+      return new BooleanXform({tag: 'boolean', attr: 'val'});
+    },
+    parsedModel: false,
+    xml: '<boolean val="false"/>',
+    tests: ['parse'],
+  },
+  {
+    title: 'val="1"',
+    create() {
+      return new BooleanXform({tag: 'boolean', attr: 'val'});
+    },
+    parsedModel: true,
+    xml: '<boolean val="1"/>',
+    tests: ['parse'],
+  },
+  {
+    title: 'val="true"',
+    create() {
+      return new BooleanXform({tag: 'boolean', attr: 'val'});
+    },
+    parsedModel: true,
+    xml: '<boolean val="true"/>',
+    tests: ['parse'],
+  },
 ];
 
 describe('BooleanXform', () => {

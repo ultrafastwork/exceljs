@@ -75,6 +75,19 @@ describe('Worksheet', () => {
       );
     });
 
+    it('sets quotePrefix on row and col', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('basket');
+
+      ws.getRow(1).quotePrefix = true;
+      expect(ws.getCell('A1').quotePrefix).to.equal(true);
+
+      const col2 = ws.getColumn(2);
+      col2.quotePrefix = true;
+      expect(col2.isDefault).to.equal(false);
+      expect(ws.getCell('B2').quotePrefix).to.equal(true);
+    });
+
     it('sets col styles', () => {
       const wb = new Excel.Workbook();
       const ws = wb.addWorksheet('basket');

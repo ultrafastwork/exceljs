@@ -76,6 +76,7 @@ const expectations = [
       axisPosition: 'middle',
       borderColor: {argb: 'FFFF0000'},
       negativeFillColor: {argb: 'FF00FF00'},
+      negativeBorderColor: {argb: 'FFFF5500'},
       axisColor: {argb: 'FF0000FF'},
       direction: 'rightToLeft',
       cfvo: [{type: 'autoMin'}, {type: 'autoMax'}],
@@ -95,6 +96,7 @@ const expectations = [
         <x14:cfvo type="autoMax"/>
         <x14:borderColor rgb="FFFF0000"/>
         <x14:negativeFillColor rgb="FF00FF00"/>
+        <x14:negativeBorderColor rgb="FFFF5500"/>
         <x14:axisColor rgb="FF0000FF"/>
       </x14:dataBar>
     `,

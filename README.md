@@ -299,7 +299,7 @@ For Example:
 
 ```javascript
 // create a sheet with red tab colour
-const sheet = workbook.addWorksheet('My Sheet', {properties:{tabColor:{argb:'FFC0000'}}});
+const sheet = workbook.addWorksheet('My Sheet', {properties:{tabColor:{argb:'FFC00000'}}});
 
 // create a sheet where the grid lines are hidden
 const sheet = workbook.addWorksheet('My Sheet', {views: [{showGridLines: false}]});
@@ -392,7 +392,7 @@ worksheet.properties.defaultRowHeight = 15;
 
 | Name             | Default    | Description |
 | ---------------- | ---------- | ----------- |
-| tabColor         | undefined  | Color of the tabs |
+| tabColor         | undefined  | Color of the tabs in alpha-red-green-blue hexadecimal format (e.g. `{argb: 'FFC00000'}`) |
 | outlineLevelCol  | 0          | The worksheet column outline level |
 | outlineLevelRow  | 0          | The worksheet row outline level |
 | defaultRowHeight | 15         | Default row height |
@@ -727,7 +727,30 @@ worksheet.spliceColumns(3,2);
 const newCol3Values = [1,2,3,4,5];
 const newCol4Values = ['one', 'two', 'three', 'four', 'five'];
 worksheet.spliceColumns(3, 1, newCol3Values, newCol4Values);
+```
 
+## Nested columns
+Also you can build nested columns 
+
+```javascript
+worksheet.makeColumns([
+  {
+    id: 1, 
+    title: 'Some', 
+  },
+  {id: 2, title: 'Qwe'},
+  {id: 3, title: 'Foo'},
+  {
+    id: 4,
+    title: 'Zoo',
+    children: [
+      { id: 41, title: 'Zoo 1' },
+      { id: 42, title: 'Zoo 2' },
+      { id: 44, title: 'Zoo 3' },
+      { id: 45, title: 'Zoo 4' },
+    ]
+  }
+]);
 ```
 
 ## Rows[⬆](#contents)<!-- Link generated with jump2header -->
@@ -1148,6 +1171,9 @@ ws.getCell('B1').note = {
   },
   editAs: 'twoCells',
 };
+
+// remove note from a cell
+ws.getCell('B1').removeNote();
 ```
 
 ### Cell Comments Properties[⬆](#contents)<!-- Link generated with jump2header -->
@@ -1795,27 +1821,30 @@ worksheet.addConditionalFormatting({
 | aboveAverage | Applies formatting to cells with values above (or below) average |
 | colorScale   | Applies a coloured background to cells based on where their values lie in the range |
 | iconSet      | Adds one of a range of icons to cells based on value |
+| dataBar      | Adds data bars to cells based on value |
 | containsText | Applies formatting based on whether cell a specific text |
 | timePeriod   | Applies formatting based on whether cell datetime value lies within a specified range |
 
 ### Expression[⬆](#contents)<!-- Link generated with jump2header -->
 
-| Field    | Optional | Default | Description |
-| -------- | -------- | ------- | ----------- |
-| type     |          |         | 'expression' |
-| priority | Y        | &lt;auto&gt;  | determines priority ordering of styles |
-| formulae |          |         | array of 1 formula string that returns a true/false value. To reference the cell value, use the top-left cell address |
-| style    |          |         | style structure to apply if the formula returns true |
+| Field      | Optional | Default | Description |
+| ---------- | -------- | ------- | ----------- |
+| type       |          |         | 'expression' |
+| priority   | Y        | &lt;auto&gt;  | determines priority ordering of styles |
+| stopIfTrue | Y        | false   | if true, no rules with lower priority will be applied if this rule evaluates to true |
+| formulae   |          |         | array of 1 formula string that returns a true/false value. To reference the cell value, use the top-left cell address |
+| style      |          |         | style structure to apply if the formula returns true |
 
 ### Cell Is[⬆](#contents)<!-- Link generated with jump2header -->
 
-| Field    | Optional | Default | Description |
-| -------- | -------- | ------- | ----------- |
-| type     |          |         | 'cellIs' |
-| priority | Y        | &lt;auto&gt;  | determines priority ordering of styles |
-| operator |          |         | how to compare cell value with formula result |
-| formulae |          |         | array of 1 formula string that returns the value to compare against each cell |
-| style    |          |         | style structure to apply if the comparison returns true |
+| Field      | Optional | Default | Description |
+| ---------- | -------- | ------- | ----------- |
+| type       |          |         | 'cellIs' |
+| priority   | Y        | &lt;auto&gt;  | determines priority ordering of styles |
+| stopIfTrue | Y        | false   | if true, no rules with lower priority will be applied if this rule evaluates to true |
+| operator   |          |         | how to compare cell value with formula result |
+| formulae   |          |         | array of 1 formula string that returns the value to compare against each cell |
+| style      |          |         | style structure to apply if the comparison returns true |
 
 **Cell Is Operators**
 
@@ -1829,14 +1858,15 @@ worksheet.addConditionalFormatting({
 
 ### Top 10[⬆](#contents)<!-- Link generated with jump2header -->
 
-| Field    | Optional | Default | Description |
-| -------- | -------- | ------- | ----------- |
-| type     |          |         | 'top10' |
-| priority | Y        | &lt;auto&gt;  | determines priority ordering of styles |
-| rank     | Y        | 10      | specifies how many top (or bottom) values are included in the formatting |
-| percent  | Y        | false   | if true, the rank field is a percentage, not an absolute |
-| bottom   | Y        | false   | if true, the bottom values are included instead of the top |
-| style    |          |         | style structure to apply if the comparison returns true |
+| Field      | Optional | Default | Description |
+| ---------- | -------- | ------- | ----------- |
+| type       |          |         | 'top10' |
+| priority   | Y        | &lt;auto&gt;  | determines priority ordering of styles |
+| stopIfTrue | Y        | false   | if true, no rules with lower priority will be applied if this rule evaluates to true |
+| rank       | Y        | 10      | specifies how many top (or bottom) values are included in the formatting |
+| percent    | Y        | false   | if true, the rank field is a percentage, not an absolute |
+| bottom     | Y        | false   | if true, the bottom values are included instead of the top |
+| style      |          |         | style structure to apply if the comparison returns true |
 
 ### Above Average[⬆](#contents)<!-- Link generated with jump2header -->
 
@@ -1844,7 +1874,8 @@ worksheet.addConditionalFormatting({
 | ------------- | -------- | ------- | ----------- |
 | type          |          |         | 'aboveAverage' |
 | priority      | Y        | &lt;auto&gt;  | determines priority ordering of styles |
-| aboveAverage  | Y        | false   | if true, the rank field is a percentage, not an absolute |
+| stopIfTrue    | Y        | false   | if true, no rules with lower priority will be applied if this rule evaluates to true |
+| aboveAverage  | Y        | true    | if true, formatting applies to values above the average; if false, below the average |
 | style         |          |         | style structure to apply if the comparison returns true |
 
 ### Color Scale[⬆](#contents)<!-- Link generated with jump2header -->
@@ -1853,6 +1884,7 @@ worksheet.addConditionalFormatting({
 | ------------- | -------- | ------- | ----------- |
 | type          |          |         | 'colorScale' |
 | priority      | Y        | &lt;auto&gt;  | determines priority ordering of styles |
+| stopIfTrue    | Y        | false   | if true, no rules with lower priority will be applied if this rule evaluates to true |
 | cfvo          |          |         | array of 2 to 5 Conditional Formatting Value Objects specifying way-points in the value range |
 | color         |          |         | corresponding array of colours to use at given way points |
 | style         |          |         | style structure to apply if the comparison returns true |
@@ -1863,6 +1895,7 @@ worksheet.addConditionalFormatting({
 | ------------- | -------- | ------- | ----------- |
 | type          |          |         | 'iconSet' |
 | priority      | Y        | &lt;auto&gt;  | determines priority ordering of styles |
+| stopIfTrue    | Y        | false   | if true, no rules with lower priority will be applied if this rule evaluates to true |
 | iconSet       | Y        | 3TrafficLights | name of icon set to use |
 | showValue     |          | true    | Specifies whether the cells in the applied range display the icon and cell value, or the icon only |
 | reverse       |          | false   | Specifies whether the icons in the icon set specified in iconSet are show in reserve order. If custom equals "true" this value must be ignored |
@@ -1876,6 +1909,7 @@ worksheet.addConditionalFormatting({
 | ---------- | -------- | ------- | ----------- |
 | type       |          |         | 'dataBar' |
 | priority   | Y        | &lt;auto&gt;  | determines priority ordering of styles |
+| stopIfTrue | Y        | false   | if true, no rules with lower priority will be applied if this rule evaluates to true |
 | minLength  |          | 0       | Specifies the length of the shortest data bar in this conditional formatting range |
 | maxLength  |          | 100     | Specifies the length of the longest data bar in this conditional formatting range |
 | showValue  |          | true    | Specifies whether the cells in the conditional formatting range display both the data bar and the numeric value or the data bar |
@@ -1890,13 +1924,14 @@ worksheet.addConditionalFormatting({
 
 ### Contains Text[⬆](#contents)<!-- Link generated with jump2header -->
 
-| Field    | Optional | Default | Description |
-| -------- | -------- | ------- | ----------- |
-| type     |          |         | 'containsText' |
-| priority | Y        | &lt;auto&gt;  | determines priority ordering of styles |
-| operator |          |         | type of text comparison |
-| text     |          |         | text to search for |
-| style    |          |         | style structure to apply if the comparison returns true |
+| Field      | Optional | Default | Description |
+| ---------- | -------- | ------- | ----------- |
+| type       |          |         | 'containsText' |
+| priority   | Y        | &lt;auto&gt;  | determines priority ordering of styles |
+| stopIfTrue | Y        | false   | if true, no rules with lower priority will be applied if this rule evaluates to true |
+| operator   |          |         | type of text comparison |
+| text       |          |         | text to search for |
+| style      |          |         | style structure to apply if the comparison returns true |
 
 **Contains Text Operators**
 
@@ -1914,6 +1949,7 @@ worksheet.addConditionalFormatting({
 | ---------- | -------- | ------- | ----------- |
 | type       |          |         | 'timePeriod' |
 | priority   | Y        | &lt;auto&gt;  | determines priority ordering of styles |
+| stopIfTrue | Y        | false   | if true, no rules with lower priority will be applied if this rule evaluates to true |
 | timePeriod |          |         | what time period to compare cell value to |
 | style      |          |         | style structure to apply if the comparison returns true |
 
@@ -2009,7 +2045,7 @@ const imageId2 = workbook.addImage({
 
 // add image to workbook by base64
 const myBase64Image = "data:image/png;base64,iVBORw0KG...";
-const imageId2 = workbook.addImage({
+const imageId3 = workbook.addImage({
   base64: myBase64Image,
   extension: 'png',
 });
@@ -2052,7 +2088,6 @@ It can have one of the following values:
 
 | Value     | Description |
 | --------- | ----------- |
-| undefined | It specifies the image will be moved and sized with cells |
 | twoCell   | Image will be moved and sized with cells |
 | oneCell   | This is the default. Image will be moved with cells but not sized |
 | absolute  | Image will not be moved or sized with cells |
@@ -2101,6 +2136,27 @@ const sheetImageId = worksheet.addImage(imageId, 'B2:D6');
 
 // Remove the image
 worksheet.removeImage(sheetImageId);
+```
+
+### Add image with accessibility support[⬆](#contents)<!-- Link generated with jump2header -->
+
+You can add an image with title, description or mark it as decorative
+
+```javascript
+worksheet.addImage(imageId2, {
+  tl: { col: 0, row: 0 },
+  ext: { width: 500, height: 200 },
+  hyperlinks: {
+    hyperlink: 'http://www.somewhere.com',
+    tooltip: 'http://www.somewhere.com'
+  }
+},
+{
+  title: 'image title',
+  description: 'image alt text',
+  decorative: 1, // value is 0 or 1
+}
+);
 ```
 
 ## Sheet Protection[⬆](#contents)<!-- Link generated with jump2header -->
@@ -2464,10 +2520,10 @@ The constructor takes a required input argument and an optional options argument
 | --------------------- | ----------- |
 | input (required)      | Specifies the name of the file or the readable stream from which to read the XLSX workbook. |
 | options (optional)    | Specifies how to handle the event types occuring during the read parsing. |
-| options.entries       | Specifies whether to emit entries (`'emit'`) or not (`'ignore'`). Default is `'emit'`. |
+| options.entries       | Specifies whether to emit entries (`'emit'`) or not (`'ignore'`). Default is `'ignore'`. |
 | options.sharedStrings | Specifies whether to cache shared strings (`'cache'`), which inserts them into the respective cell values, or whether to emit them (`'emit'`) or ignore them (`'ignore'`), in both of which case the cell value will be a reference to the shared string's index. Default is `'cache'`. |
-| options.hyperlinks    | Specifies whether to cache hyperlinks (`'cache'`), which inserts them into their respective cells, whether to emit them (`'emit'`) or whether to ignore them (`'ignore'`). Default is `'cache'`. |
-| options.styles        | Specifies whether to cache styles (`'cache'`), which inserts them into their respective rows and cells, or whether to ignore them (`'ignore'`). Default is `'cache'`. |
+| options.hyperlinks    | Specifies whether to cache hyperlinks (`'cache'`), which inserts them into their respective cells, whether to emit them (`'emit'`) or whether to ignore them (`'ignore'`). Default is `'ignore'`. |
+| options.styles        | Specifies whether to cache styles (`'cache'`), which inserts them into their respective rows and cells, or whether to ignore them (`'ignore'`). Default is `'ignore'`. |
 | options.worksheets    | Specifies whether to emit worksheets (`'emit'`) or not (`'ignore'`). Default is `'emit'`. |
 
 ```js

@@ -4,6 +4,7 @@ const testXformHelper = require('../test-xform-helper');
 
 const Enums = verquire('doc/enums');
 const XmlStream = verquire('utils/xml-stream');
+const RelType = verquire('xlsx/rel-type');
 const WorksheetXform = verquire('xlsx/xform/sheet/worksheet-xform');
 
 const SharedStringsXform = verquire('xlsx/xform/strings/shared-strings-xform');
@@ -135,7 +136,9 @@ const expectations = [
     initialModel: require('./data/sheet.7.0.json'),
     preparedModel: require('./data/sheet.7.1.json'),
     xml: fs.readFileSync(`${__dirname}/data/sheet.7.2.xml`).toString(),
-    tests: ['prepare', 'render'],
+    parsedModel: require('./data/sheet.7.3.json'),
+    reconciledModel: require('./data/sheet.7.4.json'),
+    tests: ['prepare', 'render', 'parse', 'reconcile'],
     options: {
       sharedStrings: new SharedStringsXform(),
       hyperlinks: [],
@@ -187,5 +190,202 @@ describe('WorksheetXform', () => {
     expect(iConditionalFormatting).not.to.equal(-1);
     expect(iDataValidations).not.to.equal(-1);
     expect(iConditionalFormatting).to.be.lessThan(iDataValidations);
+  });
+
+  it('legacyDrawing must be after drawing and before picture and tableParts', () => {
+    const xform = new WorksheetXform();
+    const xmlStream = new XmlStream();
+    const model = {
+      id: 1,
+      rows: [],
+      cols: [],
+      conditionalFormattings: [],
+      drawing: {rId: 'rId1'},
+      background: {rId: 'rId2'},
+      tables: [{rId: 'rId3'}],
+      rels: [
+        {
+          Id: 'rId4',
+          Type: RelType.VmlDrawing,
+          Target: '../drawings/vmlDrawing1.vml',
+        },
+      ],
+    };
+
+    xform.render(xmlStream, model);
+
+    const {xml} = xmlStream;
+    const iDrawing = xml.indexOf('<drawing');
+    const iLegacyDrawing = xml.indexOf('<legacyDrawing');
+    const iPicture = xml.indexOf('<picture');
+    const iTableParts = xml.indexOf('<tableParts');
+
+    expect(iDrawing).not.to.equal(-1);
+    expect(iLegacyDrawing).not.to.equal(-1);
+    expect(iPicture).not.to.equal(-1);
+    expect(iTableParts).not.to.equal(-1);
+    expect(iLegacyDrawing).to.be.greaterThan(iDrawing);
+    expect(iLegacyDrawing).to.be.lessThan(iPicture);
+    expect(iPicture).to.be.lessThan(iTableParts);
+  });
+
+  describe('reconcile', () => {
+    it('does not throw when comments or vmlDrawing relationship has empty Target', () => {
+      const xform = new WorksheetXform();
+      const model = {
+        relationships: [
+          {
+            Id: 'rId1',
+            Type: RelType.Comments,
+            Target: '',
+          },
+          {
+            Id: 'rId2',
+            Type: RelType.VmlDrawing,
+            Target: '',
+          },
+        ],
+        rows: [],
+        cols: [],
+        conditionalFormattings: [],
+      };
+      const options = {
+        comments: {},
+        vmlDrawings: {},
+        styles: fakeStyles,
+        sharedStrings: new SharedStringsXform(),
+      };
+
+      expect(() => xform.reconcile(model, options)).to.not.throw();
+      expect(model.comments).to.be.undefined();
+      expect(model.relationships).to.be.undefined();
+    });
+
+    it('does not throw when comments relationship has missing Target or missing comments entry', () => {
+      const xform = new WorksheetXform();
+      const model = {
+        relationships: [
+          {
+            Id: 'rId1',
+            Type: RelType.Comments,
+          },
+          {
+            Id: 'rId2',
+            Type: RelType.Comments,
+            Target: '../comments99.xml',
+          },
+        ],
+        rows: [],
+        cols: [],
+        conditionalFormattings: [],
+      };
+      const options = {
+        comments: {},
+        styles: fakeStyles,
+        sharedStrings: new SharedStringsXform(),
+      };
+
+      expect(() => xform.reconcile(model, options)).to.not.throw();
+      expect(model.comments).to.be.undefined();
+    });
+
+    it('reconciles comments and vmlDrawings when Target is valid', () => {
+      const xform = new WorksheetXform();
+      const model = {
+        relationships: [
+          {
+            Id: 'rId1',
+            Type: RelType.Comments,
+            Target: '../comments1.xml',
+          },
+          {
+            Id: 'rId2',
+            Type: RelType.VmlDrawing,
+            Target: '../drawings/vmlDrawing1.vml',
+          },
+        ],
+        rows: [],
+        cols: [],
+        conditionalFormattings: [],
+      };
+      const options = {
+        comments: {
+          '../comments1.xml': {
+            comments: [{ref: 'A1', note: {texts: [{text: 'hello'}]}}],
+          },
+        },
+        vmlDrawings: {
+          '../drawings/vmlDrawing1.vml': {
+            comments: [{margins: {insetmode: 'auto'}}],
+          },
+        },
+        styles: fakeStyles,
+        sharedStrings: new SharedStringsXform(),
+      };
+
+      xform.reconcile(model, options);
+      expect(options.commentsMap.A1).to.deep.equal({
+        ref: 'A1',
+        note: {
+          texts: [{text: 'hello'}],
+          margins: {insetmode: 'auto'},
+        },
+      });
+    });
+
+    it('reconciles hyperlink with hash from location attribute', () => {
+      const xform = new WorksheetXform();
+      const sharedStrings = new SharedStringsXform();
+      sharedStrings.add('link');
+      const model = {
+        relationships: [
+          {
+            Id: 'rId1',
+            Type: RelType.Hyperlink,
+            Target: 'http://localhost/',
+            TargetMode: 'External',
+          },
+        ],
+        hyperlinks: [
+          {
+            address: 'A1',
+            rId: 'rId1',
+            target: 'myhash',
+          },
+        ],
+        rows: [
+          {
+            number: 1,
+            min: 1,
+            max: 1,
+            cells: [
+              {
+                address: 'A1',
+                type: Enums.ValueType.String,
+                value: 0,
+              },
+            ],
+          },
+        ],
+        cols: [],
+        conditionalFormattings: [],
+      };
+      const options = {
+        styles: fakeStyles,
+        sharedStrings,
+      };
+
+      xform.reconcile(model, options);
+      expect(options.hyperlinkMap.A1).to.equal('http://localhost/');
+      expect(options.hyperlinkHashMap.A1).to.equal('myhash');
+      expect(model.rows[0].cells[0]).to.deep.equal({
+        address: 'A1',
+        type: Enums.ValueType.Hyperlink,
+        text: 'link',
+        hyperlink: 'http://localhost/',
+        hash: 'myhash',
+        value: undefined,
+      });
+    });
   });
 });

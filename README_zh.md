@@ -292,7 +292,7 @@ const sheet = workbook.addWorksheet('My Sheet');
 
 ```javascript
 // 创建带有红色标签颜色的工作表
-const sheet = workbook.addWorksheet('My Sheet', {properties:{tabColor:{argb:'FFC0000'}}});
+const sheet = workbook.addWorksheet('My Sheet', {properties:{tabColor:{argb:'FFC00000'}}});
 
 // 创建一个隐藏了网格线的工作表
 const sheet = workbook.addWorksheet('My Sheet', {views: [{showGridLines: false}]});
@@ -1942,7 +1942,7 @@ const imageId2 = workbook.addImage({
 
 // 通过 base64  将图像添加到工作簿
 const myBase64Image = "data:image/png;base64,iVBORw0KG...";
-const imageId2 = workbook.addImage({
+const imageId3 = workbook.addImage({
   base64: myBase64Image,
   extension: 'png',
 });
@@ -1982,7 +1982,7 @@ worksheet.addImage(imageId2, {
 
 | 值     | 描述 |
 | --------- | ----------- |
-| `undefined` | 它指定使图像将根据单元格移动和调整其大小 |
+| `twoCell`   | 它指定使图像将根据单元格移动和调整其大小 |
 | `oneCell`   | 这是默认值。图像将与单元格一起移动，但大小不变动 |
 | `absolute`  | 图像将不会随着单元格移动或调整大小 |
 
@@ -2349,14 +2349,14 @@ await workbook.commit();
 | --------------------- | ----------- |
 | input (必需的)        | 指定从中读取XLSX工作簿的文件或可读流的名称|
 | options (可选的)      | 指定如何处理读取解析期间发生的事件类型 |
-| options.entries       | 指定是否去触发事件(`'emit'`)或者不发出事件(`'ignore'`)，默认值是`'emit'` |
+| options.entries       | 指定是否去触发事件(`'emit'`)或者不发出事件(`'ignore'`)，默认值是`'ignore'` |
 | options.sharedStrings | 指定是否去缓存(`'cache'`)共享字符串，将其插入到相应的单元格值中，或者是否去触发(`'emit'`)或忽略(`'ignore'`)它们，在这两种情况下，单元格值都将是对共享字符串索引的引用。默认值是`'cache'` |
-| options.hyperlinks    | 指定是否去缓存超链接(`'cache'`)，将其插入到相应的单元格值中，是否去触发(`'emit'`)或忽略(`'ignore'`)它们。默认值是`'cache'` |
-| options.styles        | 指定是否去缓存样式(`'cache'`)，将其插入到相应的行或单元格值中，或是否忽略(`'忽略'`)它们。默认值是`'cache'`  |
+| options.hyperlinks    | 指定是否去缓存超链接(`'cache'`)，将其插入到相应的单元格值中，是否去触发(`'emit'`)或忽略(`'ignore'`)它们。默认值是`'ignore'` |
+| options.styles        | 指定是否去缓存样式(`'cache'`)，将其插入到相应的行或单元格值中，或是否忽略(`'忽略'`)它们。默认值是`'ignore'`  |
 | options.worksheets    |指定是否去触发(`'emit'`)或忽略(`'ignore'`)工作表。默认值是`'emit'` |
 
 ```js
-const workbook = new ExcelJS.stream.xlsx.WorkbookReader('./file.xlsx');
+const workbookReader = new ExcelJS.stream.xlsx.WorkbookReader('./file.xlsx');
 for await (const worksheetReader of workbookReader) {
   for await (const row of worksheetReader) {
     // ...

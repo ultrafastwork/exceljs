@@ -639,9 +639,13 @@ describe('Workbook', () => {
               const ws2 = wb2.getWorksheet('duplicateTest');
 
               expect(ws2.getCell('A2').value).to.equal('OneInfo');
-              expect(ws2.getCell('A2').style).to.equal(ws2.getCell('A1').style);
+              expect(ws2.getCell('A2').style).to.deep.equal(
+                ws2.getCell('A1').style
+              );
               expect(ws2.getCell('A3').value).to.equal('OneInfo');
-              expect(ws2.getCell('A3').style).to.equal(ws2.getCell('A1').style);
+              expect(ws2.getCell('A3').style).to.deep.equal(
+                ws2.getCell('A1').style
+              );
               expect(ws2.getCell('A4').value).to.be.null();
             });
         });
@@ -769,6 +773,8 @@ describe('Workbook', () => {
 
         // expecting styles to be copied (see worksheet spec)
         ws.mergeCells('B2:C3');
+        // expecting styles to be applied to the argument range
+        ws.fillCells('E3:F4', testUtils.styles.fills.blueWhiteHGrad);
 
         return wb.xlsx
           .writeFile(TEST_XLSX_FILE_NAME)
@@ -786,6 +792,18 @@ describe('Workbook', () => {
               testUtils.styles.borders.doubleRed
             );
             expect(ws2.getCell('B2').fill).to.deep.equal(
+              testUtils.styles.fills.blueWhiteHGrad
+            );
+            expect(ws2.getCell('E3').fill).to.deep.equal(
+              testUtils.styles.fills.blueWhiteHGrad
+            );
+            expect(ws2.getCell('E4').fill).to.deep.equal(
+              testUtils.styles.fills.blueWhiteHGrad
+            );
+            expect(ws2.getCell('F3').fill).to.deep.equal(
+              testUtils.styles.fills.blueWhiteHGrad
+            );
+            expect(ws2.getCell('F4').fill).to.deep.equal(
               testUtils.styles.fills.blueWhiteHGrad
             );
             expect(ws2.getCell('B2').alignment).to.deep.equal(
@@ -851,6 +869,8 @@ describe('Workbook', () => {
     const wb = new ExcelJS.Workbook();
     const sheets = [
       'splice.rows.removeOnly',
+      'splice.rows.remove2Last',
+      'splice.rows.removeFew',
       'splice.rows.insertFewer',
       'splice.rows.insertSame',
       'splice.rows.insertMore',

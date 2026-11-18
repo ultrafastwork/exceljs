@@ -149,6 +149,65 @@ const expectations = [
     `,
     tests: ['render', 'parse'],
   },
+  {
+    title: 'clamped to maxRow',
+    create: () => {
+      const xform = new DataValidationsXform();
+      xform.maxRow = 2;
+      return xform;
+    },
+    xml: `
+      <dataValidations count="1">
+        <dataValidation type="whole" sqref="A1:B1048576">
+          <formula1>5</formula1>
+          <formula2>10</formula2>
+        </dataValidation>
+      </dataValidations>
+    `,
+    parsedModel: {
+      A1: {type: 'whole', operator: 'between', formulae: [5, 10]},
+      A2: {type: 'whole', operator: 'between', formulae: [5, 10]},
+      B1: {type: 'whole', operator: 'between', formulae: [5, 10]},
+      B2: {type: 'whole', operator: 'between', formulae: [5, 10]},
+    },
+    tests: ['parse'],
+  },
+  {
+    title: 'clamped when maxRow is 0',
+    create: () => {
+      const xform = new DataValidationsXform();
+      xform.maxRow = 0;
+      return xform;
+    },
+    xml: `
+      <dataValidations count="1">
+        <dataValidation type="whole" sqref="A1:XFD1048576">
+          <formula1>5</formula1>
+          <formula2>10</formula2>
+        </dataValidation>
+      </dataValidations>
+    `,
+    parsedModel: {},
+    tests: ['parse'],
+  },
+  {
+    title: 'skipped when range starts after maxRow',
+    create: () => {
+      const xform = new DataValidationsXform();
+      xform.maxRow = 2;
+      return xform;
+    },
+    xml: `
+      <dataValidations count="1">
+        <dataValidation type="whole" sqref="A5:B1048576">
+          <formula1>5</formula1>
+          <formula2>10</formula2>
+        </dataValidation>
+      </dataValidations>
+    `,
+    parsedModel: {},
+    tests: ['parse'],
+  },
 ];
 
 describe('DataValidationsXform', () => {

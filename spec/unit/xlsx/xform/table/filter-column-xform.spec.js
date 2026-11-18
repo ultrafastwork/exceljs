@@ -50,6 +50,31 @@ const expectations = [
     tests: ['prepare', 'render', 'renderIn', 'parse'],
     options: {index: 0},
   },
+  {
+    title: 'with dynamic filter',
+    create() {
+      return new FilterColumnXform();
+    },
+    initialModel: {filterButton: true},
+    xml:
+      '<filterColumn colId="0" hiddenButton="0"><dynamicFilter type="today"/></filterColumn>',
+    get parsedModel() {
+      return this.initialModel;
+    },
+    tests: ['parse'],
+  },
+  {
+    title: 'default hiddenButton omitted',
+    create() {
+      return new FilterColumnXform();
+    },
+    initialModel: {filterButton: true},
+    xml: '<filterColumn colId="0"/>',
+    get parsedModel() {
+      return this.initialModel;
+    },
+    tests: ['parse'],
+  },
 ];
 
 describe('FilterColumnXform', () => {

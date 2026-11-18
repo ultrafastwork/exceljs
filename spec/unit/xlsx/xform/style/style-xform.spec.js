@@ -126,6 +126,43 @@ const expectations = [
     },
     tests: ['parse', 'parseIn'],
   },
+  {
+    title: 'QuotePrefix',
+    create() {
+      return new StyleXform({xfId: true});
+    },
+    preparedModel: {
+      numFmtId: 0,
+      fontId: 0,
+      fillId: 0,
+      borderId: 0,
+      xfId: 0,
+      quotePrefix: true,
+    },
+    xml:
+      '<xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0" quotePrefix="1"/>',
+    get parsedModel() {
+      return this.preparedModel;
+    },
+    tests: ['render', 'renderIn', 'parse'],
+  },
+  {
+    title: 'QuotePrefix true',
+    create() {
+      return new StyleXform({xfId: true});
+    },
+    xml:
+      '<xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0" quotePrefix="true"/>',
+    parsedModel: {
+      numFmtId: 0,
+      fontId: 0,
+      fillId: 0,
+      borderId: 0,
+      xfId: 0,
+      quotePrefix: true,
+    },
+    tests: ['parse', 'parseIn'],
+  },
 ];
 
 describe('StyleXform', () => {

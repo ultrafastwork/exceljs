@@ -2,3 +2,5 @@ build
 dist
 out
 spec/manual/public/
+ai-docs/
+test/

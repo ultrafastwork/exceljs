@@ -370,5 +370,128 @@ describe('Workbook', () => {
         'Target="../pivotTables/pivotTable2.xml"'
       );
     });
+
+    it('supports the "count" metric in pivotTable1.xml', async () => {
+      const workbook = new ExcelJS.Workbook();
+
+      const worksheet1 = workbook.addWorksheet('Sheet1');
+      worksheet1.addRows(TEST_DATA);
+
+      const worksheet2 = workbook.addWorksheet('Sheet2');
+      worksheet2.addPivotTable({
+        sourceSheet: worksheet1,
+        rows: ['A', 'B'],
+        columns: ['C'],
+        values: ['E'],
+        metric: 'count',
+      });
+
+      const buffer = await workbook.xlsx.writeBuffer();
+      const zip = await JSZip.loadAsync(buffer);
+      const pivotXml = await zip.files['xl/pivotTables/pivotTable1.xml'].async(
+        'string'
+      );
+      expect(pivotXml).to.include('name="Count of E"');
+      expect(pivotXml).to.include('subtotal="count"');
+    });
+
+    it('defaults to "sum" metric when metric is omitted', async () => {
+      const workbook = new ExcelJS.Workbook();
+
+      const worksheet1 = workbook.addWorksheet('Sheet1');
+      worksheet1.addRows(TEST_DATA);
+
+      const worksheet2 = workbook.addWorksheet('Sheet2');
+      worksheet2.addPivotTable({
+        sourceSheet: worksheet1,
+        rows: ['A', 'B'],
+        columns: ['C'],
+        values: ['E'],
+      });
+
+      const buffer = await workbook.xlsx.writeBuffer();
+      const zip = await JSZip.loadAsync(buffer);
+      const pivotXml = await zip.files['xl/pivotTables/pivotTable1.xml'].async(
+        'string'
+      );
+      expect(pivotXml).to.include('name="Sum of E"');
+      expect(pivotXml).to.not.include('subtotal="count"');
+    });
+
+    it('throws an error for unsupported pivot table metrics', () => {
+      const workbook = new ExcelJS.Workbook();
+
+      const worksheet1 = workbook.addWorksheet('Sheet1');
+      worksheet1.addRows(TEST_DATA);
+
+      const worksheet2 = workbook.addWorksheet('Sheet2');
+      expect(() => {
+        worksheet2.addPivotTable({
+          sourceSheet: worksheet1,
+          rows: ['A', 'B'],
+          columns: ['C'],
+          values: ['E'],
+          metric: 'average',
+        });
+      }).to.throw('Only the "sum" and "count" metrics are supported at this time.');
+    });
+
+    it('supports multiple values when columns are not specified (PR #2578)', async () => {
+      const workbook = new ExcelJS.Workbook();
+
+      const worksheet1 = workbook.addWorksheet('Sheet1');
+      worksheet1.addRows(TEST_DATA);
+
+      const worksheet2 = workbook.addWorksheet('Sheet2');
+      worksheet2.addPivotTable({
+        sourceSheet: worksheet1,
+        rows: ['A', 'B'],
+        values: ['D', 'E'],
+      });
+
+      const buffer = await workbook.xlsx.writeBuffer();
+      const zip = await JSZip.loadAsync(buffer);
+      const pivotXml = await zip.files['xl/pivotTables/pivotTable1.xml'].async('string');
+
+      expect(pivotXml).to.include('<colFields count="1">');
+      expect(pivotXml).to.include('<field x="-2" />');
+      expect(pivotXml).to.include('<dataFields count="2">');
+      expect(pivotXml).to.include('name="Sum of D"');
+      expect(pivotXml).to.include('name="Sum of E"');
+    });
+
+    it('throws an error when multiple values and columns are specified (PR #2578)', () => {
+      const workbook = new ExcelJS.Workbook();
+
+      const worksheet1 = workbook.addWorksheet('Sheet1');
+      worksheet1.addRows(TEST_DATA);
+
+      const worksheet2 = workbook.addWorksheet('Sheet2');
+      expect(() => {
+        worksheet2.addPivotTable({
+          sourceSheet: worksheet1,
+          rows: ['A', 'B'],
+          columns: ['C'],
+          values: ['D', 'E'],
+        });
+      }).to.throw('It is currently not possible to have multiple values when columns are specified.');
+    });
+
+    it('throws an error when no values are specified (PR #2578)', () => {
+      const workbook = new ExcelJS.Workbook();
+
+      const worksheet1 = workbook.addWorksheet('Sheet1');
+      worksheet1.addRows(TEST_DATA);
+
+      const worksheet2 = workbook.addWorksheet('Sheet2');
+      expect(() => {
+        worksheet2.addPivotTable({
+          sourceSheet: worksheet1,
+          rows: ['A', 'B'],
+          columns: ['C'],
+          values: [],
+        });
+      }).to.throw('Must have at least one value.');
+    });
   });
 });

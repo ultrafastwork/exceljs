@@ -31,6 +31,19 @@ const expectations = [
     xml: '<autoFilter ref="A1:C1"/>',
     tests: ['render', 'renderIn'],
   },
+  {
+    title: 'Exclude columns',
+    create() {
+      return new AutoFilterXform();
+    },
+    preparedModel: {from: 'A1', to: 'E1', exclude: [1, 2]},
+    xml:
+      '<autoFilter ref="A1:E1">' +
+      '<filterColumn colId="1" showButton="0"/>' +
+      '<filterColumn colId="2" showButton="0"/>' +
+      '</autoFilter>',
+    tests: ['render', 'renderIn'],
+  },
 ];
 
 describe('AutoFilterXform', () => {

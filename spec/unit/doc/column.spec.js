@@ -164,7 +164,24 @@ describe('Column', () => {
     expect(model[0].width).to.equal(9);
 
     expect(model[1].width).to.equal(10);
-
     expect(model[2].width).to.equal(9);
+  });
+
+  it('loads columns from model when cols are listed out of order (PR #1563)', () => {
+    const sheet = createSheetMock();
+    const cols = [
+      {min: 4, max: 4, width: 12.6640625, collapsed: true},
+      {min: 1, max: 1, width: 73.6640625, collapsed: false},
+      {min: 2, max: 2, hidden: true, width: 3.5, collapsed: false},
+      {min: 3, max: 3, width: 12.6640625, collapsed: false},
+    ];
+
+    const columns = Column.fromModel(sheet, cols);
+    expect(columns.length).to.equal(4);
+    expect(columns[0].width).to.equal(73.6640625);
+    expect(columns[1].hidden).to.equal(true);
+    expect(columns[1].width).to.equal(3.5);
+    expect(columns[2].width).to.equal(12.6640625);
+    expect(columns[3].width).to.equal(12.6640625);
   });
 });

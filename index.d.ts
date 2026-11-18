@@ -1,4 +1,4 @@
-declare interface Buffer extends ArrayBuffer { }
+declare interface Buffer { }
 
 export declare enum RelationshipType {
 	None = 0,
@@ -299,14 +299,18 @@ export interface Style {
 	protection: Partial<Protection>;
 	border: Partial<Borders>;
 	fill: Fill;
+	quotePrefix: boolean;
 }
+
+export type DataValidationType =
+	| 'list' | 'whole' | 'decimal' | 'date' | 'textLength' | 'custom';
 
 export type DataValidationOperator =
 	| 'between' | 'notBetween' | 'equal' | 'notEqual' | 'greaterThan' | 'lessThan'
 	| 'greaterThanOrEqual' | 'lessThanOrEqual';
 
 export interface DataValidation {
-	type: 'list' | 'whole' | 'decimal' | 'date' | 'textLength' | 'custom';
+	type: DataValidationType;
 	formulae: any[];
 	allowBlank?: boolean;
 	operator?: DataValidationOperator;
@@ -405,6 +409,7 @@ export type CellValue =
 		margins?: Partial<CommentMargins>;
 		protection?: Partial<CommentProtection>;
 		editAs?: CommentEditAs;
+		autoShape?: boolean;
 	}
 
 export interface CellModel {
@@ -463,6 +468,7 @@ export interface Cell extends Style, Address {
 	 * comment of the cell
 	 */
 	note: string | Comment;
+	removeNote(): void;
 
 	/**
 	 * convenience getter to access the formula
@@ -488,6 +494,11 @@ export interface Cell extends Style, Address {
 	 * The styles of the cell
 	 */
 	style: Partial<Style>;
+
+	/**
+	 * Merge partial style into the cell's style without mutating shared style references
+	 */
+	setStyle(style: Partial<Style>): void;
 
 	addName(name: string): void;
 
@@ -523,7 +534,7 @@ export interface RowModel {
 export interface Row extends Style {
 	readonly worksheet: Worksheet;
 	readonly hasValues: boolean;
-	readonly dimensions: number;
+	readonly dimensions: { min: number; max: number } | null;
 	model: Partial<RowModel> | null;
 	/**
 	 * Set a specific row height
@@ -538,8 +549,8 @@ export interface Row extends Style {
 	/**
 	 * Get a row as a sparse array
 	 */
-	// readonly values: CellValue[];
-	values: CellValue[] | { [key: string]: CellValue };
+	get values(): CellValue[];
+	set values(value: CellValue[] | { [key: string]: CellValue });
 
 	/**
 	 * Set an outline level for rows
@@ -595,7 +606,7 @@ export interface Row extends Style {
 	/**
 	 * Commit a completed row to stream
 	 */
-	commit(): void;
+	commit(): Promise<void>;
 	destroy(): void;
 	addPageBreak(lft?: number, rght?: number): void;
 }
@@ -634,7 +645,7 @@ export interface Column {
 	/**
 	 * The cell values in the column
 	 */
-	values: CellValue;
+	values: CellValue[];
 
 	/**
 	 * Column letter key
@@ -656,6 +667,7 @@ export interface Column {
 	font?: Partial<Font>;
 	alignment?: Partial<Alignment>;
 	protection?: Partial<Protection>;
+	quotePrefix?: boolean;
 
 	toString(): string
 	equivalentTo(other: Column): boolean
@@ -864,9 +876,11 @@ export interface HeaderFooter {
 export type AutoFilter = string | {
 	from: string | { row: number; column: number };
 	to: string | { row: number; column: number };
+	exclude?: number[];
 };
 
 export interface WorksheetProtection {
+	sheet?: boolean;
 	objects: boolean;
 	scenarios: boolean;
 	selectLockedCells: boolean;
@@ -914,20 +928,99 @@ export class Anchor implements IAnchor {
 }
 export type ImageEditAs = 'twoCell' | 'oneCell' | 'absolute';
 
-export interface ImageRange {
+export interface DrawingRange {
 	tl: Anchor;
 	br: Anchor;
 	editAs?: ImageEditAs;
 }
 
-export interface ImagePosition {
+export type ImageRange = DrawingRange;
+
+export interface DrawingPosition {
 	tl: { col: number; row: number };
 	ext: { width: number; height: number };
 }
 
-export interface ImageHyperlinkValue {
+export type ImagePosition = DrawingPosition;
+
+export interface DrawingHyperlinkValue {
 	hyperlink: string;
 	tooltip?: string;
+}
+
+export type ImageHyperlinkValue = DrawingHyperlinkValue;
+
+export interface ShapeProps {
+	/**
+	 * Defined as DocumentFormat.OpenXml.Drawing.ShapeTypeValues in Open API Spec.
+	 * See https://learn.microsoft.com/dotnet/api/documentformat.openxml.drawing.shapetypevalues
+	 */
+	type: string;
+	rotation?: number;
+	horizontalFlip?: boolean;
+	verticalFlip?: boolean;
+	fill?: ShapeFill;
+	outline?: ShapeOutline;
+	textBody?: ShapeTextBody;
+}
+
+export type ShapeFill = {
+	type: 'solid';
+	color: { theme?: string; rgb?: string };
+};
+
+export interface ShapeArrowEnd {
+	type?: 'triangle' | 'arrow' | 'stealth' | 'diamond' | 'oval';
+	length?: 'lg' | 'med' | 'sm';
+	width?: 'lg' | 'med' | 'sm';
+}
+
+export type ShapeOutline = {
+	weight?: number;
+	color?: { theme?: string; rgb?: string };
+	dash?: 'solid' | 'sysDot' | 'sysDash' | 'dash' | 'dashDot' | 'lgDash' | 'lgDashDot' | 'lgDashDotDot';
+	arrow?: {
+		head?: ShapeArrowEnd;
+		tail?: ShapeArrowEnd;
+	};
+};
+
+export type ShapeTextBody = {
+	paragraphs: ShapeParagraph[];
+	vertAlign?: 't' | 'ctr' | 'b';
+};
+
+export type ShapeParagraph = {
+	runs: ShapeRun[];
+	alignment?: 'l' | 'ctr' | 'r';
+};
+
+export type ShapeRun = {
+	text: string;
+	font?: Partial<ShapeRunFont>;
+};
+
+export type ShapeRunFont = {
+	size: number;
+	color: { theme?: string; rgb?: string };
+	bold: boolean;
+	italic: boolean;
+	underline: 'sng' | 'dbl' | 'none';
+};
+
+export interface PivotTableModel {
+	sourceSheet: Worksheet;
+	rows: string[];
+	columns?: string[];
+	values: string[];
+	metric?: 'sum' | 'count';
+	applyWidthHeightFormats?: string | boolean;
+}
+
+export interface HFImageOptions {
+	id: string;
+	width: string;
+	height: string;
 }
 
 export interface Range extends Location {
@@ -984,6 +1077,25 @@ export interface RowBreak {
 	man: number;
 }
 
+/**
+ * @see {@link Media}
+ */
+export interface WorksheetMedia {
+	type: 'image' | 'background';	// image,background
+	hyperlinks?: ImageHyperlinkValue | string;
+	imageId: number;
+	sheetImageId?: string;
+	rotation?: number;
+	range?:
+		| string
+		| ({ editAs?: ImageEditAs } & ImageRange & {
+				hyperlinks?: ImageHyperlinkValue;
+		  })
+		| ({ editAs?: ImageEditAs } & ImagePosition & {
+				hyperlinks?: ImageHyperlinkValue;
+		  });
+}
+
 export interface WorksheetModel {
 	id: number;
 	name: string;
@@ -994,7 +1106,7 @@ export interface WorksheetModel {
 	rowBreaks: RowBreak[];
 	views: WorksheetView[];
 	autoFilter: AutoFilter;
-	media: Media[];
+	media: WorksheetMedia[];
 	merges: Range['range'][];
 }
 export type WorksheetState = 'visible' | 'hidden' | 'veryHidden';
@@ -1017,8 +1129,9 @@ export interface Cvfo {
 	value?: number;
 }
 export interface ConditionalFormattingBaseRule {
-	priority: number;
+	priority?: number;
 	style?: Partial<Style>;
+	stopIfTrue?: boolean;
 }
 export interface ExpressionRuleType extends ConditionalFormattingBaseRule {
 	type: 'expression';
@@ -1033,14 +1146,14 @@ export interface CellIsRuleType extends ConditionalFormattingBaseRule {
 
 export interface Top10RuleType extends ConditionalFormattingBaseRule {
 	type: 'top10';
-	rank: number;
-	percent: boolean;
-	bottom: boolean;
+	rank?: number;
+	percent?: boolean;
+	bottom?: boolean;
 }
 
 export interface AboveAverageRuleType extends ConditionalFormattingBaseRule {
 	type: 'aboveAverage';
-	aboveAverage: boolean;
+	aboveAverage?: boolean;
 }
 
 export interface ColorScaleRuleType extends ConditionalFormattingBaseRule {
@@ -1071,6 +1184,11 @@ export interface TimePeriodRuleType extends ConditionalFormattingBaseRule {
 
 export interface DataBarRuleType extends ConditionalFormattingBaseRule {
 	type: 'dataBar';
+	color?: Partial<Color>;
+	borderColor?: Partial<Color>;
+	negativeBorderColor?: Partial<Color>;
+	negativeFillColor?: Partial<Color>;
+	axisColor?: Partial<Color>;
 	gradient?: boolean;
 	minLength?: number;
 	maxLength?: number;
@@ -1092,6 +1210,19 @@ export type RowValues = CellValue[] | { [key: string]: CellValue } | undefined |
 export interface ConditionalFormattingOptions {
 	ref: string;
 	rules: ConditionalFormattingRule[];
+}
+
+export interface NestedColumn extends Partial<Column> {
+	id: string | number;
+	title?: string;
+	children?: NestedColumn[];
+}
+
+export interface ImageProps {
+	title?: string;
+	description?: string;
+	decorative?: number | boolean | '0' | '1';
+	rotation?: number;
 }
 
 export interface Worksheet {
@@ -1188,6 +1319,11 @@ export interface Worksheet {
 	columns: Array<Partial<Column>>;
 
 	/**
+	 * Build nested column headers from a nested tree structure.
+	 */
+	makeColumns(input: NestedColumn[]): { rows: Array<Array<NestedColumn | null>> };
+
+	/**
 	 * The total row size of the document. Equal to the row number of the last row that has values.
 	 */
 	readonly rowCount: number;
@@ -1247,6 +1383,16 @@ export interface Worksheet {
 	 * Duplicate rows and insert new rows
 	 */
 	duplicateRow(rowNum: number, count: number, insert: boolean): void;
+
+	/**
+	 * Duplicate multiple rows
+	 */
+	duplicateRows(options: {
+		initialRow: number;
+		length?: number;
+		firstRowToPaste?: number;
+		copiesAmount?: number;
+	}): void;
 
 	/**
 	 * Get or create row by 1-based index
@@ -1329,6 +1475,8 @@ export interface Worksheet {
 
 	fillFormula(range: Range | string | Location, formula: string, results?: ((r: number, c: number) => string | number) | number[] | number[][]): void;
 
+	fillCells(v: Range | string | Location, fillStyle: Fill, makeClones?: boolean): void;
+
 	/**
 	 * Using the image id from `Workbook.addImage`, set the background to the worksheet
 	 * Returns the sheetImageId of the background image
@@ -1342,7 +1490,7 @@ export interface Worksheet {
 	 * embed an image within the worksheet to cover a range
 	 * Returns the sheetImageId of the embedded image
 	 */
-	addImage(imageId: number, range: string | { editAs?: ImageEditAs; } & ImageRange & { hyperlinks?: ImageHyperlinkValue } | { editAs?: ImageEditAs; } & ImagePosition & { hyperlinks?: ImageHyperlinkValue }): string;
+	addImage(imageId: number, range: string | { editAs?: ImageEditAs; rotation?: number; } & DrawingRange & { hyperlinks?: DrawingHyperlinkValue } | { editAs?: ImageEditAs; rotation?: number; } & DrawingPosition & { hyperlinks?: DrawingHyperlinkValue }, rotationOrProps?: number | ImageProps, props?: ImageProps): string;
 
 	/**
 	 * Using the sheetImageId from `Worksheet.addImage` or `Worksheet.addBackgroundImage`,
@@ -1354,17 +1502,53 @@ export interface Worksheet {
 		type: 'image',
 		imageId: string;
 		sheetImageId: string;
-		range: ImageRange;
+		rotation?: number;
+		props?: ImageProps;
+		range: DrawingRange;
 	}>;
 
-	commit(): void;
+	/**
+	 * Add a shape to the worksheet
+	 */
+	addShape(props: ShapeProps, range: string | { editAs?: ImageEditAs; } & DrawingRange | { editAs?: ImageEditAs; } & DrawingPosition, hyperlinks?: DrawingHyperlinkValue): void;
+
+	getShapes(): Array<{
+		props: ShapeProps;
+		range: DrawingRange;
+	}>;
+
+	shapes: Array<{
+		props: ShapeProps;
+		range: DrawingRange;
+	}>;
+
+	/**
+	 * Add an image to header or footer
+	 */
+	addHFImage(imageId: number, options: HFImageOptions): void;
+
+	hfImages: Array<{
+		type: string;
+		id: string;
+		style: { width: string; height: string };
+		imagedata: { index: number; rId?: string; title?: string };
+	}>;
+
+	/**
+	 * Add a pivot table to the worksheet
+	 */
+	addPivotTable(pivotTableProperties: PivotTableModel): void;
+
+	commit(): Promise<void>;
 
 	model: WorksheetModel;
+
+	sheetProtection?: Partial<WorksheetProtection>;
 
 	/**
 	 * Worksheet protection
 	 */
-	protect(password: string, options: Partial<WorksheetProtection>): Promise<void>;
+	protect(password?: string, options?: Partial<WorksheetProtection>): Promise<void>;
 	unprotect(): void;
 
 	/**
@@ -1378,11 +1562,15 @@ export interface Worksheet {
 	/**
 	 * delete table by name or id
 	 */
-	removeTable(name: string): void;
+	removeTable(name: string, withData?: boolean): void;
 	/**
 	 *  fetch table
 	 */
 	getTables(): [Table, void][];
+	/**
+	 * list of conditionalFormattingOptions
+	 */
+	conditionalFormattings: ConditionalFormattingOptions[];
 	/**
 	 * add conditionalFormattingOptions
 	 */
@@ -1420,9 +1608,9 @@ export interface WorksheetProperties {
 	/**
  	 * The outline properties which controls how it will summarize rows and columns
    	 */
-	outlineProperties: {
-		summaryBelow: boolean,
-		summaryRight: boolean,
+	outlineProperties?: {
+		summaryBelow?: boolean;
+		summaryRight?: boolean;
 	};
 	/**
 	 * Default row height (default: 15)
@@ -1493,7 +1681,7 @@ export interface Xlsx {
 	 * read from a stream
 	 * @param stream
 	 */
-	read(stream: import('stream').Stream, options?: Partial<XlsxReadOptions>): Promise<Workbook>;
+	read(stream: import('stream').Stream | ReadableStream, options?: Partial<XlsxReadOptions>): Promise<Workbook>;
 
 	/**
 	 * load from an array buffer
@@ -1514,7 +1702,7 @@ export interface Xlsx {
 	/**
 	 * write to a stream
 	 */
-	write(stream: import('stream').Stream, options?: Partial<XlsxWriteOptions>): Promise<void>;
+	write(stream: import('stream').Stream | WritableStream, options?: Partial<XlsxWriteOptions>): Promise<void>;
 }
 
 // https://c2fo.github.io/fast-csv/docs/parsing/options
@@ -1524,7 +1712,7 @@ type HeaderTransformFunction = (headers: HeaderArray) => HeaderArray;
 export interface FastCsvParserOptionsArgs {
 	objectMode: boolean;
 	delimiter: string;
-	quote: string | null;
+	quote: string | null | boolean;
 	escape: string;
 	headers: boolean | HeaderTransformFunction | HeaderArray;
 	renameHeaders: boolean;
@@ -1576,7 +1764,7 @@ export interface FastCsvFormatterOptionsArgs {
 
 export interface CsvReadOptions {
 	dateFormats: string[];
-	map(value: any, index: number): any;
+	map(value: any, index: number | string): any;
 	sheetName: string;
 	parserOptions: Partial<FastCsvParserOptionsArgs>;
 }
@@ -1601,7 +1789,7 @@ export interface Csv {
 	/**
 	 * read from a stream
 	 */
-	read(stream: import('stream').Stream, options?: Partial<CsvReadOptions>): Promise<Worksheet>;
+	read(stream: import('stream').Stream | ReadableStream, options?: Partial<CsvReadOptions>): Promise<Worksheet>;
 
 	/**
 	 * Create input stream for reading
@@ -1621,11 +1809,11 @@ export interface Csv {
 	/**
 	 * write to a stream
 	 */
-	write(stream: import('stream').Stream, options?: Partial<CsvWriteOptions>): Promise<void>;
+	write(stream: import('stream').Stream | WritableStream, options?: Partial<CsvWriteOptions>): Promise<void>;
 }
 
 export interface Media {
-	type: string;	// image,background
+	type: 'image' | 'background';	// image,background
 	name: string;
 	extension: string;
 	buffer: Buffer;
@@ -1634,8 +1822,8 @@ export interface Media {
 export interface Address {
 	sheetName?: string;
 	address: string;
-	col: string;
-	row: string;
+	col: number;
+	row: number;
 	$col$row: string;
 }
 
@@ -1691,6 +1879,17 @@ export interface DefinedNames {
 	model: DefinedNamesModel;
 }
 
+/**
+ * @see {@link Media}
+ */
+export interface WorkbookMedia extends Media {
+	type: 'image' | 'background';	// image,background
+	name: string;
+	extension: string;
+	buffer: Buffer;
+	index?: number;
+}
+
 export interface WorkbookModel {
 	creator: string;
 	lastModifiedBy: string;
@@ -1713,7 +1912,7 @@ export interface WorkbookModel {
 	revision: Date;
 	contentStatus: string;
 	themes: string[];
-	media: Media[];
+	media: WorkbookMedia[];
 }
 
 export class Workbook {
@@ -1802,7 +2001,7 @@ export interface TableStyleProperties {
 	 * The colour theme of the table
 	 * @default 'TableStyleMedium2'
 	 */
-	theme?: 'TableStyleDark1' | 'TableStyleDark10' | 'TableStyleDark11' | 'TableStyleDark2' | 'TableStyleDark3' | 'TableStyleDark4' | 'TableStyleDark5' | 'TableStyleDark6' | 'TableStyleDark7' | 'TableStyleDark8' | 'TableStyleDark9' | 'TableStyleLight1' | 'TableStyleLight10' | 'TableStyleLight11' | 'TableStyleLight12' | 'TableStyleLight13' | 'TableStyleLight14' | 'TableStyleLight15' | 'TableStyleLight16' | 'TableStyleLight17' | 'TableStyleLight18' | 'TableStyleLight19' | 'TableStyleLight2' | 'TableStyleLight20' | 'TableStyleLight21' | 'TableStyleLight3' | 'TableStyleLight4' | 'TableStyleLight5' | 'TableStyleLight6' | 'TableStyleLight7' | 'TableStyleLight8' | 'TableStyleLight9' | 'TableStyleMedium1' | 'TableStyleMedium10' | 'TableStyleMedium11' | 'TableStyleMedium12' | 'TableStyleMedium13' | 'TableStyleMedium14' | 'TableStyleMedium15' | 'TableStyleMedium16' | 'TableStyleMedium17' | 'TableStyleMedium18' | 'TableStyleMedium19' | 'TableStyleMedium2' | 'TableStyleMedium20' | 'TableStyleMedium21' | 'TableStyleMedium22' | 'TableStyleMedium23' | 'TableStyleMedium24' | 'TableStyleMedium25' | 'TableStyleMedium26' | 'TableStyleMedium27' | 'TableStyleMedium28' | 'TableStyleMedium3' | 'TableStyleMedium4' | 'TableStyleMedium5' | 'TableStyleMedium6' | 'TableStyleMedium7' | 'TableStyleMedium8' | 'TableStyleMedium9';
+	theme?: 'TableStyleDark1' | 'TableStyleDark10' | 'TableStyleDark11' | 'TableStyleDark2' | 'TableStyleDark3' | 'TableStyleDark4' | 'TableStyleDark5' | 'TableStyleDark6' | 'TableStyleDark7' | 'TableStyleDark8' | 'TableStyleDark9' | 'TableStyleLight1' | 'TableStyleLight10' | 'TableStyleLight11' | 'TableStyleLight12' | 'TableStyleLight13' | 'TableStyleLight14' | 'TableStyleLight15' | 'TableStyleLight16' | 'TableStyleLight17' | 'TableStyleLight18' | 'TableStyleLight19' | 'TableStyleLight2' | 'TableStyleLight20' | 'TableStyleLight21' | 'TableStyleLight3' | 'TableStyleLight4' | 'TableStyleLight5' | 'TableStyleLight6' | 'TableStyleLight7' | 'TableStyleLight8' | 'TableStyleLight9' | 'TableStyleMedium1' | 'TableStyleMedium10' | 'TableStyleMedium11' | 'TableStyleMedium12' | 'TableStyleMedium13' | 'TableStyleMedium14' | 'TableStyleMedium15' | 'TableStyleMedium16' | 'TableStyleMedium17' | 'TableStyleMedium18' | 'TableStyleMedium19' | 'TableStyleMedium2' | 'TableStyleMedium20' | 'TableStyleMedium21' | 'TableStyleMedium22' | 'TableStyleMedium23' | 'TableStyleMedium24' | 'TableStyleMedium25' | 'TableStyleMedium26' | 'TableStyleMedium27' | 'TableStyleMedium28' | 'TableStyleMedium3' | 'TableStyleMedium4' | 'TableStyleMedium5' | 'TableStyleMedium6' | 'TableStyleMedium7' | 'TableStyleMedium8' | 'TableStyleMedium9' | 'None' | null;
 	/**
 	  * Highlight the first column (bold)
 	  * @default false
@@ -1869,7 +2068,11 @@ export interface TableProperties {
 	/**
 	 * Top left cell of the table
 	 */
-	ref: string;
+	ref?: string;
+	/**
+	 * Range of the table (e.g. 'A1:B4') when defining a table over existing data
+	 */
+	tableRef?: string;
 	/**
 	 * Show headers at top of table
 	 * @default true
@@ -1892,12 +2095,13 @@ export interface TableProperties {
 	/**
 	 * Rows of data
 	 */
-	rows: any[][]
+	rows?: any[][]
 }
 
 export type TableColumn = Required<TableColumnProperties>
 
 export interface Table extends Required<TableProperties> {
+	table: TableProperties;
 	/**
 	 * Commit changes
 	 */
@@ -1923,6 +2127,14 @@ export interface Table extends Required<TableProperties> {
 	 * Remove a column with data
 	 */
 	removeColumns: (colIndex: number, count: number) => void
+	/**
+	 * Delete all cells covered by table
+	 */
+	destroy: () => void
+	/**
+	 * Get table range
+	 */
+	getTableRange: (body?: boolean) => { startRow: number; startColumn: number; endRow: number; endColumn: number }
 }
 
 export namespace config {
@@ -2002,6 +2214,7 @@ export namespace stream {
 			addApp(): Promise<void>;
 			addCore(): Promise<void>;
 			addSharedStrings(): Promise<void>;
+			addDrawings(): Promise<void>;
 			addWorkbookRels(): Promise<void>;
 			addWorkbook(): Promise<void>;
 		}
@@ -2031,7 +2244,7 @@ export namespace stream {
 		}
 
 		class WorkbookReader extends Workbook {
-			constructor(input: string | import('stream').Stream, options: Partial<WorkbookStreamReaderOptions>);
+			constructor(input: string | import('stream').Stream, options?: Partial<WorkbookStreamReaderOptions>);
 			read(): Promise<void>;
 			[Symbol.asyncIterator](): AsyncGenerator<WorksheetReader>;
 			parse(): AsyncIterator<any>;
@@ -2040,18 +2253,22 @@ export namespace stream {
 		interface WorksheetReaderOptions {
 			workbook: Workbook;
 			id: number;
-			entry: import('stream').Stream;
+			iterator: AsyncIterator<any>;
 			options: WorkbookStreamReaderOptions;
 		}
 
 		class WorksheetReader {
+			readonly id: number;
+			name: string;
+			state: WorksheetState;
+			workbook: WorkbookReader;
 			constructor(options: WorksheetReaderOptions);
-			read(): Promise<void>;
+			readonly dimensions: Range;
+			readonly columns: Column[] | null;
 			[Symbol.asyncIterator](): AsyncGenerator<Row>;
+			read(): Promise<void>;
 			parse(): AsyncIterator<Array<any>>;
-			dimensions(): number;
-			columns(): number;
-			getColumn(c: number): Column;
+			getColumn(c: string | number): Column;
 		}
 	}
 }

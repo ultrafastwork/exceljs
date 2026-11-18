@@ -28,6 +28,38 @@ const expectations = [
     tests: ['render', 'parse'],
   },
   {
+    title: 'Expression without formulae',
+    create() {
+      return new CfRuleXform();
+    },
+    preparedModel: {
+      type: 'expression',
+      dxfId: 1,
+      priority: 1,
+    },
+    xml: '<cfRule type="expression" dxfId="1" priority="1" />',
+    parsedModel: {
+      type: 'expression',
+      dxfId: 1,
+      priority: 1,
+    },
+    tests: ['render', 'parse'],
+  },
+  {
+    title: 'Expression with empty formulae',
+    create() {
+      return new CfRuleXform();
+    },
+    preparedModel: {
+      type: 'expression',
+      dxfId: 1,
+      priority: 1,
+      formulae: [],
+    },
+    xml: '<cfRule type="expression" dxfId="1" priority="1" />',
+    tests: ['render'],
+  },
+  {
     title: 'Cell Is',
     create() {
       return new CfRuleXform();
@@ -190,6 +222,71 @@ const expectations = [
       return this.preparedModel;
     },
     tests: ['render', 'parse'],
+  },
+  {
+    title: 'Expression with stopIfTrue true',
+    create() {
+      return new CfRuleXform();
+    },
+    preparedModel: {
+      type: 'expression',
+      dxfId: 1,
+      priority: 1,
+      stopIfTrue: true,
+      formulae: ['ROW()'],
+    },
+    xml: `
+      <cfRule type="expression" dxfId="1" priority="1" stopIfTrue="1">
+        <formula>ROW()</formula>
+      </cfRule>
+    `,
+    parsedModel: {
+      type: 'expression',
+      dxfId: 1,
+      priority: 1,
+      stopIfTrue: true,
+      formulae: ['ROW()'],
+    },
+    tests: ['render', 'parse'],
+  },
+  {
+    title: 'Expression with stopIfTrue false (render omits attribute)',
+    create() {
+      return new CfRuleXform();
+    },
+    preparedModel: {
+      type: 'expression',
+      dxfId: 1,
+      priority: 1,
+      stopIfTrue: false,
+      formulae: ['ROW()'],
+    },
+    xml: `
+      <cfRule type="expression" dxfId="1" priority="1">
+        <formula>ROW()</formula>
+      </cfRule>
+    `,
+    tests: ['render'],
+  },
+  {
+    title: 'Cell Is with stopIfTrue="0" (parse)',
+    create() {
+      return new CfRuleXform();
+    },
+    xml: `
+      <cfRule type="cellIs" dxfId="1" priority="1" operator="greaterThan" stopIfTrue="0">
+        <formula>1</formula>
+      </cfRule>
+    `,
+    parsedModel: {
+      type: 'cellIs',
+      dxfId: 1,
+      priority: 1,
+      operator: 'greaterThan',
+      stopIfTrue: false,
+      formulae: ['1'],
+    },
+    tests: ['parse'],
   },
 ];
 

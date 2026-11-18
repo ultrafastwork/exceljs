@@ -508,5 +508,131 @@ describe('Workbook', () => {
         expect(remainingImage.sheetImageId).to.equal(normalSheetImageId);
       });
     });
+
+    it('preserves correct image mapping when adding images out of order and repeating imageIds', async () => {
+      const wb = new ExcelJS.Workbook();
+      const ws = wb.addWorksheet('blort');
+
+      const buffer1 = Buffer.from('test-image-buffer-1');
+      const buffer2 = Buffer.from('test-image-buffer-2');
+
+      const imageId1 = wb.addImage({
+        buffer: buffer1,
+        extension: 'png',
+      });
+      const imageId2 = wb.addImage({
+        buffer: buffer2,
+        extension: 'png',
+      });
+
+      // Add imageId2 first, then imageId1 twice, then imageId2 again
+      ws.addImage(imageId2, 'A1:B2');
+      ws.addImage(imageId1, {
+        tl: {col: 2, row: 0},
+        ext: {width: 50, height: 50},
+        hyperlinks: {
+          hyperlink: 'https://example.com',
+          tooltip: 'Example',
+        },
+      });
+      ws.addImage(imageId1, 'E1:F2');
+      ws.addImage(imageId2, 'G1:H2');
+
+      const outBuffer = await wb.xlsx.writeBuffer();
+      const wb2 = new ExcelJS.Workbook();
+      await wb2.xlsx.load(outBuffer);
+
+      const ws2 = wb2.getWorksheet('blort');
+      const images = ws2.getImages();
+      expect(images.length).to.equal(4);
+
+      expect(Buffer.compare(wb2.getImage(images[0].imageId).buffer, buffer2)).to.equal(0);
+      expect(Buffer.compare(wb2.getImage(images[1].imageId).buffer, buffer1)).to.equal(0);
+      expect(Buffer.compare(wb2.getImage(images[2].imageId).buffer, buffer1)).to.equal(0);
+      expect(Buffer.compare(wb2.getImage(images[3].imageId).buffer, buffer2)).to.equal(0);
+    });
+
+    it('stores embedded image with rotation, extent, and offset (PR #2049)', async () => {
+      const wb = new ExcelJS.Workbook();
+      const ws = wb.addWorksheet('blort');
+
+      const imageId = wb.addImage({
+        filename: IMAGE_FILENAME,
+        extension: 'png',
+      });
+
+      ws.addImage(imageId, 'C3:E6', 90);
+      ws.addImage(imageId, {
+        tl: {col: 1, row: 7},
+        ext: {width: 100, height: 100},
+        rotation: 45,
+      });
+
+      const outBuffer = await wb.xlsx.writeBuffer();
+      const wb2 = new ExcelJS.Workbook();
+      await wb2.xlsx.load(outBuffer);
+
+      const ws2 = wb2.getWorksheet('blort');
+      const images = ws2.getImages();
+      expect(images.length).to.equal(2);
+      expect(images[0].rotation).to.equal(90);
+      expect(images[1].rotation).to.equal(45);
+    });
+
+    it('supports image accessibility title, description, and decorative attributes (PR #1789)', async () => {
+      const JSZip = require('jszip');
+      const wb = new ExcelJS.Workbook();
+      const ws = wb.addWorksheet('blort');
+
+      const imageId = wb.addImage({
+        filename: IMAGE_FILENAME,
+        extension: 'png',
+      });
+
+      ws.addImage(
+        imageId,
+        {
+          tl: {col: 0, row: 0},
+          ext: {width: 500, height: 200},
+        },
+        {
+          title: 'image title',
+          description: 'image alt text',
+          decorative: 1,
+        }
+      );
+
+      expect(ws.getImages()[0].props).to.deep.equal({
+        title: 'image title',
+        description: 'image alt text',
+        decorative: 1,
+      });
+
+      const outBuffer = await wb.xlsx.writeBuffer();
+      const zip = await JSZip.loadAsync(outBuffer);
+      const drawingXml = await zip.file('xl/drawings/drawing1.xml').async('string');
+
+      expect(drawingXml).to.include('title="image title"');
+      expect(drawingXml).to.include('descr="image alt text"');
+      expect(drawingXml).to.include(
+        '<adec:decorative xmlns:adec="http://schemas.microsoft.com/office/drawing/2017/decorative" val="1"/>'
+      );
+    });
+
+    it('validates image extension in addImage (PR #1448)', () => {
+      const wb = new ExcelJS.Workbook();
+      expect(() =>
+        wb.addImage({
+          filename: IMAGE_FILENAME,
+          extension: 'bmp',
+        })
+      ).to.throw('Extension values must be included "jpeg", "png", "gif"');
+
+      expect(() =>
+        wb.addImage({
+          filename: IMAGE_FILENAME,
+        })
+      ).to.throw('Extension values must be included "jpeg", "png", "gif"');
+    });
   });
 });

@@ -35,5 +35,34 @@ describe('StylesXform', () => {
 
       expect(xmlStream.xml).xml.to.equal(expectedXml);
     });
+
+    it('Extracts formatCode when addDxfStyle receives numFmt as an object', () => {
+      const stylesXform = new StylesXform(true);
+      const dxfId = stylesXform.addDxfStyle({
+        numFmt: {id: 164, formatCode: '"$"#,##0.00'},
+      });
+
+      expect(dxfId).to.equal(0);
+
+      const xmlStream = new XmlStream();
+      stylesXform.render(xmlStream);
+
+      expect(xmlStream.xml).to.not.include('[object Object]');
+      expect(xmlStream.xml).to.include('formatCode="&quot;$&quot;#,##0.00"');
+    });
+
+    it('Renders dxf numFmt when addDxfStyle receives numFmt as a string', () => {
+      const stylesXform = new StylesXform(true);
+      const dxfId = stylesXform.addDxfStyle({
+        numFmt: '0.00%',
+      });
+
+      expect(dxfId).to.equal(0);
+
+      const xmlStream = new XmlStream();
+      stylesXform.render(xmlStream);
+
+      expect(xmlStream.xml).to.include('formatCode="0.00%"');
+    });
   });
 });

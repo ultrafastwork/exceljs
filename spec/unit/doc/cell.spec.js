@@ -369,6 +369,45 @@ describe('Cell', () => {
     expect(a1.model.comment.note).to.deep.equal(comment);
   });
 
+  it('can remove comment', () => {
+    const a1 = sheetMock.getCell('A1');
+
+    const comment = {
+      texts: [
+        {
+          font: {
+            size: 12,
+            color: {theme: 0},
+            name: 'Calibri',
+            family: 2,
+            scheme: 'minor',
+          },
+          text: 'This is ',
+        },
+      ],
+      margins: {
+        insetmode: 'auto',
+        inset: [0.13, 0.13, 0.25, 0.25],
+      },
+      protection: {
+        locked: 'True',
+        lockText: 'True',
+      },
+      editAs: 'twoCells',
+    };
+
+    a1.note = comment;
+    a1.value = 'test set value';
+
+    expect(a1.model.comment.type).to.equal('note');
+    expect(a1.model.comment.note).to.deep.equal(comment);
+
+    a1.removeNote();
+
+    expect(a1.note).to.be.undefined();
+    expect(a1.model.comment).to.be.undefined();
+  });
+
   it('Cell comments supports setting margins, protection, and position properties', () => {
     const a1 = sheetMock.getCell('A1');
 
@@ -405,5 +444,103 @@ describe('Cell', () => {
       0.25,
     ]);
     expect(a1.model.comment.note.editAs).to.equal('absolute');
+  });
+
+  it('supports quotePrefix on cell and inherits row/column style', () => {
+    const a1 = sheetMock.getCell('A1');
+    a1.value = '=SUM(B1:B2)';
+    a1.quotePrefix = true;
+    expect(a1.quotePrefix).to.equal(true);
+    expect(a1.style.quotePrefix).to.equal(true);
+
+    const row2 = sheetMock.getRow(2);
+    row2.style = {quotePrefix: true};
+    expect(sheetMock.getCell('A2').quotePrefix).to.equal(true);
+
+    const col3 = sheetMock.getColumn(3);
+    col3.style = {quotePrefix: true};
+    expect(sheetMock.getCell('C3').quotePrefix).to.equal(true);
+  });
+
+  it('clones style object when setting style attributes on shared styles', () => {
+    const cases = [
+      {attr: 'numFmt', initial: '0.00', updated: '#,##0'},
+      {
+        attr: 'font',
+        initial: fonts.arialBlackUI14,
+        updated: fonts.comicSansUdB16,
+      },
+      {
+        attr: 'alignment',
+        initial: {horizontal: 'left'},
+        updated: {horizontal: 'center'},
+      },
+      {
+        attr: 'border',
+        initial: {top: {style: 'thin'}},
+        updated: {bottom: {style: 'thick'}},
+      },
+      {
+        attr: 'fill',
+        initial: {
+          type: 'pattern',
+          pattern: 'solid',
+          fgColor: {argb: 'FFFF0000'},
+        },
+        updated: {
+          type: 'pattern',
+          pattern: 'solid',
+          fgColor: {argb: 'FF00FF00'},
+        },
+      },
+      {
+        attr: 'protection',
+        initial: {locked: true},
+        updated: {locked: false},
+      },
+      {attr: 'quotePrefix', initial: false, updated: true},
+    ];
+
+    cases.forEach(({attr, initial, updated}) => {
+      const sharedStyle = {[attr]: initial};
+      const a1 = sheetMock.getCell('A1');
+      const b1 = sheetMock.getCell('B1');
+      a1.style = sharedStyle;
+      b1.style = sharedStyle;
+
+      a1[attr] = updated;
+
+      expect(a1.style).to.not.equal(b1.style);
+      expect(a1[attr]).to.deep.equal(updated);
+      expect(b1[attr]).to.deep.equal(initial);
+    });
+  });
+
+  it('merges style via setStyle without mutating shared style object (PR #1378)', () => {
+    const sharedStyle = {
+      font: fonts.arialBlackUI14,
+      numFmt: '0.00',
+    };
+    const a1 = sheetMock.getCell('A1');
+    const b1 = sheetMock.getCell('B1');
+    a1.style = sharedStyle;
+    b1.style = sharedStyle;
+
+    a1.setStyle({
+      fill: {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: {argb: 'FF789ABC'},
+      },
+    });
+
+    expect(a1.style).to.not.equal(b1.style);
+    expect(a1.numFmt).to.equal('0.00');
+    expect(a1.fill).to.deep.equal({
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: {argb: 'FF789ABC'},
+    });
+    expect(b1.fill).to.be.undefined();
   });
 });

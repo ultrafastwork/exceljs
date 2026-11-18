@@ -185,6 +185,27 @@ const expectations = [
     options: {hyperlinkMap: fakeHyperlinkMap, styles: fakeStyles},
   },
   {
+    title: 'Inline Rich Text with empty substring',
+    create() {
+      return new CellXform();
+    },
+    preparedModel: {
+      address: 'A1',
+      type: Enums.ValueType.RichText,
+      value: {
+        richText: [
+          {font: {color: {argb: 'FF0000'}}, text: 'red'},
+          {font: {color: {argb: '00FF00'}}, text: ''},
+          {font: {color: {argb: '0000FF'}}, text: 'blue'},
+        ],
+      },
+    },
+    xml:
+      '<c r="A1" t="inlineStr"><is><r><rPr><color rgb="FF0000"/></rPr><t>red</t></r><r><rPr><color rgb="0000FF"/></rPr><t>blue</t></r></is></c>',
+    tests: ['render', 'renderIn'],
+    options: {hyperlinkMap: fakeHyperlinkMap, styles: fakeStyles},
+  },
+  {
     title: 'Shared String',
     create() {
       return new CellXform();
@@ -289,6 +310,109 @@ const expectations = [
       style: {numFmt: 'mm-dd-yy'},
     },
     tests: ['prepare', 'render', 'renderIn', 'parse', 'reconcile'],
+    options: {
+      sharedStrings: new SharedStringsXform(),
+      hyperlinks: [],
+      hyperlinkMap: fakeHyperlinkMap,
+      styles: fakeStyles,
+    },
+  },
+  {
+    title: 'Strict OpenXML Date',
+    create() {
+      return new CellXform();
+    },
+    xml: '<c r="A1" s="1" t="d"><v>2024-02-09</v></c>',
+    parsedModel: {
+      address: 'A1',
+      type: Enums.ValueType.Date,
+      value: new Date('2024-02-09'),
+      styleId: 1,
+    },
+    reconciledModel: {
+      address: 'A1',
+      type: Enums.ValueType.Date,
+      value: new Date('2024-02-09'),
+      style: {numFmt: 'mm-dd-yy'},
+    },
+    tests: ['parse', 'reconcile'],
+    options: {
+      sharedStrings: new SharedStringsXform(),
+      hyperlinks: [],
+      hyperlinkMap: fakeHyperlinkMap,
+      styles: fakeStyles,
+    },
+  },
+  {
+    title: 'Strict OpenXML Date ISO Timestamp',
+    create() {
+      return new CellXform();
+    },
+    xml: '<c r="A1" t="d"><v>2024-02-09T12:34:56.000Z</v></c>',
+    parsedModel: {
+      address: 'A1',
+      type: Enums.ValueType.Date,
+      value: new Date('2024-02-09T12:34:56.000Z'),
+    },
+    reconciledModel: {
+      address: 'A1',
+      type: Enums.ValueType.Date,
+      value: new Date('2024-02-09T12:34:56.000Z'),
+    },
+    tests: ['parse', 'reconcile'],
+    options: {
+      sharedStrings: new SharedStringsXform(),
+      hyperlinks: [],
+      hyperlinkMap: fakeHyperlinkMap,
+      styles: fakeStyles,
+    },
+  },
+  {
+    title: 'Strict OpenXML Formula Date',
+    create() {
+      return new CellXform();
+    },
+    xml: '<c r="A1" s="1" t="d"><f>TODAY()</f><v>2024-02-09</v></c>',
+    parsedModel: {
+      address: 'A1',
+      type: Enums.ValueType.Formula,
+      formula: 'TODAY()',
+      result: new Date('2024-02-09'),
+      styleId: 1,
+    },
+    reconciledModel: {
+      address: 'A1',
+      type: Enums.ValueType.Formula,
+      formula: 'TODAY()',
+      result: new Date('2024-02-09'),
+      style: {numFmt: 'mm-dd-yy'},
+    },
+    tests: ['parse', 'reconcile'],
+    options: {
+      sharedStrings: new SharedStringsXform(),
+      hyperlinks: [],
+      hyperlinkMap: fakeHyperlinkMap,
+      styles: fakeStyles,
+    },
+  },
+  {
+    title: 'Invalid Date',
+    create() {
+      return new CellXform();
+    },
+    initialModel: {
+      address: 'A1',
+      type: Enums.ValueType.Date,
+      value: new Date('invalid'),
+    },
+    preparedModel: {
+      address: 'A1',
+      type: Enums.ValueType.Date,
+      value: new Date('invalid'),
+      styleId: 1,
+    },
+    xml: '<c r="A1" s="1"><v/></c>',
+    tests: ['prepare', 'render', 'renderIn'],
     options: {
       sharedStrings: new SharedStringsXform(),
       hyperlinks: [],

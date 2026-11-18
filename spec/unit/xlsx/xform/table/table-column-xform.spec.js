@@ -23,6 +23,16 @@ const expectations = [
     parsedModel: {name: 'Foo', totalsRowFunction: 'Baz'},
     tests: ['render', 'renderIn', 'parse'],
   },
+  {
+    title: 'calculatedColumnFormula',
+    create() {
+      return new TableColumnXform();
+    },
+    xml:
+      '<tableColumn id="1" name="Foo"><calculatedColumnFormula>Bar</calculatedColumnFormula></tableColumn>',
+    parsedModel: {name: 'Foo'},
+    tests: ['parse'],
+  },
 ];
 
 describe('TableColumnXform', () => {

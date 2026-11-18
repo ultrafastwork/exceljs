@@ -1,3 +1,4 @@
+const path = require('path');
 const testutils = require('../utils/index');
 
 const ExcelJS = verquire('exceljs');
@@ -533,6 +534,44 @@ describe('WorksheetWriter', () => {
       row = ws.getRow(2);
       row.addPageBreak();
       expect(ws.rowBreaks.length).to.equal(2);
+    });
+  });
+
+  describe('Images/Drawings (PR #2201 / PR #2633)', () => {
+    it('adds images and verifies worksheet drawings in streaming mode', async () => {
+      const filename = path.join(__dirname, '../out/wb-images.test.xlsx');
+      const wb = new ExcelJS.stream.xlsx.WorkbookWriter({
+        filename,
+        useStyles: true,
+        useSharedStrings: true,
+      });
+      const ws1 = wb.addWorksheet('foo');
+      const ws2 = wb.addWorksheet('bar');
+
+      const imageId1 = wb.addImage({
+        filename: path.join(__dirname, 'data/image.png'),
+        extension: 'png',
+      });
+
+      const sheetImageId1 = ws1.addImage(imageId1, {
+        tl: {col: 0.25, row: 0.7},
+        ext: {width: 160, height: 60},
+      });
+      expect(sheetImageId1).to.be.a('string');
+      expect(ws1.getImages().length).to.equal(1);
+
+      const sheetImageId2 = ws2.addImage(imageId1, 'C1:F10');
+      expect(sheetImageId2).to.be.a('string');
+      expect(ws2.getImages().length).to.equal(1);
+
+      await ws1.commit();
+      await ws2.commit();
+      await wb.commit();
+
+      const wb2 = new ExcelJS.Workbook();
+      await wb2.xlsx.readFile(filename);
+      expect(wb2.getWorksheet('foo').getImages().length).to.equal(1);
+      expect(wb2.getWorksheet('bar').getImages().length).to.equal(1);
     });
   });
 });

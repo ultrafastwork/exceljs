@@ -46,6 +46,19 @@ describe('utils', () => {
 
       expect(excelDate).to.equal(43084.70833333333);
     });
+
+    it('should return undefined for invalid Date values', () => {
+      expect(utils.dateToExcel(new Date('invalid'), false)).to.be.undefined();
+      expect(utils.dateToExcel(new Date(NaN), false)).to.be.undefined();
+    });
+
+    it('should return undefined for non-Date values', () => {
+      expect(utils.dateToExcel(null, false)).to.be.undefined();
+      expect(utils.dateToExcel(undefined, false)).to.be.undefined();
+      expect(utils.dateToExcel('2017-12-15', false)).to.be.undefined();
+      expect(utils.dateToExcel(43084, false)).to.be.undefined();
+      expect(utils.dateToExcel({}, false)).to.be.undefined();
+    });
   });
 
   describe('excelToDate', () => {
@@ -64,6 +77,53 @@ describe('utils', () => {
       const dateConverted = utils.excelToDate(excelDate, false);
 
       expect(dateConverted).to.deep.equal(myDate);
+    });
+  });
+
+  describe('cloneDeep', () => {
+    it('should be null', () => {
+      const clone = utils.cloneDeep(null);
+
+      expect(clone).to.be.equal(null);
+    });
+    it('should be date', () => {
+      const myDate = new Date(Date.UTC(2017, 11, 15, 17, 0, 0, 0));
+      const cloneDate = utils.cloneDeep(myDate);
+
+      expect(cloneDate).to.deep.equal(myDate);
+    });
+    it('should be string', () => {
+      const clone = utils.cloneDeep('string');
+
+      expect(clone).to.equal('string');
+    });
+    it('should be array', () => {
+      const origin = [1, 2, [3, undefined, [5]]];
+      const clone = utils.cloneDeep(origin);
+
+      expect(clone).to.deep.equal(origin);
+
+      origin.push(6);
+
+      expect(clone).not.to.deep.equal(origin);
+    });
+    it('should be object', () => {
+      const origin = {
+        name: 'test',
+        goods: [1, 2, 3, [4]],
+        theme: {
+          font: 'red',
+          size: 12,
+          border: undefined,
+        },
+      };
+      const clone = utils.cloneDeep(origin);
+
+      expect(clone).to.deep.equal(origin);
+
+      origin.theme.size = 13;
+
+      expect(clone).not.to.deep.equal(origin);
     });
   });
 });
