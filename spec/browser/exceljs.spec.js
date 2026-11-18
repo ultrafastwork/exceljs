@@ -38,7 +38,7 @@ describe('ExcelJS', () => {
       })
       .catch(unexpectedError(done));
   });
-  it('should read xlsx via blob', async done => {
+  it('should read xlsx via blob', done => {
     const wb = new ExcelJS.Workbook();
     const ws = wb.addWorksheet('blort');
 
