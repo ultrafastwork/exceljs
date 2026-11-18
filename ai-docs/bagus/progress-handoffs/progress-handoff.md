@@ -1,12 +1,14 @@
-# progress-handoff (v1.0.0+88) - Active
+# progress-handoff (v1.0.0+89) - Active
 
 ## Status
 - **Status**: Active
-- **Current Session**: `v1.0.0+88`
+- **Current Session**: `v1.0.0+89`
 - **Developer**: bagus
 
 ## Pending Tasks
-- [ ] Decide distribution: keep git-tag installs (`github:<owner>/exceljs#v4.5.0`) or rename to a scoped package (e.g. `@<scope>/exceljs`) and update `repository`/`bugs`/`homepage` for npm publishing. **Ask the user before changing the package name.**
-- [ ] Fix browser test tooling on Node 26 (upgrade `grunt-contrib-jasmine`/Puppeteer, Jasmine 4.x, `headless: 'new'`). Until then, run Jasmine with Node 24 (see `ai-docs/planned.md` → Known Environment Caveats).
-- [ ] Remove the redundant `patches/jszip+3.10.1.patch` (pnpm uses `patches/jszip@3.10.1.patch`).
+- [ ] Close the `dist/` gap for git-tag consumers. `dist/` is gitignored, so `github:ultrafastwork/exceljs#vX.Y.Z` installs have no `browser` bundle and no `dist/es5`, and the jszip CSP patch doesn't reach consumers. **Ask the user** which to use: (a) a release tag commit that includes the built `dist/`, (b) a `prepare` build step, or (c) GitHub Release tarballs from `pnpm pack`.
+- [ ] Consider tracking `pnpm-lock.yaml` (currently gitignored) for reproducible installs. **Ask the user first.**
+- [ ] Long term: replace the unmaintained `grunt-contrib-jasmine` (Puppeteer override in `pnpm-workspace.yaml`) with direct Puppeteer or `jasmine-browser-runner`.
 - [ ] Backlog in `ai-docs/planned.md`: pivot table class refactor and metrics, ZIP dependency strategy, Node engine floor.
+
+## Recent Accomplishments
