@@ -863,7 +863,7 @@ await workbook.xlsx.writeFile('multiple-pivots.xlsx');
 
 ---
 
-## [#2989] Fix transitive dependencies issues in Snyk for outdated version of archiver
+## [DONE] [#2989] Fix transitive dependencies issues in Snyk for outdated version of archiver
 
 - **GitHub URL:** [PR #2989 on GitHub](https://github.com/exceljs/exceljs/pull/2989)
 - **Author:** [@nickiannone-fis](https://github.com/nickiannone-fis)
@@ -1147,7 +1147,7 @@ If a non-numeric value is passed to dateToExcel(), like when it's called because
 
 ---
 
-## [#2930] Update content-types.01.xml
+## [DONE] [#2930] Update content-types.01.xml
 
 - **GitHub URL:** [PR #2930 on GitHub](https://github.com/exceljs/exceljs/pull/2930)
 - **Author:** [@MatheusdeArmas](https://github.com/MatheusdeArmas)
@@ -1355,7 +1355,7 @@ Before the modification, BufferToString would cause the processed stream to be t
 
 ---
 
-## [#2891] #2878: dependencies bump and code fix
+## [DONE] [#2891] #2878: dependencies bump and code fix
 
 - **GitHub URL:** [PR #2891 on GitHub](https://github.com/exceljs/exceljs/pull/2891)
 - **Author:** [@rengare](https://github.com/rengare) (Gracjan Górecki)
@@ -1507,7 +1507,7 @@ None.
 
 ---
 
-## [#2869] Bumping unzipper (DUPLICATED #2744)
+## [DONE] [#2869] Bumping unzipper (DUPLICATED #2744)
 
 - **GitHub URL:** [PR #2869 on GitHub](https://github.com/exceljs/exceljs/pull/2869)
 - **Author:** [@Siemienik](https://github.com/Siemienik) (Siemienik Pawel)
@@ -1522,7 +1522,7 @@ Duplicate #2744 due to run pipeline.
 
 ---
 
-## [#2867] Introducing styleCacheMode. Up to 3x performance improvements on xlsx…
+## [DONE] [#2867] Introducing styleCacheMode. Up to 3x performance improvements on xlsx…
 
 - **GitHub URL:** [PR #2867 on GitHub](https://github.com/exceljs/exceljs/pull/2867)
 - **Author:** [@brunoargolo](https://github.com/brunoargolo)
@@ -1668,7 +1668,7 @@ N/A (updated typings are reflected in diffs to runtime code + tests).
 
 ---
 
-## [#2847] Shuntagami patch 1
+## [DONE] [#2847] Shuntagami patch 1
 
 - **GitHub URL:** [PR #2847 on GitHub](https://github.com/exceljs/exceljs/pull/2847)
 - **Author:** [@shuntagami](https://github.com/shuntagami)
@@ -1718,7 +1718,7 @@ I tested this on one machine running Ubuntu 24.04. I would love to test it more 
 
 ---
 
-## [#2812] update-dependency-version
+## [DONE] [#2812] update-dependency-version
 
 - **GitHub URL:** [PR #2812 on GitHub](https://github.com/exceljs/exceljs/pull/2812)
 - **Author:** [@Diego-18](https://github.com/Diego-18) (Diego Jose Chavez Chirinos)
@@ -2040,7 +2040,7 @@ N/A
 
 ---
 
-## [#2779] improve: add logs to help developers troubleshoot issues
+## [DONE] [#2779] improve: add logs to help developers troubleshoot issues
 
 - **GitHub URL:** [PR #2779 on GitHub](https://github.com/exceljs/exceljs/pull/2779)
 - **Author:** [@gweesin](https://github.com/gweesin) (gweesin)
@@ -2136,7 +2136,7 @@ console.log('cell: 1,2: ', cell12.value); // Displays:  '    '
 
 ---
 
-## [#2744] bump: Bumping unzipper to mitigate license issue
+## [DONE] [#2744] bump: Bumping unzipper to mitigate license issue
 
 - **GitHub URL:** [PR #2744 on GitHub](https://github.com/exceljs/exceljs/pull/2744)
 - **Author:** [@dubzzz](https://github.com/dubzzz) (Nicolas DUBIEN)
@@ -2246,7 +2246,7 @@ https://github.com/exceljs/exceljs/blob/master/index.d.ts#L1625C2-L1626C14
 
 ---
 
-## [#2710] fix: add proper version control to deps
+## [DONE] [#2710] fix: add proper version control to deps
 
 - **GitHub URL:** [PR #2710 on GitHub](https://github.com/exceljs/exceljs/pull/2710)
 - **Author:** [@haikal-handamara-x150s](https://github.com/haikal-handamara-x150s) (Haikal Handamara)
@@ -2590,7 +2590,7 @@ I have attached a file there. Loading that file goes from 1.5 minutes in node JS
 
 ---
 
-## [#2688] update package name
+## [DONE] [#2688] update package name
 
 - **GitHub URL:** [PR #2688 on GitHub](https://github.com/exceljs/exceljs/pull/2688)
 - **Author:** [@SahilTamboli7194](https://github.com/SahilTamboli7194) (Sahil Tamboli)
@@ -2617,7 +2617,7 @@ I have attached a file there. Loading that file goes from 1.5 minutes in node JS
 
 ---
 
-## [#2687] [Breaking] Replace unzipper with yauzl-promise
+## [DONE] [#2687] [Breaking] Replace unzipper with yauzl-promise
 
 - **GitHub URL:** [PR #2687 on GitHub](https://github.com/exceljs/exceljs/pull/2687)
 - **Author:** [@pnappa](https://github.com/pnappa) (Patrick Nappa)
@@ -3550,7 +3550,7 @@ No code changes - only added tests
 
 ---
 
-## [#2278] Downgrade regenerator runtime dependency to be CSP strict-src compliant
+## [DONE] [#2278] Downgrade regenerator runtime dependency to be CSP strict-src compliant
 
 - **GitHub URL:** [PR #2278 on GitHub](https://github.com/exceljs/exceljs/pull/2278)
 - **Author:** [@lakshit-dua](https://github.com/lakshit-dua)
@@ -4012,7 +4012,7 @@ Make spreadsheet with a note in a cell within a table. Note that the spreadsheet
 
 ---
 
-## [#2077] Basic shape support added
+## [DONE] [#2077] Basic shape support added
 
 - **GitHub URL:** [PR #2077 on GitHub](https://github.com/exceljs/exceljs/pull/2077)
 - **Author:** [@DantSu](https://github.com/DantSu) (Franck Alary)
@@ -4732,7 +4732,7 @@ Added a streaming table test in workbook-xlsx-writer.spec.js I exported the tabl
 
 ---
 
-## [#1869] Lint fixes
+## [DONE] [#1869] Lint fixes
 
 - **GitHub URL:** [PR #1869 on GitHub](https://github.com/exceljs/exceljs/pull/1869)
 - **Author:** [@bno1](https://github.com/bno1)
@@ -4955,7 +4955,7 @@ node ./test/test-saxes-stream-mbstr.js
 
 ---
 
-## [#1664] FIXES #713 Remove 'use strict' strings brute force to enable module packaging
+## [DONE] [#1664] FIXES #713 Remove 'use strict' strings brute force to enable module packaging
 
 - **GitHub URL:** [PR #1664 on GitHub](https://github.com/exceljs/exceljs/pull/1664)
 - **Author:** [@laurisvan](https://github.com/laurisvan) (Lauri Svan)
@@ -5208,7 +5208,7 @@ I followed the step described in #1515 and with the changes from this pull reque
 
 ---
 
-## [#1457] browser: add streaming xlsx reader for blob
+## [DONE] [#1457] browser: add streaming xlsx reader for blob
 
 - **GitHub URL:** [PR #1457 on GitHub](https://github.com/exceljs/exceljs/pull/1457)
 - **Author:** [@myfreeer](https://github.com/myfreeer)
