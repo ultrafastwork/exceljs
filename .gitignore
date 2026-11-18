@@ -67,4 +67,3 @@ _SpecRunner.html
 # Ignore xlsx files generated during testing
 *.xlsx
 pnpm-lock.yaml
-pnpm-workspace.yaml

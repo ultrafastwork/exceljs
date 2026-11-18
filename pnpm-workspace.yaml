@@ -1,0 +1,9 @@
+allowBuilds:
+  core-js: true
+  husky: true
+  puppeteer: true
+
+# Strip jszip's `new Function` setImmediate fallback so browser bundles
+# stay CSP-compliant (no 'unsafe-eval'). See upstream PR #2672.
+patchedDependencies:
+  jszip@3.10.1: patches/jszip@3.10.1.patch
