@@ -930,7 +930,7 @@ worksheet.addImage(imageId, {
 
 ---
 
-## [#2978] Fix undefined column assignment autofilter
+## [DONE] [#2978] Fix undefined column assignment autofilter
 
 - **GitHub URL:** [PR #2978 on GitHub](https://github.com/exceljs/exceljs/pull/2978)
 - **Author:** [@hypesystem](https://github.com/hypesystem) (Niels Abildgaard)
@@ -964,7 +964,7 @@ N/A
 
 ---
 
-## [#2977] Fix large validation ranges by clamping range to highest row in actual data
+## [DONE] [#2977] Fix large validation ranges by clamping range to highest row in actual data
 
 - **GitHub URL:** [PR #2977 on GitHub](https://github.com/exceljs/exceljs/pull/2977)
 - **Author:** [@hypesystem](https://github.com/hypesystem) (Niels Abildgaard)
@@ -1001,7 +1001,7 @@ N/A
 
 ---
 
-## [#2973] Fix parsing error for dynamicFilter nodes in Excel tables
+## [DONE] [#2973] Fix parsing error for dynamicFilter nodes in Excel tables
 
 - **GitHub URL:** [PR #2973 on GitHub](https://github.com/exceljs/exceljs/pull/2973)
 - **Author:** [@johnnyoshika](https://github.com/johnnyoshika) (Johnny Oshika)
@@ -1130,7 +1130,7 @@ This is a very minor change. There is no attempt to add dynamic filter support i
 
 ---
 
-## [#2956] Fix the return value from dateToExcel() when it's passed a non-numeric value.
+## [DONE] [#2956] Fix the return value from dateToExcel() when it's passed a non-numeric value.
 
 - **GitHub URL:** [PR #2956 on GitHub](https://github.com/exceljs/exceljs/pull/2956)
 - **Author:** [@davepuchyr](https://github.com/davepuchyr)
@@ -1275,7 +1275,7 @@ Execute the process to parse Excel files at frequent intervals.
 
 ---
 
-## [#2912] Fix a constant identifier naming error in the Chinese documentation
+## [DONE] [#2912] Fix a constant identifier naming error in the Chinese documentation
 
 - **GitHub URL:** [PR #2912 on GitHub](https://github.com/exceljs/exceljs/pull/2912)
 - **Author:** [@yusn](https://github.com/yusn) (余森)
@@ -1382,7 +1382,7 @@ Before the modification, BufferToString would cause the processed stream to be t
 
 ---
 
-## [#2885] feat: add 'count' metric for pivot table
+## [DONE] [#2885] feat: add 'count' metric for pivot table
 
 - **GitHub URL:** [PR #2885 on GitHub](https://github.com/exceljs/exceljs/pull/2885)
 - **Author:** [@dsilva01](https://github.com/dsilva01) (Desiderio Silva)
@@ -1415,7 +1415,7 @@ The PR includes a new unit test file, [pivot-tables-with-count.spec.js](https://
 
 ---
 
-## [#2883] Make to work with expressions with no formulae
+## [DONE] [#2883] Make to work with expressions with no formulae
 
 - **GitHub URL:** [PR #2883 on GitHub](https://github.com/exceljs/exceljs/pull/2883)
 - **Author:** [@AndresDSoto](https://github.com/AndresDSoto) (Andres)
@@ -1445,7 +1445,7 @@ No tests as it is trying to avoid the error: TypeError: Cannot read properties o
 
 ---
 
-## [#2876] Fix error of adding image in certain situations
+## [DONE] [#2876] Fix error of adding image in certain situations
 
 - **GitHub URL:** [PR #2876 on GitHub](https://github.com/exceljs/exceljs/pull/2876)
 - **Author:** [@wwwxy80s](https://github.com/wwwxy80s) (wwwxy)
@@ -1480,7 +1480,7 @@ all case passed
 
 ---
 
-## [#2874] Fix: Changed error-prone race conditions
+## [DONE] [#2874] Fix: Changed error-prone race conditions
 
 - **GitHub URL:** [PR #2874 on GitHub](https://github.com/exceljs/exceljs/pull/2874)
 - **Author:** [@StevenGee3398](https://github.com/StevenGee3398) (Steven)
@@ -1592,7 +1592,7 @@ npm run benchmark:styles
 
 ---
 
-## [#2852] fix: add check for empty target on worksheet-xform reconcile
+## [DONE] [#2852] fix: add check for empty target on worksheet-xform reconcile
 
 - **GitHub URL:** [PR #2852 on GitHub](https://github.com/exceljs/exceljs/pull/2852)
 - **Author:** [@kyleamazza-fq](https://github.com/kyleamazza-fq)
@@ -1620,7 +1620,7 @@ Adds a conditional check for comments in the model.relationships of worksheet-xf
 
 ---
 
-## [#2851] fix boolean read val error like as ：<strike val="0"/>
+## [DONE] [#2851] fix boolean read val error like as ：<strike val="0"/>
 
 - **GitHub URL:** [PR #2851 on GitHub](https://github.com/exceljs/exceljs/pull/2851)
 - **Author:** [@Jason33Wang](https://github.com/Jason33Wang) (Jason233Wang)
@@ -1640,7 +1640,7 @@ The current code doesn't handle <strike val="0"/> correctly. This PR fixes it by
 
 ---
 
-## [#2849] feat: support web-native streams for read/write methods
+## [DONE] [#2849] feat: support web-native streams for read/write methods
 
 - **GitHub URL:** [PR #2849 on GitHub](https://github.com/exceljs/exceljs/pull/2849)
 - **Author:** [@lionel-rowe](https://github.com/lionel-rowe)
@@ -1695,7 +1695,7 @@ N/A (updated typings are reflected in diffs to runtime code + tests).
 
 ---
 
-## [#2846] Update xlsx.js to allow compat with non office generated files.
+## [DONE] [#2846] Update xlsx.js to allow compat with non office generated files.
 
 - **GitHub URL:** [PR #2846 on GitHub](https://github.com/exceljs/exceljs/pull/2846)
 - **Author:** [@TheMrDec](https://github.com/TheMrDec) (The Mr Dec)
@@ -1745,7 +1745,7 @@ I tested this on one machine running Ubuntu 24.04. I would love to test it more 
 
 ---
 
-## [#2809] Added quote prefix feature
+## [DONE] [#2809] Added quote prefix feature
 
 - **GitHub URL:** [PR #2809 on GitHub](https://github.com/exceljs/exceljs/pull/2809)
 - **Author:** [@ldefelici-mitobit](https://github.com/ldefelici-mitobit)
@@ -1773,7 +1773,7 @@ To test the new feature we added a new test 'spec/escape/escape.js' that creates
 
 ---
 
-## [#2807] place pageSetUpPr in the end of sheetPr to fix getting broken xlsx do…
+## [DONE] [#2807] place pageSetUpPr in the end of sheetPr to fix getting broken xlsx do…
 
 - **GitHub URL:** [PR #2807 on GitHub](https://github.com/exceljs/exceljs/pull/2807)
 - **Author:** [@strelok372](https://github.com/strelok372) (v.doz)
@@ -1816,7 +1816,7 @@ https://github.com/exceljs/exceljs/blob/5bed18b45e824f409b08456b59b87430ded023ab
 
 ---
 
-## [#2803] Fix corrupted file with conditional formatting and hyperlinks
+## [DONE] [#2803] Fix corrupted file with conditional formatting and hyperlinks
 
 - **GitHub URL:** [PR #2803 on GitHub](https://github.com/exceljs/exceljs/pull/2803)
 - **Author:** [@TheAsda](https://github.com/TheAsda) (Andrey Kiselev)
@@ -1902,7 +1902,7 @@ The file generates successfully and opens in Excel:
 
 ---
 
-## [#2800] fix: worksheet-reader hidden prop
+## [DONE] [#2800] fix: worksheet-reader hidden prop
 
 - **GitHub URL:** [PR #2800 on GitHub](https://github.com/exceljs/exceljs/pull/2800)
 - **Author:** [@babu-ch](https://github.com/babu-ch) (bab)
@@ -1937,7 +1937,7 @@ https://github.com/exceljs/exceljs/blob/5bed18b45e824f409b08456b59b87430ded023ab
 
 ---
 
-## [#2791] Issue 2790/xlsx stream missing worksheets
+## [DONE] [#2791] Issue 2790/xlsx stream missing worksheets
 
 - **GitHub URL:** [PR #2791 on GitHub](https://github.com/exceljs/exceljs/pull/2791)
 - **Author:** [@LarryKen](https://github.com/LarryKen) (Larry Burrows)
@@ -1977,7 +1977,7 @@ Running `npm run test:integration` get 194 tests passing 2 failing (The 2 failin
 
 ---
 
-## [#2783] :memo: Fix errors in document about image embedding
+## [DONE] [#2783] :memo: Fix errors in document about image embedding
 
 - **GitHub URL:** [PR #2783 on GitHub](https://github.com/exceljs/exceljs/pull/2783)
 - **Author:** [@Cat7373](https://github.com/Cat7373) (Cat73)
@@ -2009,7 +2009,7 @@ From my project code, it works correctly:
 
 ---
 
-## [#2781] fix: setting cell style attribute clones style object
+## [DONE] [#2781] fix: setting cell style attribute clones style object
 
 - **GitHub URL:** [PR #2781 on GitHub](https://github.com/exceljs/exceljs/pull/2781)
 - **Author:** [@gmahomarf](https://github.com/gmahomarf) (Gazy Mahomar)
@@ -2078,7 +2078,7 @@ https://github.com/exceljs/exceljs/blob/5bed18b45e824f409b08456b59b87430ded023ab
 
 ---
 
-## [#2767] Bug2675 table creation accepts invalid names
+## [DONE] [#2767] Bug2675 table creation accepts invalid names
 
 - **GitHub URL:** [PR #2767 on GitHub](https://github.com/exceljs/exceljs/pull/2767)
 - **Author:** [@georgbuehler](https://github.com/georgbuehler)
@@ -2103,7 +2103,7 @@ New assertion and supporting function in [table.js](https://github.com/georgbueh
 
 ---
 
-## [#2752] fix #2751 - Csv reading - cells filled with spaces only are converted to 0 
+## [DONE] [#2752] fix #2751 - Csv reading - cells filled with spaces only are converted to 0 
 
 - **GitHub URL:** [PR #2752 on GitHub](https://github.com/exceljs/exceljs/pull/2752)
 - **Author:** [@tlgman](https://github.com/tlgman) (Sylvio Menubarbe)
@@ -2173,7 +2173,7 @@ Not applicable
 
 ---
 
-## [#2737] Don't render empty rich text substrings
+## [DONE] [#2737] Don't render empty rich text substrings
 
 - **GitHub URL:** [PR #2737 on GitHub](https://github.com/exceljs/exceljs/pull/2737)
 - **Author:** [@Blackhol3](https://github.com/Blackhol3) (Amaury Dalla Monta)
@@ -2209,7 +2209,7 @@ Not rendering the empty substring in the XML solves the problem, without changin
 
 ---
 
-## [#2736] Improve conditional formatting settings
+## [DONE] [#2736] Improve conditional formatting settings
 
 - **GitHub URL:** [PR #2736 on GitHub](https://github.com/exceljs/exceljs/pull/2736)
 - **Author:** [@Blackhol3](https://github.com/Blackhol3) (Amaury Dalla Monta)
@@ -2224,7 +2224,7 @@ Fix #2233 by allowing the `stopIfTrue` setting, and improve the TypeScript defin
 
 ---
 
-## [#2720] Fix type mismatch in Address interface
+## [DONE] [#2720] Fix type mismatch in Address interface
 
 - **GitHub URL:** [PR #2720 on GitHub](https://github.com/exceljs/exceljs/pull/2720)
 - **Author:** [@ashc0](https://github.com/ashc0) (Ersola)
@@ -2274,7 +2274,7 @@ Nothing
 
 ---
 
-## [#2702] Fix date parsing for Strict OpenXML spreadsheets
+## [DONE] [#2702] Fix date parsing for Strict OpenXML spreadsheets
 
 - **GitHub URL:** [PR #2702 on GitHub](https://github.com/exceljs/exceljs/pull/2702)
 - **Author:** [@jec006](https://github.com/jec006) (Josh Caldwell)
@@ -2463,7 +2463,7 @@ This fixes the issue https://github.com/exceljs/exceljs/issues/2695, the parsing
 
 ---
 
-## [#2698] Issue: style.xml has [Object object] as formatCode
+## [DONE] [#2698] Issue: style.xml has [Object object] as formatCode
 
 - **GitHub URL:** [PR #2698 on GitHub](https://github.com/exceljs/exceljs/pull/2698)
 - **Author:** [@jmatth11](https://github.com/jmatth11) (Joshua Matthews)
@@ -2529,7 +2529,7 @@ I'm not really sure what is supposed to go here.
 
 ---
 
-## [#2697] Add type DataValidationType
+## [DONE] [#2697] Add type DataValidationType
 
 - **GitHub URL:** [PR #2697 on GitHub](https://github.com/exceljs/exceljs/pull/2697)
 - **Author:** [@gregfenton](https://github.com/gregfenton) (Greg Fenton)
@@ -2560,7 +2560,7 @@ Added a new type (DataValidationType) and used it in one other type definition (
 
 ---
 
-## [#2691] fix: inefficient merge check for large amount of merged cells within …
+## [DONE] [#2691] fix: inefficient merge check for large amount of merged cells within …
 
 - **GitHub URL:** [PR #2691 on GitHub](https://github.com/exceljs/exceljs/pull/2691)
 - **Author:** [@aorsten](https://github.com/aorsten)
@@ -2644,7 +2644,7 @@ Resolves https://github.com/exceljs/exceljs/issues/2686
 
 ---
 
-## [#2685] Fix error saving files when streaming using autofilter and sheet protection
+## [DONE] [#2685] Fix error saving files when streaming using autofilter and sheet protection
 
 - **GitHub URL:** [PR #2685 on GitHub](https://github.com/exceljs/exceljs/pull/2685)
 - **Author:** [@Dokril](https://github.com/Dokril) (Dmitriy Petrov)
@@ -2691,7 +2691,7 @@ Changes to the pull request correct this error.
 
 ---
 
-## [#2680] Fix for Bug 2678: Table creation allows empty array of rows
+## [DONE] [#2680] Fix for Bug 2678: Table creation allows empty array of rows
 
 - **GitHub URL:** [PR #2680 on GitHub](https://github.com/exceljs/exceljs/pull/2680)
 - **Author:** [@georgbuehler](https://github.com/georgbuehler)
@@ -2718,7 +2718,7 @@ One line of code changed in [Table.js](https://github.com/exceljs/exceljs/blob/m
 
 ---
 
-## [#2672] Fix 'unsafe-eval' CSP issue
+## [DONE] [#2672] Fix 'unsafe-eval' CSP issue
 
 - **GitHub URL:** [PR #2672 on GitHub](https://github.com/exceljs/exceljs/pull/2672)
 - **Author:** [@cherniavskii](https://github.com/cherniavskii) (Andrew Cherniavskii)
@@ -2748,7 +2748,7 @@ I'll prepare before/after demos later as it's tricky to do with Codesandbox/Stac
 
 ---
 
-## [#2671] fix: make iterate-stream more resilient
+## [DONE] [#2671] fix: make iterate-stream more resilient
 
 - **GitHub URL:** [PR #2671 on GitHub](https://github.com/exceljs/exceljs/pull/2671)
 - **Author:** [@Kkoile](https://github.com/Kkoile) (Nils Hirsekorn)
@@ -2775,7 +2775,7 @@ n/a
 
 ---
 
-## [#2664] Worksheet protect(): fix types
+## [DONE] [#2664] Worksheet protect(): fix types
 
 - **GitHub URL:** [PR #2664 on GitHub](https://github.com/exceljs/exceljs/pull/2664)
 - **Author:** [@nuragic](https://github.com/nuragic) (Andrea Puddu)
@@ -2796,7 +2796,7 @@ I added a basic test, let me know if you would like to make any change.
 
 ---
 
-## [#2655] add: add color field in data bar cf in typescript
+## [DONE] [#2655] add: add color field in data bar cf in typescript
 
 - **GitHub URL:** [PR #2655 on GitHub](https://github.com/exceljs/exceljs/pull/2655)
 - **Author:** [@krhambaliyaavesta](https://github.com/krhambaliyaavesta) (Krunal Ambaliya)
@@ -2839,7 +2839,7 @@ I made a change in the TypeScript type file, specifically in the Databar interfa
 
 ---
 
-## [#2651] Fix issue #2547
+## [DONE] [#2651] Fix issue #2547
 
 - **GitHub URL:** [PR #2651 on GitHub](https://github.com/exceljs/exceljs/pull/2651)
 - **Author:** [@darkag](https://github.com/darkag)
@@ -2882,7 +2882,7 @@ the exported file will open with this fix but won't without.
 
 ---
 
-## [#2633] WorksheetWriter.addImage
+## [DONE] [#2633] WorksheetWriter.addImage
 
 - **GitHub URL:** [PR #2633 on GitHub](https://github.com/exceljs/exceljs/pull/2633)
 - **Author:** [@shuntagami](https://github.com/shuntagami)
@@ -2911,7 +2911,7 @@ add a bug fix on https://github.com/exceljs/exceljs/pull/2201, resolved conflict
 
 ---
 
-## [#2630] Add additional Media types for worksheet and workbook (Improves type of Media interface)
+## [DONE] [#2630] Add additional Media types for worksheet and workbook (Improves type of Media interface)
 
 - **GitHub URL:** [PR #2630 on GitHub](https://github.com/exceljs/exceljs/pull/2630)
 - **Author:** [@devcomfort](https://github.com/devcomfort) (devcomfort)
@@ -2946,7 +2946,7 @@ Changed type of type property from `string` to `"image" | "background"`.
 
 ---
 
-## [#2625] Fix splicecolumn mergedcells
+## [DONE] [#2625] Fix splicecolumn mergedcells
 
 - **GitHub URL:** [PR #2625 on GitHub](https://github.com/exceljs/exceljs/pull/2625)
 - **Author:** [@roshanreacts](https://github.com/roshanreacts) (Roshan K Gujarathi)
@@ -3012,7 +3012,7 @@ Other than the above rest of all are the format changes from prettier
 
 ---
 
-## [#2614] fix: addImage position is wrong
+## [DONE] [#2614] fix: addImage position is wrong
 
 - **GitHub URL:** [PR #2614 on GitHub](https://github.com/exceljs/exceljs/pull/2614)
 - **Author:** [@newbeea](https://github.com/newbeea) (Phil Xu)
@@ -3141,7 +3141,7 @@ Typings update is not required.
 
 ---
 
-## [#2602] Parse page breaks
+## [DONE] [#2602] Parse page breaks
 
 - **GitHub URL:** [PR #2602 on GitHub](https://github.com/exceljs/exceljs/pull/2602)
 - **Author:** [@kigh-ota](https://github.com/kigh-ota) (Kaiichiro Ota)
@@ -3186,7 +3186,7 @@ I also added unit tests in `worksheet-xform.spec.js`.
 
 ---
 
-## [#2601] feat: Support shapes and text boxes
+## [DONE] [#2601] feat: Support shapes and text boxes
 
 - **GitHub URL:** [PR #2601 on GitHub](https://github.com/exceljs/exceljs/pull/2601)
 - **Author:** [@kigh-ota](https://github.com/kigh-ota) (Kaiichiro Ota)
@@ -3245,7 +3245,7 @@ ws.addShape({
 
 ---
 
-## [#2596] fix: updated dimensions type
+## [DONE] [#2596] fix: updated dimensions type
 
 - **GitHub URL:** [PR #2596 on GitHub](https://github.com/exceljs/exceljs/pull/2596)
 - **Author:** [@sr-26](https://github.com/sr-26) (Weasely)
@@ -3264,7 +3264,7 @@ Closes  #2592
 
 ---
 
-## [#2588] Fix shared strings and richText
+## [DONE] [#2588] Fix shared strings and richText
 
 - **GitHub URL:** [PR #2588 on GitHub](https://github.com/exceljs/exceljs/pull/2588)
 - **Author:** [@PetrChalov](https://github.com/PetrChalov) (Petr Chalov)
@@ -3287,7 +3287,7 @@ Create a workbook with multiple richText values and enabled useSharedStrings.
 
 ---
 
-## [#2587] Fix types of Row and Column values
+## [DONE] [#2587] Fix types of Row and Column values
 
 - **GitHub URL:** [PR #2587 on GitHub](https://github.com/exceljs/exceljs/pull/2587)
 - **Author:** [@pex](https://github.com/pex) (Roman Ernst)
@@ -3307,7 +3307,7 @@ Create a workbook with multiple richText values and enabled useSharedStrings.
 
 ---
 
-## [#2578] PivotTable: Support multiple values
+## [DONE] [#2578] PivotTable: Support multiple values
 
 - **GitHub URL:** [PR #2578 on GitHub](https://github.com/exceljs/exceljs/pull/2578)
 - **Author:** [@Rablet](https://github.com/Rablet) (Robin Edrenius)
@@ -3340,7 +3340,7 @@ I crated a PivotTable with one value and multiple columns without problems
 
 ---
 
-## [#2577] Fixed tabColor example and documented hexadecimal format
+## [DONE] [#2577] Fixed tabColor example and documented hexadecimal format
 
 - **GitHub URL:** [PR #2577 on GitHub](https://github.com/exceljs/exceljs/pull/2577)
 - **Author:** [@Mike-Dax](https://github.com/Mike-Dax) (Michael)
@@ -3361,7 +3361,7 @@ The README had an incorrect example for `tabColor`. I've also specified the alph
 
 ---
 
-## [#2563] feat: header and footer support image
+## [DONE] [#2563] feat: header and footer support image
 
 - **GitHub URL:** [PR #2563 on GitHub](https://github.com/exceljs/exceljs/pull/2563)
 - **Author:** [@baian1](https://github.com/baian1)
@@ -3399,7 +3399,7 @@ test xlsx compatibility
 
 ---
 
-## [#2562] fix: fixes typescript and intellisense
+## [DONE] [#2562] fix: fixes typescript and intellisense
 
 - **GitHub URL:** [PR #2562 on GitHub](https://github.com/exceljs/exceljs/pull/2562)
 - **Author:** [@groozin](https://github.com/groozin) (Tomasz Mikos)
@@ -3474,7 +3474,7 @@ See below:
 
 ---
 
-## [#2558] Fix the problem with writing a file using streams and not using RAM
+## [DONE] [#2558] Fix the problem with writing a file using streams and not using RAM
 
 - **GitHub URL:** [PR #2558 on GitHub](https://github.com/exceljs/exceljs/pull/2558)
 - **Author:** [@zlooun](https://github.com/zlooun) (Shabanov Ivan)
@@ -3519,7 +3519,7 @@ https://www.npmjs.com/package/@zlooun/exceljs
 
 ---
 
-## [#2341] tests: Add test with a third party exported excel file
+## [DONE] [#2341] tests: Add test with a third party exported excel file
 
 - **GitHub URL:** [PR #2341 on GitHub](https://github.com/exceljs/exceljs/pull/2341)
 - **Author:** [@Amund211](https://github.com/Amund211) (Amund Eggen Svandal)
@@ -3575,7 +3575,7 @@ A simple fix is to downgrade to regenrator-runtime to 0.13.1, which doesn't have
 
 ---
 
-## [#2264] fix：Fix the problem of displaying more than 255 characters in formula…
+## [DONE] [#2264] fix：Fix the problem of displaying more than 255 characters in formula…
 
 - **GitHub URL:** [PR #2264 on GitHub](https://github.com/exceljs/exceljs/pull/2264)
 - **Author:** [@zurmokeeper](https://github.com/zurmokeeper) (zurmokeeper)
@@ -3610,7 +3610,7 @@ throw new Error('The input cannot be larger than 255 characters. Please check th
 
 ---
 
-## [#2201] WorksheetWriter.addImage
+## [DONE] [#2201] WorksheetWriter.addImage
 
 - **GitHub URL:** [PR #2201 on GitHub](https://github.com/exceljs/exceljs/pull/2201)
 - **Author:** [@yapus](https://github.com/yapus) (Iakov Pustilnik)
@@ -3644,7 +3644,7 @@ Result (`text.xml`):
 
 ---
 
-## [#2185] fix file not opening because of wrong defaults
+## [DONE] [#2185] fix file not opening because of wrong defaults
 
 - **GitHub URL:** [PR #2185 on GitHub](https://github.com/exceljs/exceljs/pull/2185)
 - **Author:** [@nbelyh](https://github.com/nbelyh) (Nikolay Belykh)
@@ -3667,7 +3667,7 @@ Please refer to the linked issue #2184
 
 ---
 
-## [#2148] Issue 2147: stream.xlsx.WorkbookReader.parse() doesn't cleanup temporary files if not fully iterated
+## [DONE] [#2148] Issue 2147: stream.xlsx.WorkbookReader.parse() doesn't cleanup temporary files if not fully iterated
 
 - **GitHub URL:** [PR #2148 on GitHub](https://github.com/exceljs/exceljs/pull/2148)
 - **Author:** [@Turtlefight](https://github.com/Turtlefight) (Sven Fisch)
@@ -3692,7 +3692,7 @@ mocha test for this issue is included in the pull request.
 
 ---
 
-## [#2127] Fixed error in FastCsvParserOptionsArgs
+## [DONE] [#2127] Fixed error in FastCsvParserOptionsArgs
 
 - **GitHub URL:** [PR #2127 on GitHub](https://github.com/exceljs/exceljs/pull/2127)
 - **Author:** [@andrewasd](https://github.com/andrewasd)
@@ -3708,7 +3708,7 @@ following the instructions on the ReadMe.md using typescript returns typeError w
 
 ---
 
-## [#2116] Add duplicate multiple rows feature
+## [DONE] [#2116] Add duplicate multiple rows feature
 
 - **GitHub URL:** [PR #2116 on GitHub](https://github.com/exceljs/exceljs/pull/2116)
 - **Author:** [@joaojhgs](https://github.com/joaojhgs) (JoãoHGS)
@@ -3757,7 +3757,7 @@ Result:
 
 ---
 
-## [#2102] Fixed issue 1351 - "worksheet.properties.outlineProperties does not exist"
+## [DONE] [#2102] Fixed issue 1351 - "worksheet.properties.outlineProperties does not exist"
 
 - **GitHub URL:** [PR #2102 on GitHub](https://github.com/exceljs/exceljs/pull/2102)
 - **Author:** [@ksiegel1923](https://github.com/ksiegel1923) (Kara Siegel)
@@ -3774,7 +3774,7 @@ I was using exceljs and wanted to group rows using outline level. I noticed that
 
 ---
 
-## [#2095] fix: saving a worksheet with conditional formatting breaks the font styles
+## [DONE] [#2095] fix: saving a worksheet with conditional formatting breaks the font styles
 
 - **GitHub URL:** [PR #2095 on GitHub](https://github.com/exceljs/exceljs/pull/2095)
 - **Author:** [@Codeneos](https://github.com/Codeneos) (Peter van Gulik)
@@ -3837,7 +3837,7 @@ The `BooleanXform`-class which is changed in the PR is only used in `FontXform` 
 
 ---
 
-## [#2090] Tables and media update functions when inserting or deleting rows/columns in a worksheet
+## [DONE] [#2090] Tables and media update functions when inserting or deleting rows/columns in a worksheet
 
 - **GitHub URL:** [PR #2090 on GitHub](https://github.com/exceljs/exceljs/pull/2090)
 - **Author:** [@MatthisClavijo](https://github.com/MatthisClavijo)
@@ -3890,7 +3890,7 @@ No modification is done to the third and fourth sheet. Note that if you generate
 
 ---
 
-## [#2089] Fix #1959 Corrupted file generating by reading and modifing an existing XLSX file with tables
+## [DONE] [#2089] Fix #1959 Corrupted file generating by reading and modifing an existing XLSX file with tables
 
 - **GitHub URL:** [PR #2089 on GitHub](https://github.com/exceljs/exceljs/pull/2089)
 - **Author:** [@MatthisClavijo](https://github.com/MatthisClavijo)
@@ -3928,7 +3928,7 @@ It loads the newly written file and checks if the tables in the first sheet have
 
 ---
 
-## [#2081] fix utf-8 multibyte  character garbled problem
+## [DONE] [#2081] fix utf-8 multibyte  character garbled problem
 
 - **GitHub URL:** [PR #2081 on GitHub](https://github.com/exceljs/exceljs/pull/2081)
 - **Author:** [@ligolas](https://github.com/ligolas) (ligolas)
@@ -3955,7 +3955,7 @@ fix bug #2063,  handle data chunk  properly to avoid multibyte character incompl
 
 ---
 
-## [#2080] fix issue #1695, #1130 reading csv files with headers
+## [DONE] [#2080] fix issue #1695, #1130 reading csv files with headers
 
 - **GitHub URL:** [PR #2080 on GitHub](https://github.com/exceljs/exceljs/pull/2080)
 - **Author:** [@consatan](https://github.com/consatan) (Chopin Ngo)
@@ -3981,7 +3981,7 @@ See the integration test
 
 ---
 
-## [#2079] Fix Unable to specify a note in a cell within a table
+## [DONE] [#2079] Fix Unable to specify a note in a cell within a table
 
 - **GitHub URL:** [PR #2079 on GitHub](https://github.com/exceljs/exceljs/pull/2079)
 - **Author:** [@rheidari](https://github.com/rheidari) (Reza Heidari)
@@ -4070,7 +4070,7 @@ Shape.RIGHT_BRACE = 'rightBrace';
 
 ---
 
-## [#2061] 'None' is another theme style for a table
+## [DONE] [#2061] 'None' is another theme style for a table
 
 - **GitHub URL:** [PR #2061 on GitHub](https://github.com/exceljs/exceljs/pull/2061)
 - **Author:** [@gocs](https://github.com/gocs) (gocs)
@@ -4125,7 +4125,7 @@ what it renders:
 
 ---
 
-## [#2049] improved media properties with rotation, extent, offset
+## [DONE] [#2049] improved media properties with rotation, extent, offset
 
 - **GitHub URL:** [PR #2049 on GitHub](https://github.com/exceljs/exceljs/pull/2049)
 - **Author:** [@GitSamson](https://github.com/GitSamson) (SamsonSun)
@@ -4182,7 +4182,7 @@ https://github.com/GitSamson/FFE_Database_Builder
 
 ---
 
-## [#2009] Fix addThemes
+## [DONE] [#2009] Fix addThemes
 
 - **GitHub URL:** [PR #2009 on GitHub](https://github.com/exceljs/exceljs/pull/2009)
 - **Author:** [@bno1](https://github.com/bno1)
@@ -4199,7 +4199,7 @@ This function would not insert the default theme if model.themes is an empty obj
 
 ---
 
-## [#2002] fix hyperlink hash
+## [DONE] [#2002] fix hyperlink hash
 
 - **GitHub URL:** [PR #2002 on GitHub](https://github.com/exceljs/exceljs/pull/2002)
 - **Author:** [@nwind](https://github.com/nwind) (吴多益)
@@ -4252,7 +4252,7 @@ Result after this pr
 
 ---
 
-## [#2001] fix xlsx parser can not compatible with rich text tags that are not closed
+## [DONE] [#2001] fix xlsx parser can not compatible with rich text tags that are not closed
 
 - **GitHub URL:** [PR #2001 on GitHub](https://github.com/exceljs/exceljs/pull/2001)
 - **Author:** [@WingMrL](https://github.com/WingMrL) (WingUNO)
@@ -4318,7 +4318,7 @@ workbook.xlsx
 
 ---
 
-## [#1971] Fixed set multiple print area functionality.
+## [DONE] [#1971] Fixed set multiple print area functionality.
 
 - **GitHub URL:** [PR #1971 on GitHub](https://github.com/exceljs/exceljs/pull/1971)
 - **Author:** [@hovikkhachatryan](https://github.com/hovikkhachatryan) (Hovik Khachatryan)
@@ -4347,7 +4347,7 @@ test file is already merged with this PR https://github.com/exceljs/exceljs/pull
 
 ---
 
-## [#1938] Fix loadin of table rows and ref from xlsx file
+## [DONE] [#1938] Fix loadin of table rows and ref from xlsx file
 
 - **GitHub URL:** [PR #1938 on GitHub](https://github.com/exceljs/exceljs/pull/1938)
 - **Author:** [@antoineacy](https://github.com/antoineacy) (Antoine)
@@ -4370,7 +4370,7 @@ A test file is commited. It tests that table data is properly loaded.
 
 ---
 
-## [#1936] Fix loading of tables with calculated columns.
+## [DONE] [#1936] Fix loading of tables with calculated columns.
 
 - **GitHub URL:** [PR #1936 on GitHub](https://github.com/exceljs/exceljs/pull/1936)
 - **Author:** [@antoineacy](https://github.com/antoineacy) (Antoine)
@@ -4397,7 +4397,7 @@ https://github.com/antoineacy/exceljs/blob/antoine-patch-1/lib/xlsx/xform/table/
 
 ---
 
-## [#1933] Add automatic size for comment box
+## [DONE] [#1933] Add automatic size for comment box
 
 - **GitHub URL:** [PR #1933 on GitHub](https://github.com/exceljs/exceljs/pull/1933)
 - **Author:** [@csgka1](https://github.com/csgka1) (hlink)
@@ -4443,7 +4443,7 @@ Should I update `README.MD` at the same time?
 
 ---
 
-## [#1929] Release large values early for GC to be able to do its job
+## [DONE] [#1929] Release large values early for GC to be able to do its job
 
 - **GitHub URL:** [PR #1929 on GitHub](https://github.com/exceljs/exceljs/pull/1929)
 - **Author:** [@kibertoad](https://github.com/kibertoad) (Igor Savin)
@@ -4464,7 +4464,7 @@ There is a test, showing that loading 19 MB large file does not fail GA CI.
 
 ---
 
-## [#1922] Options for WorkbookReader should have an optional type
+## [DONE] [#1922] Options for WorkbookReader should have an optional type
 
 - **GitHub URL:** [PR #1922 on GitHub](https://github.com/exceljs/exceljs/pull/1922)
 - **Author:** [@vicary](https://github.com/vicary) (Vicary)
@@ -4479,7 +4479,7 @@ There is a test, showing that loading 19 MB large file does not fail GA CI.
 
 ---
 
-## [#1907] FIX assignStyle on Table.store
+## [DONE] [#1907] FIX assignStyle on Table.store
 
 - **GitHub URL:** [PR #1907 on GitHub](https://github.com/exceljs/exceljs/pull/1907)
 - **Author:** [@o100ja](https://github.com/o100ja) (Aleksandar Ostojić)
@@ -4566,7 +4566,7 @@ After reviewing the source code I've tried to do the same export with the follow
 
 ---
 
-## [#1901] Fix worksheet reader type definitions
+## [DONE] [#1901] Fix worksheet reader type definitions
 
 - **GitHub URL:** [PR #1901 on GitHub](https://github.com/exceljs/exceljs/pull/1901)
 - **Author:** [@SpudNyk](https://github.com/SpudNyk)
@@ -4605,7 +4605,7 @@ https://github.com/exceljs/exceljs/blob/0f6d7657e71f1de3c1fc2a2a75776b7766f0576a
 
 ---
 
-## [#1889] Support nested columns feature
+## [DONE] [#1889] Support nested columns feature
 
 - **GitHub URL:** [PR #1889 on GitHub](https://github.com/exceljs/exceljs/pull/1889)
 - **Author:** [@jeka1985](https://github.com/jeka1985) (Eugene Yemelin)
@@ -4684,7 +4684,7 @@ makeColumns(input) {
 
 ---
 
-## [#1886] Fix Row.values type definition
+## [DONE] [#1886] Fix Row.values type definition
 
 - **GitHub URL:** [PR #1886 on GitHub](https://github.com/exceljs/exceljs/pull/1886)
 - **Author:** [@sergejostir](https://github.com/sergejostir) (Sergej Oštir)
@@ -4711,7 +4711,7 @@ https://github.com/exceljs/exceljs/blob/1d5e5ac02d836f02f2d8b6282b3e1e327f0403b6
 
 ---
 
-## [#1885] Add table support for streaming Mode Fixes issue #1412
+## [DONE] [#1885] Add table support for streaming Mode Fixes issue #1412
 
 - **GitHub URL:** [PR #1885 on GitHub](https://github.com/exceljs/exceljs/pull/1885)
 - **Author:** [@mrawdon](https://github.com/mrawdon)
@@ -4753,7 +4753,7 @@ The alternative solution is to split the expression like eslint-config-prettier 
 
 ---
 
-## [#1796] resolves #1033 - Make date1904 property on CellFormulaValue interface optional
+## [DONE] [#1796] resolves #1033 - Make date1904 property on CellFormulaValue interface optional
 
 - **GitHub URL:** [PR #1796 on GitHub](https://github.com/exceljs/exceljs/pull/1796)
 - **Author:** [@Barobi](https://github.com/Barobi)
@@ -4768,7 +4768,7 @@ See https://github.com/exceljs/exceljs/issues/1033
 
 ---
 
-## [#1789] Add support image accessibilities requirements
+## [DONE] [#1789] Add support image accessibilities requirements
 
 - **GitHub URL:** [PR #1789 on GitHub](https://github.com/exceljs/exceljs/pull/1789)
 - **Author:** [@samuraitruong](https://github.com/samuraitruong) (Truong Nguyen)
@@ -4791,7 +4791,7 @@ See https://github.com/exceljs/exceljs/issues/1033
 
 ---
 
-## [#1767] Add expression support for x14:cfRule
+## [DONE] [#1767] Add expression support for x14:cfRule
 
 - **GitHub URL:** [PR #1767 on GitHub](https://github.com/exceljs/exceljs/pull/1767)
 - **Author:** [@bno1](https://github.com/bno1)
@@ -4820,7 +4820,7 @@ I tested the spreadsheet I was having problems with in #1751 and everything work
 
 ---
 
-## [#1746] Add removeNote method
+## [DONE] [#1746] Add removeNote method
 
 - **GitHub URL:** [PR #1746 on GitHub](https://github.com/exceljs/exceljs/pull/1746)
 - **Author:** [@dolbyzerr](https://github.com/dolbyzerr) (Andrei)
@@ -4852,7 +4852,7 @@ I've added a `test-comment-remove.js` script that gets `comments.xlsx` file with
 
 ---
 
-## [#1743] fix CSV reading large number
+## [DONE] [#1743] fix CSV reading large number
 
 - **GitHub URL:** [PR #1743 on GitHub](https://github.com/exceljs/exceljs/pull/1743)
 - **Author:** [@Harmonickey](https://github.com/Harmonickey) (Alex Ayerdi)
@@ -4887,7 +4887,7 @@ Please help me with the standard test plan that you might want to use for this? 
 
 ---
 
-## [#1688] fix issue #894
+## [DONE] [#1688] fix issue #894
 
 - **GitHub URL:** [PR #1688 on GitHub](https://github.com/exceljs/exceljs/pull/1688)
 - **Author:** [@SuyongSun](https://github.com/SuyongSun) (SuyongSun)
@@ -4921,7 +4921,7 @@ testimage
 
 ---
 
-## [#1665] fix: parse-sax distructs multi-byte char
+## [DONE] [#1665] fix: parse-sax distructs multi-byte char
 
 - **GitHub URL:** [PR #1665 on GitHub](https://github.com/exceljs/exceljs/pull/1665)
 - **Author:** [@kouqon](https://github.com/kouqon) (t_mrc-ct)
@@ -4987,7 +4987,7 @@ N/A
 
 ---
 
-## [#1600] Fix spliceRows() issues with delete
+## [DONE] [#1600] Fix spliceRows() issues with delete
 
 - **GitHub URL:** [PR #1600 on GitHub](https://github.com/exceljs/exceljs/pull/1600)
 - **Author:** [@iva2k](https://github.com/iva2k) (Ilya I)
@@ -5011,7 +5011,7 @@ There are couple new testcases that exercise deletes near the end of the workshe
 
 ---
 
-## [#1596] return destination stream when piping in StreamBuf
+## [DONE] [#1596] return destination stream when piping in StreamBuf
 
 - **GitHub URL:** [PR #1596 on GitHub](https://github.com/exceljs/exceljs/pull/1596)
 - **Author:** [@GabrielLomba](https://github.com/GabrielLomba) (Gabriel Lomba)
@@ -5038,7 +5038,7 @@ Added a unit test related to this change.
 
 ---
 
-## [#1573] fix: cell.style.fill problems
+## [DONE] [#1573] fix: cell.style.fill problems
 
 - **GitHub URL:** [PR #1573 on GitHub](https://github.com/exceljs/exceljs/pull/1573)
 - **Author:** [@huyunan](https://github.com/huyunan)
@@ -5088,7 +5088,7 @@ A simple test is included in spec/unit/utils/utils.spec.js
 
 ---
 
-## [#1570] fix a handful of streaming parser bugs
+## [DONE] [#1570] fix a handful of streaming parser bugs
 
 - **GitHub URL:** [PR #1570 on GitHub](https://github.com/exceljs/exceljs/pull/1570)
 - **Author:** [@yocontra](https://github.com/yocontra) (Eric Schoffstall)
@@ -5129,7 +5129,7 @@ All of our edge case tests that use exceljs under the hood pass, and the existin
 
 ---
 
-## [#1563] col listed in different order in the excel xml breaks props load
+## [DONE] [#1563] col listed in different order in the excel xml breaks props load
 
 - **GitHub URL:** [PR #1563 on GitHub](https://github.com/exceljs/exceljs/pull/1563)
 - **Author:** [@teodormarianmck](https://github.com/teodormarianmck) (Teodor Marian)
@@ -5159,7 +5159,7 @@ Wrote unit test.
 
 ---
 
-## [#1531] docs: fix default options for streaming xlsx reader
+## [DONE] [#1531] docs: fix default options for streaming xlsx reader
 
 - **GitHub URL:** [PR #1531 on GitHub](https://github.com/exceljs/exceljs/pull/1531)
 - **Author:** [@yocontra](https://github.com/yocontra) (Eric Schoffstall)
@@ -5184,7 +5184,7 @@ Closes https://github.com/exceljs/exceljs/issues/1430
 
 ---
 
-## [#1516] Corretly serialize and deserialize multiple print areas on one worksh…
+## [DONE] [#1516] Corretly serialize and deserialize multiple print areas on one worksh…
 
 - **GitHub URL:** [PR #1516 on GitHub](https://github.com/exceljs/exceljs/pull/1516)
 - **Author:** [@peterkooijmans](https://github.com/peterkooijmans) (Peter Kooijmans)
@@ -5318,7 +5318,7 @@ A profiling is done with `spec/integration/data/huge.xlsx` as input file with re
 
 ---
 
-## [#1448] Add addImage method validation
+## [DONE] [#1448] Add addImage method validation
 
 - **GitHub URL:** [PR #1448 on GitHub](https://github.com/exceljs/exceljs/pull/1448)
 - **Author:** [@Yangeok](https://github.com/Yangeok) (Yangwook Ian Jeong)
@@ -5343,7 +5343,7 @@ A profiling is done with `spec/integration/data/huge.xlsx` as input file with re
 
 ---
 
-## [#1383] [F] #1363 - Add support for excluding AutoFilter columns
+## [DONE] [#1383] [F] #1363 - Add support for excluding AutoFilter columns
 
 - **GitHub URL:** [PR #1383 on GitHub](https://github.com/exceljs/exceljs/pull/1383)
 - **Author:** [@remzh](https://github.com/remzh) (Rem Zhang)
@@ -5378,7 +5378,7 @@ sheet.autoFilter = {
 
 ---
 
-## [#1378] fix issue #791 - modify a cell style on existing excel file may affec…
+## [DONE] [#1378] fix issue #791 - modify a cell style on existing excel file may affec…
 
 - **GitHub URL:** [PR #1378 on GitHub](https://github.com/exceljs/exceljs/pull/1378)
 - **Author:** [@DantSu](https://github.com/DantSu) (Franck Alary)
@@ -5470,7 +5470,7 @@ ws.getCell('B2').setStyle({
 
 ---
 
-## [#1345] Improved table handling
+## [DONE] [#1345] Improved table handling
 
 - **GitHub URL:** [PR #1345 on GitHub](https://github.com/exceljs/exceljs/pull/1345)
 - **Author:** [@delcon](https://github.com/delcon) (delcon)
@@ -5511,7 +5511,7 @@ let me know what you think
 
 ---
 
-## [#1061] Add ability to set fill style for a range 
+## [DONE] [#1061] Add ability to set fill style for a range 
 
 - **GitHub URL:** [PR #1061 on GitHub](https://github.com/exceljs/exceljs/pull/1061)
 - **Author:** [@iabukai](https://github.com/iabukai)
