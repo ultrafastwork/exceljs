@@ -64,6 +64,10 @@ Codebase, dependency and tooling modernization. Requires a **major** version bum
 - `got` and `ts-node` were removed.
 - The pre-commit hook chunks lint-staged file lists so large commits fit the Windows command-line limit.
 - CI tests Node 24 and 26 with pnpm.
+- `pnpm-lock.yaml` is now tracked in git.
+- Release tags include the built `dist/`: `scripts/release-tag.js` builds the bundles and tags a detached commit
+  that adds them on top of the version bump, so git-tag installs get the browser bundles while `master` stays
+  free of build output.
 
 ## [4.5.0] - 2026-11-19
 

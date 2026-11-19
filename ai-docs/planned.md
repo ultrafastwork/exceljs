@@ -31,7 +31,7 @@
 4. **ESM Modernization** (user request, session `v1.0.0+90`):
    - [x] `"type": "module"` + `exports`/`imports` maps; CommonJS consumers keep working through `require(esm)`.
    - [x] `node:` built-ins in lib, mapped to polyfills only in the browser build. Web APIs (`TextDecoder`, `DecompressionStream`) replace Node-only paths, and `#crypto` splits hashing by platform.
-   - `dist/` must ship with git-tag installs, because the `browser` export condition points to `dist/exceljs.browser.mjs` (see the handoff).
+   - [x] `dist/` ships with git-tag installs (user decision, session `v1.0.0+91`, option "a"). After the `vbump` commit, run `node scripts/release-tag.js`: it builds `dist/`, commits it on a detached HEAD and creates the annotated `vX.Y.Z` tag there. `master` never contains `dist/`. Push the branch, then the tag.
 5. **Lint/Format Split** (user decision, session `v1.0.0+89`):
    - [x] Prettier owns all formatting. The whole codebase was reformatted once, and that commit is in `.git-blame-ignore-revs`. Markdown, `**/data/` fixtures and `.github/lock.yml` are excluded in `.prettierignore`.
    - [x] ESLint is kept for correctness only (undefined/unused variables, `eqeqeq`, Node API support against `engines` via `eslint-plugin-n`). `@stylistic`, `eslint-config-prettier` and the airbnb style preferences were removed, along with 75 stale `eslint-disable` directives.
