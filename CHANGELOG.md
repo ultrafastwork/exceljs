@@ -5,17 +5,43 @@ Upstream releases up to `4.4.0` are listed in the [README release history](./REA
 
 ## [Unreleased]
 
-Dependency and tooling modernization. Requires a **major** version bump because the minimum Node.js version changes.
+Codebase, dependency and tooling modernization. Requires a **major** version bump.
 
 ### Breaking
 
-- **Node.js 24 or newer is required** (`engines.node: ">=24"`, was `>=8.3.0`). Several runtime dependencies are now
-  ESM-only and load through `require(esm)`.
+- **Node.js 24 or newer is required** (`engines.node: ">=24"`, was `>=8.3.0`).
+- **ExcelJS is now an ES module** (`"type": "module"`). `import ExcelJS from 'exceljs'` and named imports
+  (`import {Workbook} from 'exceljs'`) work. CommonJS `require('exceljs')` keeps working through Node.js 24's
+  `require(esm)`, including destructuring and `.default`.
+- **The ES5 build is gone**: `exceljs/dist/es5`, the root `index.js`/`excel.js` files and the core-js/regenerator
+  polyfills were removed.
+- **An `exports` map now limits deep imports** to `exceljs`, `exceljs/browser`, `exceljs/dist/*` and
+  `exceljs/package.json`. Internal paths such as `exceljs/lib/...` can no longer be imported.
+- **Browser bundles target modern browsers** (Chrome/Edge 111+, Firefox 115+, Safari 16.4+) and ship without
+  polyfills. `exceljs.bare(.min).js` are now aliases of `exceljs(.min).js`.
+
+### Added
+
+- `dist/exceljs.browser.mjs`: an ES module browser build, selected automatically by bundlers via the `browser`
+  export condition (`exceljs/browser` also points to it).
+- A typed default export in `index.d.ts`, so `import ExcelJS from 'exceljs'` type-checks under ESM.
 
 ### Changed
 
 - Runtime dependencies: `archiver` 5 → 8, `unzipper` 0.10 → 0.12, `readable-stream` 3 → 4, `saxes` 5 → 6,
   `fast-csv` 4 → 5, `jszip` 3.10.1 → 3.10.2 (CSP patch regenerated), `dayjs` 1.11.23, `tmp` 0.2.7.
+- On Node.js the library uses native `node:` streams, events and crypto. `readable-stream` is no longer a runtime
+  dependency, only a browser-bundle polyfill. Benchmarks (stream/in-memory read and write, CSV) show no
+  regression, and writes are slightly faster.
+- Platform-neutral web APIs replace Node-only code paths: `TextDecoder`/`TextEncoder` (instead of
+  `StringDecoder` and `process.browser` branches) and `DecompressionStream('deflate-raw')` in the browser `Blob`
+  reader (instead of a zlib polyfill). In browsers, worksheet-protection hashing uses `@noble/hashes` (selected
+  through the `#crypto` subpath import), verified to produce the same hashes as `node:crypto`.
+- Sheet-protection hashing no longer concatenates a new buffer on every spin iteration.
+- Prototype-based `CommentXform`, `CommentsXform` and `StreamBuf` are now ES classes, and the internal
+  `utils.inherits` helper was removed. Unused internal modules (`line-buffer`, `auto-drain`, `stream-base64`,
+  `string-builder`, `stuttered-pipe`, `typed-stack`) and helpers (`promiseImmediate`, the broken
+  `toIsoDateString`) were removed.
 - The `uuid` dependency was removed. UUIDs now come from `crypto.randomUUID()`, falling back to
   `crypto.getRandomValues()` in insecure browser contexts (`lib/utils/uuid.js`).
 - `StreamBuf` exposes `readable`/`writable` flags so archiver 8 accepts it as a stream.
@@ -24,14 +50,19 @@ Dependency and tooling modernization. Requires a **major** version bump because 
 
 ### Tooling
 
-- Babel 8, Mocha 12, Chai 6, TypeScript 7 (type-check with `tsc`, specs run with `tsx`), Express 5, lint-staged 17.
+- Grunt, Babel, Browserify, Terser and `grunt-contrib-jasmine` were replaced by an esbuild build script
+  (`scripts/build.js`) and a Mocha + Puppeteer browser test (`spec/browser/run.js`) that tests both the script
+  and module bundles in headless Chrome.
+- The `test:es5` scripts are gone. `pnpm test` runs build, unit, integration, end-to-end, browser, TypeScript and
+  dist suites. All scripts are now cross-platform (no POSIX `export`/`rm`).
+- Mocha 12, Chai 6, TypeScript 7 (type-check with `tsc`, specs run with `tsx`), Express 5, lint-staged 17.
 - Prettier 3 (`.prettierrc.json`) is now the only formatter, and the codebase was reformatted with it once
   (the commit is listed in `.git-blame-ignore-revs`). New scripts: `pnpm format` / `pnpm format:check`.
 - ESLint 10 flat config (`eslint.config.js`, `@eslint/js` + `eslint-plugin-n`) checks correctness only, with no
   formatting rules. Replaces airbnb-base, `eslint-config-prettier`, `eslint-plugin-node`, `eslint-plugin-import`
   and `prettier-eslint`. Stale `eslint-disable` directives were removed.
-- `babelify` was replaced by a local Babel 8 browserify transform (`scripts/babelify.js`). `got` and `ts-node` were
-  removed.
+- `got` and `ts-node` were removed.
+- The pre-commit hook chunks lint-staged file lists so large commits fit the Windows command-line limit.
 - CI tests Node 24 and 26 with pnpm.
 
 ## [4.5.0] - 2026-11-19

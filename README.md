@@ -16,13 +16,13 @@ Reverse engineered from Excel spreadsheet files as a project.
 npm install exceljs
 ```
 
-This fork (`ultrafastwork/exceljs`) is distributed through git tags rather than npm. The package name stays `exceljs`, so `require('exceljs')` is unchanged:
+This fork (`ultrafastwork/exceljs`) is distributed through git tags rather than npm. The package name stays `exceljs`, so `import`/`require('exceljs')` is unchanged:
 
 ```shell
 pnpm add github:ultrafastwork/exceljs#v4.5.0
 ```
 
-Note: `dist/` (browser bundles and `exceljs/dist/es5`) is not committed. Git-tag installs currently provide the Node.js entry point only.
+Note: `dist/` (the browser bundles) is not committed. Git-tag installs currently provide the Node.js entry point only.
 
 # New Features!
 
@@ -185,72 +185,49 @@ To be clear, all contributions added to this library will be included in the lib
 
 # Importing[⬆](#contents)<!-- Link generated with jump2header -->
 
+ExcelJS is an ES module and requires Node.js 24 or later.
+
+```javascript
+import ExcelJS from 'exceljs';
+// or pick what you need
+import {Workbook, ValueType, stream} from 'exceljs';
+```
+
+CommonJS code can keep using `require`. Node.js 24 loads ES modules synchronously
+through `require()`, so existing code works unchanged:
+
 ```javascript
 const ExcelJS = require('exceljs');
 ```
 
-## ES5 Imports[⬆](#contents)<!-- Link generated with jump2header -->
+The ES5 build (`exceljs/dist/es5`) and its polyfill requirements were removed in 5.0.0.
 
-To use the ES5 transpiled code, for example for node.js versions older than 10, use the dist/es5 path.
+## Browser[⬆](#contents)<!-- Link generated with jump2header -->
 
-```javascript
-const ExcelJS = require('exceljs/dist/es5');
-```
+The `dist/` folder contains self-contained bundles for modern browsers (Chrome/Edge 111+,
+Firefox 115+, Safari 16.4+). No polyfills are needed.
 
-**Note:** The ES5 build has an implicit dependency on a number of polyfills which are no longer
- explicitly added by exceljs.
- You will need to add "core-js" and "regenerator-runtime" to your dependencies and
- include the following requires in your code before the exceljs import:
+With a bundler (Vite, webpack, esbuild, ...) just `import ExcelJS from 'exceljs'`: the
+`browser` export condition selects `dist/exceljs.browser.mjs` automatically. In a page
+without a bundler, use the ES module build:
 
-```javascript
-// polyfills required by exceljs
-require('core-js/modules/es.promise');
-require('core-js/modules/es.string.includes');
-require('core-js/modules/es.object.assign');
-require('core-js/modules/es.object.keys');
-require('core-js/modules/es.symbol');
-require('core-js/modules/es.symbol.async-iterator');
-require('regenerator-runtime/runtime');
-
-const ExcelJS = require('exceljs/dist/es5');
-```
-
-For IE 11, you'll also need a polyfill to support unicode regex patterns. For example,
-
-```js
-const rewritePattern = require('regexpu-core');
-const {generateRegexpuOptions} = require('@babel/helper-create-regexp-features-plugin/lib/util');
-
-const {RegExp} = global;
-try {
-  new RegExp('a', 'u');
-} catch (err) {
-  global.RegExp = function(pattern, flags) {
-    if (flags && flags.includes('u')) {
-      return new RegExp(rewritePattern(pattern, flags, generateRegexpuOptions({flags, pattern})));
-    }
-    return new RegExp(pattern, flags);
-  };
-  global.RegExp.prototype = RegExp.prototype;
-}
-```
-
-## Browserify[⬆](#contents)<!-- Link generated with jump2header -->
-
-ExcelJS publishes two browserified bundles inside the dist/ folder:
-
-One with implicit dependencies on core-js polyfills...
 ```html
-<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.js"></script>
-<script src="exceljs.js"></script>
+<script type="module">
+  import ExcelJS from './exceljs.browser.mjs';
+</script>
 ```
 
-And one without...
+or the classic script build, which defines a global `ExcelJS`:
+
 ```html
-<script src="--your-project's-pollyfills-here--"></script>
-<script src="exceljs.bare.js"></script>
+<script src="exceljs.min.js"></script>
 ```
 
+`exceljs.bare.js` and `exceljs.bare.min.js` are kept as aliases of `exceljs.js` and
+`exceljs.min.js` for existing pages.
+
+In the browser, file-system methods (`readFile`, `writeFile`) are not available. Use
+`load`/`writeBuffer`, or pass a `Blob` to `stream.xlsx.WorkbookReader` for streaming reads.
 
 # Interface[⬆](#contents)<!-- Link generated with jump2header -->
 

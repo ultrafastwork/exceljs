@@ -10,9 +10,9 @@ This project is a fork of **exceljs/exceljs**, a robust Excel Workbook Manager. 
 - **Bug Fixes & Maintenance**: Address issues and merge critical updates left unresolved in the upstream repository.
 
 ### Tech Stack
-- **Environment**: Node.js
-- **Build Tool**: Grunt, Babel, Browserify
-- **Testing**: Mocha, Chai
+- **Environment**: Node.js >= 24, native ES modules (`"type": "module"`); modern browsers via the `dist/` bundles
+- **Build Tool**: esbuild (`scripts/build.js`) for the browser bundles; `lib/` ships untranspiled
+- **Testing**: Mocha, Chai; browser bundles tested in headless Chrome via Puppeteer (`pnpm test:browser`)
 - **Language**: JavaScript (ES6+), TypeScript (types and specs)
 
 ---
@@ -43,7 +43,8 @@ This project is a fork of **exceljs/exceljs**, a robust Excel Workbook Manager. 
 - Keep tests updated for any bug fixes or new features in the `spec/` directory.
 
 ### 2. JavaScript / TypeScript
-- Maintain ES5 compatibility when required by the build process.
+- Write modern ESM: `import`/`export` with explicit `.js` extensions, `node:` prefixes for built-ins, ES classes. No ES5 or CommonJS.
+- Code in `lib/` must also run in browsers: prefer web-standard APIs (`TextDecoder`, `DecompressionStream`, `globalThis.crypto`). Node built-ins are mapped to polyfills in `scripts/build.js`; platform-specific code goes through `package.json` `imports` (e.g. `#crypto`).
 - Use strict typing when modifying `.ts` declaration files or specs.
 
 ### 3. Formatting and linting
