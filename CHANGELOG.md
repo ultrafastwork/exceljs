@@ -5,7 +5,10 @@ Upstream releases up to `4.4.0` are listed in the [README release history](./REA
 
 ## [Unreleased]
 
-Codebase, dependency and tooling modernization. Requires a **major** version bump.
+## [5.0.0] - 2026-11-19
+
+Codebase, dependency and tooling modernization: native ES modules on Node.js 24+, no ES5 build.
+Install with `pnpm add github:ultrafastwork/exceljs#v5.0.0`. The tag includes the built `dist/` browser bundles.
 
 ### Breaking
 
