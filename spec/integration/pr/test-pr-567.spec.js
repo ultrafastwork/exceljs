@@ -1,4 +1,4 @@
-const ExcelJS = verquire('exceljs');
+import ExcelJS from '../../../lib/exceljs.nodejs.js';
 
 const TEST_567_XLSX_FILE_NAME = './spec/integration/data/test-pr-567.xlsx';
 

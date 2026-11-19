@@ -1,8 +1,7 @@
-const utils = require('./utils/utils');
-const HrStopwatch = require('./utils/hr-stopwatch');
-const ColumnSum = require('./utils/column-sum');
-
-const Excel = require('../excel');
+import utils from './utils/utils.js';
+import HrStopwatch from './utils/hr-stopwatch.js';
+import ColumnSum from './utils/column-sum.js';
+import Excel from '../excel.js';
 
 const {Workbook} = Excel;
 const {WorkbookWriter} = Excel.stream.xlsx;

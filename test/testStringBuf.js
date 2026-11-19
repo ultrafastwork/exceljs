@@ -1,7 +1,6 @@
-const utils = require('./utils/utils');
-const HrStopwatch = require('./utils/hr-stopwatch');
-
-const StringBuf = require('../lib/utils/string-buf.js');
+import utils from './utils/utils.js';
+import HrStopwatch from './utils/hr-stopwatch.js';
+import StringBuf from '../lib/utils/string-buf.js';
 
 const SIZE = 1048576;
 

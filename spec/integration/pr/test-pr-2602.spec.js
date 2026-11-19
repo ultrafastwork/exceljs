@@ -1,4 +1,4 @@
-const ExcelJS = verquire('exceljs');
+import ExcelJS from '../../../lib/exceljs.nodejs.js';
 
 describe('PR #2602 - Parse page breaks', () => {
   it('reads and parses row page breaks into the worksheet model', async () => {

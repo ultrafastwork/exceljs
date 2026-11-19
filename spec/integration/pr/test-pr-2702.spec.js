@@ -1,7 +1,6 @@
-const {PassThrough} = require('stream');
-const JSZip = require('jszip');
-
-const ExcelJS = verquire('exceljs');
+import {PassThrough} from 'node:stream';
+import JSZip from 'jszip';
+import ExcelJS from '../../../lib/exceljs.nodejs.js';
 
 async function createStrictDateWorkbookBuffer() {
   const wb = new ExcelJS.Workbook();

@@ -1,6 +1,5 @@
-const {Readable} = require('readable-stream');
-
-const ExcelJS = verquire('exceljs');
+import {Readable} from 'node:stream';
+import ExcelJS from '../../../lib/exceljs.nodejs.js';
 
 describe('PR #2081 and PR #1665 - streaming multibyte UTF-8 characters', () => {
   it('reads multibyte UTF-8 characters via WorkbookReader when stream is sliced into small chunks', async () => {

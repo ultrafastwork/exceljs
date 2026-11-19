@@ -1,8 +1,6 @@
-const fs = require('fs');
-
-const testXformHelper = require('../test-xform-helper');
-
-const AppXform = verquire('xlsx/xform/core/app-xform');
+import fs from 'node:fs';
+import testXformHelper from '../test-xform-helper.js';
+import AppXform from '../../../../../lib/xlsx/xform/core/app-xform.js';
 
 const expectations = [
   {
@@ -11,7 +9,10 @@ const expectations = [
       return new AppXform();
     },
     preparedModel: {worksheets: [{name: 'Sheet1'}]},
-    xml: fs.readFileSync(`${__dirname}/data/app.01.xml`).toString().replace(/\r\n/g, '\n'),
+    xml: fs
+      .readFileSync(`${import.meta.dirname}/data/app.01.xml`)
+      .toString()
+      .replace(/\r\n/g, '\n'),
     tests: ['render', 'renderIn'],
   },
   {
@@ -24,7 +25,10 @@ const expectations = [
       company: 'Cyber Sapiens, Ltd.',
       manager: 'Guyon Roche',
     },
-    xml: fs.readFileSync(`${__dirname}/data/app.02.xml`).toString().replace(/\r\n/g, '\n'),
+    xml: fs
+      .readFileSync(`${import.meta.dirname}/data/app.02.xml`)
+      .toString()
+      .replace(/\r\n/g, '\n'),
     tests: ['render', 'renderIn'],
   },
 ];

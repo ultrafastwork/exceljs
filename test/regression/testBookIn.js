@@ -1,8 +1,9 @@
 /* eslint-disable n/no-unpublished-require */
-const _ = require('../../lib/utils/under-dash');
-const ExcelJS = require('../../lib/exceljs.nodejs');
 
-const HrStopwatch = require('./utils/hr-stopwatch');
+
+import _ from '../../lib/utils/under-dash.js';
+import ExcelJS from '../../lib/exceljs.nodejs.js';
+import HrStopwatch from './utils/hr-stopwatch.js';
 
 const filename = process.argv[2];
 

@@ -1,4 +1,4 @@
-const ExcelJS = verquire('exceljs');
+import ExcelJS from '../../../lib/exceljs.nodejs.js';
 
 describe('PR #2625 - Fix splicecolumn mergedcells', () => {
   it('correctly shifts merged cells after deleted columns without inserts', async () => {

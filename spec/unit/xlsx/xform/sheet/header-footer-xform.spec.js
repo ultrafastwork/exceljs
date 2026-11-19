@@ -1,6 +1,5 @@
-const testXformHelper = require('../test-xform-helper');
-
-const HeaderFooterXform = verquire('xlsx/xform/sheet/header-footer-xform');
+import testXformHelper from '../test-xform-helper.js';
+import HeaderFooterXform from '../../../../../lib/xlsx/xform/sheet/header-footer-xform.js';
 
 const expectations = [
   {

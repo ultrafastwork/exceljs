@@ -1,6 +1,6 @@
-const ExcelJS = verquire('exceljs');
-const JSZip = require('jszip');
-const {Readable} = require('readable-stream');
+import ExcelJS from '../../../lib/exceljs.nodejs.js';
+import JSZip from 'jszip';
+import {Readable} from 'node:stream';
 
 describe('github issues: WorkbookReader early termination in Node 22', () => {
   it('should parse xlsx where worksheets appear before workbook.xml', async () => {

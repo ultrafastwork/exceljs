@@ -1,13 +1,14 @@
-const _ = require('../../lib/utils/under-dash.js');
+import _ from '../../lib/utils/under-dash.js';
 
-const ColumnSum = (module.exports = function(columns) {
+const ColumnSum = function(columns) {
   this.columns = columns;
   this.sums = [];
   this.count = 0;
   _.each(this.columns, column => {
     this.sums[column] = 0;
   });
-});
+};
+export default ColumnSum;
 
 ColumnSum.prototype = {
   add(row) {

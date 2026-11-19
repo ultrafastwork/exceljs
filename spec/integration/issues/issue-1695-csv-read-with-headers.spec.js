@@ -1,4 +1,4 @@
-const ExcelJS = verquire('exceljs');
+import ExcelJS from '../../../lib/exceljs.nodejs.js';
 
 describe('github issues', () => {
   const TEST_CSV_FILE = './spec/integration/data/test-issue-1695.csv';

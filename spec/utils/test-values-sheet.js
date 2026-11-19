@@ -1,13 +1,17 @@
-const tools = require('./tools');
-
-const ExcelJS = verquire('exceljs');
+import tools from './tools.js';
+import ExcelJS from '../../lib/exceljs.nodejs.js';
+import sheetValues from './data/sheet-values.json' with {type: 'json'};
+import styles2 from './data/styles.json' with {type: 'json'};
+import sheetProperties from './data/sheet-properties.json' with {type: 'json'};
+import pageSetup2 from './data/page-setup.json' with {type: 'json'};
+import headerFooter2 from './data/header-footer.json' with {type: 'json'};
 
 const self = {
-  testValues: tools.fix(require('./data/sheet-values.json')),
-  styles: tools.fix(require('./data/styles.json')),
-  properties: tools.fix(require('./data/sheet-properties.json')),
-  pageSetup: tools.fix(require('./data/page-setup.json')),
-  headerFooter: tools.fix(require('./data/header-footer.json')),
+  testValues: tools.fix(sheetValues),
+  styles: tools.fix(styles2),
+  properties: tools.fix(sheetProperties),
+  pageSetup: tools.fix(pageSetup2),
+  headerFooter: tools.fix(headerFooter2),
 
   addSheet(wb, options) {
     // call it sheet1 so this sheet can be used for csv testing
@@ -340,4 +344,4 @@ const self = {
   },
 };
 
-module.exports = self;
+export default self;

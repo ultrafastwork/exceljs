@@ -1,13 +1,13 @@
-const fs = require('fs');
-const {promisify} = require('util');
+import fs from 'node:fs';
+import {promisify} from 'node:util';
+import testUtils from '../../utils/index.js';
+import worksheetTableSpec from '../../unit/doc/worksheet-table.spec.js';
+import ExcelJS from '../../../lib/exceljs.nodejs.js';
 
-const testUtils = require('../../utils/index');
-const {addTable, checkTable, defaultTableValues} = require('../../unit/doc/worksheet-table.spec');
-
-const ExcelJS = verquire('exceljs');
+const {addTable, checkTable, defaultTableValues} = worksheetTableSpec;
 
 const TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
-const IMAGE_FILENAME = `${__dirname}/../data/image.png`;
+const IMAGE_FILENAME = `${import.meta.dirname}/../data/image.png`;
 const fsReadFileAsync = promisify(fs.readFile);
 
 describe('WorkbookWriter', () => {

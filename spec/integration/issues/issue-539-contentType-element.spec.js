@@ -1,4 +1,4 @@
-const ExcelJS = verquire('exceljs');
+import ExcelJS from '../../../lib/exceljs.nodejs.js';
 
 describe('github issues', () => {
   describe('issue 539 - <contentType /> element', () => {

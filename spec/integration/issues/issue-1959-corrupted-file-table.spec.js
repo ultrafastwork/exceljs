@@ -1,4 +1,4 @@
-const ExcelJS = verquire('exceljs');
+import ExcelJS from '../../../lib/exceljs.nodejs.js';
 
 describe('github issues', () => {
   describe('issue 1959 - Corrupted file generating by reading and modifing an existing XLSX file with tables', () => {

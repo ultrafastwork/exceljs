@@ -1,8 +1,7 @@
-const fs = require('fs');
-
-const testXformHelper = require('../test-xform-helper');
-
-const RelationshipsXform = verquire('xlsx/xform/core/relationships-xform');
+import fs from 'node:fs';
+import testXformHelper from '../test-xform-helper.js';
+import RelationshipsXform from '../../../../../lib/xlsx/xform/core/relationships-xform.js';
+import worksheetRels1 from './data/worksheet.rels.1.json' with {type: 'json'};
 
 const expectations = [
   {
@@ -10,8 +9,11 @@ const expectations = [
     create() {
       return new RelationshipsXform();
     },
-    preparedModel: require('./data/worksheet.rels.1.json'),
-    xml: fs.readFileSync(`${__dirname}/data/worksheet.rels.xml`).toString().replace(/\r\n/g, '\n'),
+    preparedModel: worksheetRels1,
+    xml: fs
+      .readFileSync(`${import.meta.dirname}/data/worksheet.rels.xml`)
+      .toString()
+      .replace(/\r\n/g, '\n'),
     get parsedModel() {
       return this.preparedModel;
     },

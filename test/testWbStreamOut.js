@@ -1,5 +1,5 @@
-const Excel = require('../excel');
-const utils = require('../spec/utils/index');
+import Excel from '../excel.js';
+import utils from '../spec/utils/index.js';
 
 const filename = process.argv[2];
 const styles = {

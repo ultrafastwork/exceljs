@@ -1,4 +1,4 @@
-const ExcelJS = verquire('exceljs');
+import ExcelJS from '../../../lib/exceljs.nodejs.js';
 
 describe('github issues', () => {
   it('test issue 3000 - The worksheet MergeCell should be [A2:C4]', async () => {

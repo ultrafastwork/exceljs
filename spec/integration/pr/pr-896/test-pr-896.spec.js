@@ -1,14 +1,10 @@
-'use strict';
-
-const chai = require('chai');
+import * as chai from 'chai';
+import tools from '../../../utils/tools.js';
+import Excel from '../../../../lib/exceljs.nodejs.js';
+import sheetProperties from '../../../utils/data/sheet-properties.json' with {type: 'json'};
+import pageSetup2 from '../../../utils/data/page-setup.json' with {type: 'json'};
 
 process.env.EXCEL_NATIVE = 'yes';
-
-const verquire = require('../../../utils/verquire');
-
-const tools = require('../../../utils/tools');
-
-const Excel = verquire('exceljs');
 
 const {expect} = chai;
 
@@ -29,8 +25,8 @@ const TEST_NOTE = {
 describe('pr related issues', () => {
   describe('pr 896 add xml:space="preserve" for all whitespaces', () => {
     it('should store cell text and comment with leading new line', () => {
-      const properties = tools.fix(require('../../../utils/data/sheet-properties.json'));
-      const pageSetup = tools.fix(require('../../../utils/data/page-setup.json'));
+      const properties = tools.fix(sheetProperties);
+      const pageSetup = tools.fix(pageSetup2);
 
       const wb = new Excel.Workbook();
       const ws = wb.addWorksheet('sheet1', {

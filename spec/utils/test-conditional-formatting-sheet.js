@@ -1,7 +1,8 @@
-const tools = require('./tools');
+import tools from './tools.js';
+import conditionalFormatting2 from './data/conditional-formatting.json' with {type: 'json'};
 
 const self = {
-  conditionalFormattings: tools.fix(require('./data/conditional-formatting.json')),
+  conditionalFormattings: tools.fix(conditionalFormatting2),
   getConditionalFormatting(type) {
     return self.conditionalFormattings[type] || null;
   },
@@ -33,4 +34,4 @@ const self = {
   },
 };
 
-module.exports = self;
+export default self;

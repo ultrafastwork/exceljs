@@ -1,6 +1,5 @@
-const testXformHelper = require('../../test-xform-helper');
-
-const IconSetXform = verquire('xlsx/xform/sheet/cf/icon-set-xform');
+import testXformHelper from '../../test-xform-helper.js';
+import IconSetXform from '../../../../../../lib/xlsx/xform/sheet/cf/icon-set-xform.js';
 
 const expectations = [
   {

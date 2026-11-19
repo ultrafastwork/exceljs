@@ -1,6 +1,5 @@
-const testXformHelper = require('../../test-xform-helper');
-
-const DatabarXform = verquire('xlsx/xform/sheet/cf/databar-xform');
+import testXformHelper from '../../test-xform-helper.js';
+import DatabarXform from '../../../../../../lib/xlsx/xform/sheet/cf/databar-xform.js';
 
 const expectations = [
   {

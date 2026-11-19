@@ -1,6 +1,5 @@
-const HrStopwatch = require('./utils/hr-stopwatch');
-
-const Excel = require('../excel');
+import HrStopwatch from './utils/hr-stopwatch.js';
+import Excel from '../excel.js';
 
 const {Workbook} = Excel;
 

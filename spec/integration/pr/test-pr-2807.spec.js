@@ -1,6 +1,5 @@
-const JSZip = require('jszip');
-
-const ExcelJS = verquire('exceljs');
+import JSZip from 'jszip';
+import ExcelJS from '../../../lib/exceljs.nodejs.js';
 
 describe('github issues', () => {
   it('pr 2807 - places pageSetUpPr at the end of sheetPr', async () => {

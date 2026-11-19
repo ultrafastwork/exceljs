@@ -1,12 +1,9 @@
-const chai = require('chai');
+import * as chai from 'chai';
+import chaiXml from 'chai-xml';
+import chaiDatetime from 'chai-datetime';
+import dirtyChai from 'dirty-chai';
 
-const chaiXml = require('chai-xml');
-const chaiDatetime = require('chai-datetime');
-// dirty-chai v3 is ESM-only; require(esm) returns the module namespace
-const {default: dirtyChai} = require('dirty-chai');
-global.verquire = require('../utils/verquire');
-
-global.expect = chai.expect;
+globalThis.expect = chai.expect;
 
 chai.use(chaiXml);
 chai.use(chaiDatetime);

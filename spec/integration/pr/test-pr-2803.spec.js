@@ -1,7 +1,6 @@
-const fs = require('fs');
-const JSZip = require('jszip');
-
-const ExcelJS = verquire('exceljs');
+import fs from 'node:fs';
+import JSZip from 'jszip';
+import ExcelJS from '../../../lib/exceljs.nodejs.js';
 
 const TEST_XLSX_FILE_NAME = './spec/out/test-pr-2803.xlsx';
 

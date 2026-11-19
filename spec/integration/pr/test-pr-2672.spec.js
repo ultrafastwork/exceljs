@@ -1,16 +1,14 @@
-'use strict';
-
-const fs = require('fs');
-const path = require('path');
-const ExcelJS = require('../../../lib/exceljs.nodejs');
+import fs from 'node:fs';
+import path from 'node:path';
+import ExcelJS from '../../../lib/exceljs.nodejs.js';
 
 describe('PR #2672 - Fix unsafe-eval CSP Issue', () => {
   it('should not contain "new Function" in browser bundles', () => {
     const bundlePaths = [
-      path.resolve(__dirname, '../../../dist/exceljs.js'),
-      path.resolve(__dirname, '../../../dist/exceljs.min.js'),
-      path.resolve(__dirname, '../../../dist/exceljs.bare.js'),
-      path.resolve(__dirname, '../../../dist/exceljs.bare.min.js'),
+      path.resolve(import.meta.dirname, '../../../dist/exceljs.js'),
+      path.resolve(import.meta.dirname, '../../../dist/exceljs.min.js'),
+      path.resolve(import.meta.dirname, '../../../dist/exceljs.bare.js'),
+      path.resolve(import.meta.dirname, '../../../dist/exceljs.bare.min.js'),
     ];
 
     bundlePaths.forEach(file => {

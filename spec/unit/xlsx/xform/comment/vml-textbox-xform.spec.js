@@ -1,6 +1,5 @@
-const testXformHelper = require('../test-xform-helper');
-
-const VmlTextboxXform = verquire('xlsx/xform/comment/vml-textbox-xform');
+import testXformHelper from '../test-xform-helper.js';
+import VmlTextboxXform from '../../../../../lib/xlsx/xform/comment/vml-textbox-xform.js';
 
 const expectations = [
   {

@@ -1,6 +1,7 @@
-const HrStopwatch = (module.exports = function() {
+const HrStopwatch = function() {
   this.total = 0;
-});
+};
+export default HrStopwatch;
 
 HrStopwatch.prototype = {
   start() {

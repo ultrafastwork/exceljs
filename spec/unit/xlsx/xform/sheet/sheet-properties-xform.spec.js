@@ -1,7 +1,6 @@
-const XmlStream = verquire('utils/xml-stream');
-const testXformHelper = require('../test-xform-helper');
-
-const SheetPropertiesXform = verquire('xlsx/xform/sheet/sheet-properties-xform');
+import XmlStream from '../../../../../lib/utils/xml-stream.js';
+import testXformHelper from '../test-xform-helper.js';
+import SheetPropertiesXform from '../../../../../lib/xlsx/xform/sheet/sheet-properties-xform.js';
 
 const expectations = [
   {

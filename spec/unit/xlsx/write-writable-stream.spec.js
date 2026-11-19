@@ -1,6 +1,6 @@
 /* global ReadableStream, WritableStream */
 
-const ExcelJS = verquire('exceljs.nodejs');
+import ExcelJS from '../../../lib/exceljs.nodejs.js';
 
 describe('web-native streams', () => {
   it('writes and reads xlsx using WritableStream and ReadableStream', async () => {

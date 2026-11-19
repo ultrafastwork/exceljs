@@ -1,23 +1,21 @@
-'use strict';
-
 // ESLint is used for correctness only. Formatting is owned entirely by Prettier.
 
-const js = require('@eslint/js');
-const n = require('eslint-plugin-n');
-const globals = require('globals');
+import js from '@eslint/js';
+import n from 'eslint-plugin-n';
+import globals from 'globals';
 
-module.exports = [
+export default [
   {
     ignores: ['build/', 'dist/', 'out/', 'spec/manual/public/', 'ai-docs/', 'test/'],
   },
 
   js.configs.recommended,
-  n.configs['flat/recommended-script'],
+  n.configs['flat/recommended-module'],
 
   {
     languageOptions: {
       ecmaVersion: 'latest',
-      sourceType: 'commonjs',
+      sourceType: 'module',
       globals: {
         ...globals.node,
       },
@@ -39,12 +37,17 @@ module.exports = [
       'no-use-before-define': ['error', {variables: false, classes: false, functions: false}],
       'no-var': 'error',
       'prefer-const': ['error', {destructuring: 'any', ignoreReadBeforeAssign: true}],
+      'object-shorthand': 'error',
+      'prefer-arrow-callback': 'error',
+      'prefer-rest-params': 'error',
+      'prefer-spread': 'error',
+      'prefer-template': 'error',
 
       // `x = null` is used deliberately to release large buffers early
       'no-useless-assignment': 'off',
       'no-unassigned-vars': 'off',
 
-      'n/no-unpublished-require': 'off',
+      'n/no-unpublished-import': 'off',
       'n/process-exit-as-throw': 'off',
     },
   },
@@ -54,13 +57,19 @@ module.exports = [
     languageOptions: {
       globals: {
         ...globals.mocha,
-        verquire: 'readonly',
         expect: 'readonly',
       },
     },
     rules: {
       'no-new': 'off',
       'no-sparse-arrays': 'off',
+    },
+  },
+
+  {
+    files: ['spec/browser/**/*.js'],
+    languageOptions: {
+      globals: {...globals.browser, ExcelJS: 'readonly', chai: 'readonly'},
     },
   },
 ];

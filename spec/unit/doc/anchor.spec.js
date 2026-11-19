@@ -1,6 +1,7 @@
-const {createSheetMock} = require('../../utils/index');
+import index2 from '../../utils/index.js';
+import Anchor from '../../../lib/doc/anchor.js';
 
-const Anchor = verquire('doc/anchor');
+const {createSheetMock} = index2;
 
 describe('Anchor', () => {
   describe('colWidth', () => {
@@ -67,7 +68,7 @@ describe('Anchor', () => {
     });
   });
   describe('resize worksheet`s cells', () => {
-    const context = this;
+    const context = {};
     before(() => {
       context.worksheet = createSheetMock();
       context.worksheet.getColumn(1).width = 20;

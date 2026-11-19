@@ -1,4 +1,4 @@
-const _ = require('../lib/utils/under-dash.js');
+import _ from '../lib/utils/under-dash.js';
 
 const a = [];
 a[3] = 'three';

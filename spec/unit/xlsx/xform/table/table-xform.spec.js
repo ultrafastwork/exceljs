@@ -1,8 +1,8 @@
-const fs = require('fs');
-
-const testXformHelper = require('../test-xform-helper');
-
-const TableXform = verquire('xlsx/xform/table/table-xform');
+import fs from 'node:fs';
+import testXformHelper from '../test-xform-helper.js';
+import TableXform from '../../../../../lib/xlsx/xform/table/table-xform.js';
+import table11 from './data/table.1.1.json' with {type: 'json'};
+import table13 from './data/table.1.3.json' with {type: 'json'};
 
 const expectations = [
   {
@@ -11,9 +11,9 @@ const expectations = [
       return new TableXform();
     },
     initialModel: null,
-    preparedModel: require('./data/table.1.1.json'),
-    xml: fs.readFileSync(`${__dirname}/data/table.1.2.xml`).toString(),
-    parsedModel: require('./data/table.1.3.json'),
+    preparedModel: table11,
+    xml: fs.readFileSync(`${import.meta.dirname}/data/table.1.2.xml`).toString(),
+    parsedModel: table13,
     tests: ['render', 'renderIn', 'parse'],
   },
   {

@@ -1,7 +1,6 @@
-const JSZip = require('jszip');
-
-const Workbook = verquire('doc/workbook');
-const WorkbookReaderBlob = verquire('stream/xlsx/workbook-reader-blob');
+import JSZip from 'jszip';
+import Workbook from '../../../lib/doc/workbook.js';
+import WorkbookReaderBlob from '../../../lib/stream/xlsx/workbook-reader-blob.js';
 
 describe('WorkbookReaderBlob and XLSX troubleshooting log', () => {
   it('logs a warning when loading an archive without worksheets (PR #2779)', async () => {

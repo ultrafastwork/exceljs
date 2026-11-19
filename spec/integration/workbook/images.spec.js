@@ -1,11 +1,11 @@
-const fs = require('fs');
-const {promisify} = require('util');
+import fs from 'node:fs';
+import {promisify} from 'node:util';
+import ExcelJS from '../../../lib/exceljs.nodejs.js';
+import jszip2 from 'jszip';
 
-const ExcelJS = verquire('exceljs');
-
-const IMAGE_FILENAME = `${__dirname}/../data/image.png`;
+const IMAGE_FILENAME = `${import.meta.dirname}/../data/image.png`;
 const TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
-const IMAGE_XLSX_FILE_NAME = `${__dirname}/../data/images.xlsx`;
+const IMAGE_XLSX_FILE_NAME = `${import.meta.dirname}/../data/images.xlsx`;
 const fsReadFileAsync = promisify(fs.readFile);
 
 // =============================================================================
@@ -574,7 +574,7 @@ describe('Workbook', () => {
     });
 
     it('supports image accessibility title, description, and decorative attributes (PR #1789)', async () => {
-      const JSZip = require('jszip');
+      const JSZip = jszip2;
       const wb = new ExcelJS.Workbook();
       const ws = wb.addWorksheet('blort');
 

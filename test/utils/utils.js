@@ -1,5 +1,5 @@
-const fs = require('fs');
-const _ = require('../../lib/utils/under-dash.js');
+import fs from 'node:fs';
+import _ from '../../lib/utils/under-dash.js';
 
 const main = {
   cleanDir(path) {
@@ -88,4 +88,4 @@ const main = {
   },
 };
 
-module.exports = main;
+export default main;

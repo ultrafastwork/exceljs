@@ -1,6 +1,5 @@
-const testXformHelper = require('../test-xform-helper');
-
-const BrkXform = verquire('xlsx/xform/sheet/brk-xform');
+import testXformHelper from '../test-xform-helper.js';
+import BrkXform from '../../../../../lib/xlsx/xform/sheet/brk-xform.js';
 
 const expectations = [
   {

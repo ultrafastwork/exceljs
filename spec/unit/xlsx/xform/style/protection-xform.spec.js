@@ -1,6 +1,5 @@
-const testXformHelper = require('../test-xform-helper');
-
-const ProtectionXform = verquire('xlsx/xform/style/protection-xform');
+import testXformHelper from '../test-xform-helper.js';
+import ProtectionXform from '../../../../../lib/xlsx/xform/style/protection-xform.js';
 
 const expectations = [
   {

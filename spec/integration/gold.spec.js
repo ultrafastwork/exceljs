@@ -1,4 +1,4 @@
-const ExcelJS = verquire('exceljs');
+import ExcelJS from '../../lib/exceljs.nodejs.js';
 
 // =============================================================================
 // This spec is based around a gold standard Excel workbook 'gold.xlsx'
@@ -8,7 +8,7 @@ describe('Gold Book', () => {
     let wb;
     before(() => {
       wb = new ExcelJS.Workbook();
-      return wb.xlsx.readFile(`${__dirname}/data/gold.xlsx`);
+      return wb.xlsx.readFile(`${import.meta.dirname}/data/gold.xlsx`);
     });
 
     it('Values', () => {

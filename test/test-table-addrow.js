@@ -4,8 +4,11 @@
 
 /* eslint-disable */
 
+import exceljsNodejs from '../lib/exceljs.nodejs.js';
+import hrStopwatch from './utils/hr-stopwatch.js';
+
 function main(filepath) {
-  const Excel = require('../lib/exceljs.nodejs.js');
+  const Excel = exceljsNodejs;
 
   const workbook = new Excel.Workbook();
 
@@ -124,7 +127,7 @@ function main(filepath) {
 }
 
 function save(workbook, filepath, callback) {
-  const HrStopwatch = require('./utils/hr-stopwatch');
+  const HrStopwatch = hrStopwatch;
   const stopwatch = new HrStopwatch();
   stopwatch.start();
 

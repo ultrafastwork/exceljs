@@ -1,6 +1,5 @@
-const testXformHelper = require('../test-xform-helper');
-
-const AppHeadingPairsXform = verquire('xlsx/xform/core/app-heading-pairs-xform');
+import testXformHelper from '../test-xform-helper.js';
+import AppHeadingPairsXform from '../../../../../lib/xlsx/xform/core/app-heading-pairs-xform.js';
 
 const expectations = [
   {

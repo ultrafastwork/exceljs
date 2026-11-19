@@ -1,1 +1,2 @@
-pnpm lint-staged
+# chunk file lists so large commits stay under the Windows command-line limit
+pnpm lint-staged --max-arg-length 4000

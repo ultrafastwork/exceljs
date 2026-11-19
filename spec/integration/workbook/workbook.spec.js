@@ -1,6 +1,5 @@
-const testUtils = require('../../utils/index');
-
-const ExcelJS = verquire('exceljs');
+import testUtils from '../../utils/index.js';
+import ExcelJS from '../../../lib/exceljs.nodejs.js';
 
 const TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
 const TEST_CSV_FILE_NAME = './spec/out/wb.test.csv';

@@ -1,7 +1,6 @@
-const testUtils = require('../../utils/index');
-
-const Excel = verquire('exceljs');
-const Dimensions = verquire('doc/range');
+import testUtils from '../../utils/index.js';
+import Excel from '../../../lib/exceljs.nodejs.js';
+import Dimensions from '../../../lib/doc/range.js';
 
 describe('Worksheet', () => {
   describe('Merge Cells', () => {
@@ -181,7 +180,7 @@ describe('Worksheet', () => {
       expect(ws.getCell('C3').numFmt).to.deep.equal(testUtils.styles.numFmts.numFmt1);
     });
 
-    it('preserves merges after row inserts', function () {
+    it('preserves merges after row inserts', () => {
       const wb = new Excel.Workbook();
       const ws = wb.addWorksheet('testMergeAfterInsert');
 

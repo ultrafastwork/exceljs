@@ -1,6 +1,5 @@
-const testXformHelper = require('../test-xform-helper');
-
-const CustomFilterXform = verquire('xlsx/xform/table/custom-filter-xform');
+import testXformHelper from '../test-xform-helper.js';
+import CustomFilterXform from '../../../../../lib/xlsx/xform/table/custom-filter-xform.js';
 
 const expectations = [
   {

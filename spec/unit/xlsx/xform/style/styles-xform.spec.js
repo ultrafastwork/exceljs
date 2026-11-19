@@ -1,9 +1,8 @@
-const fs = require('fs');
-
-const testXformHelper = require('../test-xform-helper');
-
-const StylesXform = verquire('xlsx/xform/style/styles-xform');
-const XmlStream = verquire('utils/xml-stream');
+import fs from 'node:fs';
+import testXformHelper from '../test-xform-helper.js';
+import StylesXform from '../../../../../lib/xlsx/xform/style/styles-xform.js';
+import XmlStream from '../../../../../lib/utils/xml-stream.js';
+import styles11 from './data/styles.1.1.json' with {type: 'json'};
 
 const expectations = [
   {
@@ -11,8 +10,8 @@ const expectations = [
     create() {
       return new StylesXform();
     },
-    preparedModel: require('./data/styles.1.1.json'),
-    xml: fs.readFileSync(`${__dirname}/data/styles.1.2.xml`).toString(),
+    preparedModel: styles11,
+    xml: fs.readFileSync(`${import.meta.dirname}/data/styles.1.2.xml`).toString(),
     get parsedModel() {
       return this.preparedModel;
     },
@@ -26,7 +25,7 @@ describe('StylesXform', () => {
   describe('As StyleManager', () => {
     it('Renders empty model', () => {
       const stylesXform = new StylesXform(true);
-      const expectedXml = fs.readFileSync(`${__dirname}/data/styles.2.2.xml`).toString();
+      const expectedXml = fs.readFileSync(`${import.meta.dirname}/data/styles.2.2.xml`).toString();
 
       const xmlStream = new XmlStream();
       stylesXform.render(xmlStream);

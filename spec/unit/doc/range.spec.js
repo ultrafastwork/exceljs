@@ -1,4 +1,4 @@
-const Range = verquire('doc/range');
+import Range from '../../../lib/doc/range.js';
 
 describe('Range', () => {
   function check(d, range, $range, tl, $t$l, br, $b$r, top, left, bottom, right, sheetName) {

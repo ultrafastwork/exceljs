@@ -1,4 +1,4 @@
-const Workbook = require('../lib/doc/workbook');
+import Workbook from '../lib/doc/workbook.js';
 
 const filename = process.argv[2];
 

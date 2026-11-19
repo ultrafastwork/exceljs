@@ -2477,3 +2477,6 @@ export namespace stream {
     }
   }
 }
+
+// \import ExcelJS from 'exceljs'\: the default export is the same object as the namespace
+export * as default from './index.js';

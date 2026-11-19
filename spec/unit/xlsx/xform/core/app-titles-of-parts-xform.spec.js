@@ -1,6 +1,5 @@
-const testXformHelper = require('../test-xform-helper');
-
-const AppTitlesOfPartsXform = verquire('xlsx/xform/core/app-titles-of-parts-xform');
+import testXformHelper from '../test-xform-helper.js';
+import AppTitlesOfPartsXform from '../../../../../lib/xlsx/xform/core/app-titles-of-parts-xform.js';
 
 const expectations = [
   {

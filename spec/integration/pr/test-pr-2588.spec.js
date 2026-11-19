@@ -1,4 +1,5 @@
-const ExcelJS = verquire('exceljs');
+import ExcelJS from '../../../lib/exceljs.nodejs.js';
+import nodeStream from 'node:stream';
 
 describe('PR #2588 - Fix shared strings and richText', () => {
   it('preserves distinct richText values when using useSharedStrings in Workbook', async () => {
@@ -37,7 +38,7 @@ describe('PR #2588 - Fix shared strings and richText', () => {
   });
 
   it('preserves distinct richText values when using streaming WorkbookWriter with useSharedStrings', async () => {
-    const {PassThrough} = require('stream');
+    const {PassThrough} = nodeStream;
     const stream = new PassThrough();
 
     const wb = new ExcelJS.stream.xlsx.WorkbookWriter({

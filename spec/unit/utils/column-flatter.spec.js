@@ -1,5 +1,5 @@
-const ExcelJS = verquire('exceljs');
-const ColumnFlatter = verquire('utils/column-flatter');
+import ExcelJS from '../../../lib/exceljs.nodejs.js';
+import ColumnFlatter from '../../../lib/utils/column-flatter.js';
 
 describe('ColumnFlatter / worksheet.makeColumns (PR #1889)', () => {
   const input = [

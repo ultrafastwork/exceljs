@@ -1,4 +1,4 @@
-const Excel = require('../excel');
+import Excel from '../excel.js';
 
 const {Workbook} = Excel;
 

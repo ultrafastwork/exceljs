@@ -1,6 +1,5 @@
-const testXformHelper = require('../test-xform-helper');
-
-const PageSetupPropertiesXform = verquire('xlsx/xform/sheet/page-setup-properties-xform');
+import testXformHelper from '../test-xform-helper.js';
+import PageSetupPropertiesXform from '../../../../../lib/xlsx/xform/sheet/page-setup-properties-xform.js';
 
 const expectations = [
   {

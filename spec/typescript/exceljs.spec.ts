@@ -1,7 +1,7 @@
-import 'regenerator-runtime/runtime';
-
+import {PassThrough, Readable} from 'node:stream';
 import {expect} from 'chai';
-import * as ExcelJS from '../../index';
+import * as ExcelJS from 'exceljs';
+import DefaultExcelJS from 'exceljs';
 
 describe('typescript', () => {
   it('can create and buffer xlsx', async () => {
@@ -23,7 +23,6 @@ describe('typescript', () => {
     const ws = wb.addWorksheet('blort');
     ws.getCell('A1').value = 7;
 
-    const {PassThrough} = require('stream');
     const stream = new PassThrough();
     const wb2 = new ExcelJS.Workbook();
 
@@ -292,8 +291,6 @@ describe('typescript', () => {
     expect(row3Values).to.deep.equal([, 20, 'Bob']);
   });
   it('supports boolean, string, and null for FastCsvParserOptionsArgs.quote (PR #2127)', async () => {
-    const {Readable} = require('stream');
-
     const optionsFalse: Partial<ExcelJS.CsvReadOptions> = {
       parserOptions: {
         delimiter: '\t',
@@ -387,9 +384,7 @@ describe('typescript', () => {
     ws.getCell('A1').value = 'hello';
     const buffer = await wb.xlsx.writeBuffer();
 
-    const {Readable} = require('stream');
-
-    const readerWithoutOptions = new ExcelJS.stream.xlsx.WorkbookReader(Readable.from(buffer));
+    const readerWithoutOptions = new ExcelJS.stream.xlsx.WorkbookReader(Readable.from([buffer]));
     const valuesWithoutOptions: ExcelJS.CellValue[] = [];
     for await (const worksheetReader of readerWithoutOptions) {
       for await (const row of worksheetReader) {
@@ -398,7 +393,7 @@ describe('typescript', () => {
     }
     expect(valuesWithoutOptions).to.deep.equal(['hello']);
 
-    const readerWithOptions = new ExcelJS.stream.xlsx.WorkbookReader(Readable.from(buffer), {
+    const readerWithOptions = new ExcelJS.stream.xlsx.WorkbookReader(Readable.from([buffer]), {
       worksheets: 'emit',
       sharedStrings: 'cache',
     });
@@ -420,8 +415,7 @@ describe('typescript', () => {
     ws.addRow({id: 1, name: 'Alice'});
     const buffer = await wb.xlsx.writeBuffer();
 
-    const {Readable} = require('stream');
-    const workbookReader = new ExcelJS.stream.xlsx.WorkbookReader(Readable.from(buffer));
+    const workbookReader = new ExcelJS.stream.xlsx.WorkbookReader(Readable.from([buffer]));
 
     for await (const worksheetReader of workbookReader) {
       const id: number = worksheetReader.id;
@@ -528,7 +522,14 @@ describe('typescript', () => {
     await wb.addDrawings();
   });
 
-  it('supports CJS index.js entry point and exports (PR #2562)', () => {
+  it("supports the default export (import ExcelJS from 'exceljs')", () => {
+    const wb: ExcelJS.Workbook = new DefaultExcelJS.Workbook();
+    expect(wb).to.be.an.instanceOf(ExcelJS.Workbook);
+    expect(DefaultExcelJS.ValueType.Formula).to.equal(ExcelJS.ValueType.Formula);
+    expect(DefaultExcelJS.stream.xlsx.WorkbookReader).to.equal(ExcelJS.stream.xlsx.WorkbookReader);
+  });
+
+  it('supports named exports (PR #2562)', () => {
     const wb: ExcelJS.Workbook = new ExcelJS.Workbook();
     expect(wb).to.be.an.instanceOf(ExcelJS.Workbook);
     const ws: ExcelJS.Worksheet = wb.addWorksheet('Sheet1');

@@ -1,10 +1,9 @@
-const fs = require('fs');
-const path = require('path');
-const JSZip = require('jszip');
+import fs from 'node:fs';
+import path from 'node:path';
+import JSZip from 'jszip';
+import ExcelJS from '../../../lib/exceljs.nodejs.js';
 
-const ExcelJS = verquire('exceljs');
-
-const TEST_XLSX_FILE_NAME = path.resolve(__dirname, '../../out/wb-pr-2685.test.xlsx');
+const TEST_XLSX_FILE_NAME = path.resolve(import.meta.dirname, '../../out/wb-pr-2685.test.xlsx');
 
 describe('PR #2685 - Fix error saving files when streaming using autofilter and sheet protection', function () {
   this.timeout(10000);

@@ -1,4 +1,4 @@
-const ExcelJS = require('../excel');
+import ExcelJS from '../excel.js';
 
 const {Workbook} = ExcelJS;
 

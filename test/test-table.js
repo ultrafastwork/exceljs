@@ -1,5 +1,5 @@
-const Excel = require('../lib/exceljs.nodejs');
-const HrStopwatch = require('./utils/hr-stopwatch');
+import Excel from '../lib/exceljs.nodejs.js';
+import HrStopwatch from './utils/hr-stopwatch.js';
 
 const [, , filename] = process.argv;
 

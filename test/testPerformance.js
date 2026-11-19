@@ -1,9 +1,7 @@
-const fs = require('fs');
-const _ = require('../lib/utils/under-dash.js');
-
-const HrStopwatch = require('./utils/hr-stopwatch');
-
-const Excel = require('../excel');
+import fs from 'node:fs';
+import _ from '../lib/utils/under-dash.js';
+import HrStopwatch from './utils/hr-stopwatch.js';
+import Excel from '../excel.js';
 
 const {Workbook} = Excel;
 const {WorkbookWriter} = Excel.stream.xlsx;

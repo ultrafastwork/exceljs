@@ -1,9 +1,7 @@
-const fs = require('fs');
-const tmp = require('tmp');
-
-const testutils = require('../utils/index');
-
-const ExcelJS = verquire('exceljs');
+import fs from 'node:fs';
+import tmp from 'tmp';
+import testutils from '../utils/index.js';
+import ExcelJS from '../../lib/exceljs.nodejs.js';
 
 const TEST_FILE_NAME = './spec/out/wb.test.xlsx';
 

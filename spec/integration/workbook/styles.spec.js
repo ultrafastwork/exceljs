@@ -1,14 +1,13 @@
-const stream = require('readable-stream');
-const testUtils = require('../../utils/index');
-
-const ExcelJS = verquire('exceljs');
+import stream from 'node:stream';
+import testUtils from '../../utils/index.js';
+import ExcelJS from '../../../lib/exceljs.nodejs.js';
+import richTextSample from '../data/rich-text-sample.js';
+import richTextSampleA1 from '../data/rich-text-sample-a1.json' with {type: 'json'};
 
 const TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
 
 // =============================================================================
 // Sample Data
-const richTextSample = require('../data/rich-text-sample');
-const richTextSampleA1 = require('../data/rich-text-sample-a1.json');
 
 // =============================================================================
 // Tests

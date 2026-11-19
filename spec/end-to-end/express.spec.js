@@ -1,8 +1,7 @@
-const {Readable} = require('stream');
-const express = require('express');
-const testutils = require('../utils/index');
-
-const Excel = verquire('exceljs');
+import {Readable} from 'node:stream';
+import express from 'express';
+import testutils from '../utils/index.js';
+import Excel from '../../lib/exceljs.nodejs.js';
 
 describe('Express', () => {
   let server;

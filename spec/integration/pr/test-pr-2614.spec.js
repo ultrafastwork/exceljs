@@ -1,8 +1,7 @@
-const path = require('path');
+import path from 'node:path';
+import ExcelJS from '../../../lib/exceljs.nodejs.js';
 
-const ExcelJS = verquire('exceljs');
-
-const IMAGE_FILENAME = path.resolve(__dirname, '../data/image.png');
+const IMAGE_FILENAME = path.resolve(import.meta.dirname, '../data/image.png');
 
 describe('PR #2614 - fix: addImage position is wrong', () => {
   it('correctly calculates image anchor position with defaultRowHeight and defaultColWidth', async () => {

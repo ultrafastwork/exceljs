@@ -1,4 +1,4 @@
-const ExcelJS = verquire('exceljs');
+import ExcelJS from '../../../lib/exceljs.nodejs.js';
 
 describe('github issues', () => {
   describe('issue 2256 - (dataValidation) The exported table inserts a drop-down menu for the cell. The cell cannot display drop-down options', () => {

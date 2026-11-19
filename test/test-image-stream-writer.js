@@ -1,13 +1,13 @@
-const path = require('path');
-const Excel = require('../lib/exceljs.nodejs.js');
-const HrStopwatch = require('./utils/hr-stopwatch');
+import path from 'node:path';
+import Excel from '../lib/exceljs.nodejs.js';
+import HrStopwatch from './utils/hr-stopwatch.js';
 
 const [, , filename] = process.argv;
 
 const wb = new Excel.stream.xlsx.WorkbookWriter({filename});
 
 const imageId = wb.addImage({
-  filename: path.join(__dirname, 'data/image2.png'),
+  filename: path.join(import.meta.dirname, 'data/image2.png'),
   extension: 'png',
 });
 

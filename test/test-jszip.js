@@ -1,5 +1,5 @@
-const fs = require('fs');
-const JSZip = require('jszip');
+import fs from 'node:fs';
+import JSZip from 'jszip';
 
 // eslint-disable-next-line n/no-unsupported-features/node-builtins
 const fsp = fs.promises;

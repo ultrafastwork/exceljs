@@ -1,6 +1,5 @@
-const testXformHelper = require('./test-xform-helper');
-
-const StaticXform = verquire('xlsx/xform/static-xform');
+import testXformHelper from './test-xform-helper.js';
+import StaticXform from '../../../../lib/xlsx/xform/static-xform.js';
 
 const expectations = [
   {

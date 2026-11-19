@@ -1,6 +1,5 @@
-const testXformHelper = require('../test-xform-helper');
-
-const BorderXform = verquire('xlsx/xform/style/border-xform');
+import testXformHelper from '../test-xform-helper.js';
+import BorderXform from '../../../../../lib/xlsx/xform/style/border-xform.js';
 
 const expectations = [
   {

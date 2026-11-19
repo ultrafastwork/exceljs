@@ -1,6 +1,5 @@
-const fs = require('fs');
-
-const Worksheet = require('../lib/doc/worksheet');
+import fs from 'node:fs';
+import Worksheet from '../lib/doc/worksheet.js';
 
 const sheetname = process.argv[2];
 const stringname = process.argv[3];

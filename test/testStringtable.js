@@ -1,6 +1,6 @@
-const fs = require('fs');
-const _ = require('../lib/utils/under-dash.js');
-const SharedStrings = require('../lib/utils/shared-strings');
+import fs from 'node:fs';
+import _ from '../lib/utils/under-dash.js';
+import SharedStrings from '../lib/utils/shared-strings.js';
 
 const filename = process.argv[2];
 

@@ -1,6 +1,5 @@
-const testXformHelper = require('../../test-xform-helper');
-
-const VmlDrawingXform = verquire('xlsx/xform/drawing/vlm-drawing/vml-drawing-xform');
+import testXformHelper from '../../test-xform-helper.js';
+import VmlDrawingXform from '../../../../../../lib/xlsx/xform/drawing/vlm-drawing/vml-drawing-xform.js';
 
 const options = {
   rels: {

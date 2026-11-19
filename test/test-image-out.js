@@ -1,9 +1,9 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'node:fs';
+import path from 'node:path';
+import HrStopwatch from './utils/hr-stopwatch.js';
+import excel2 from '../excel.js';
 
-const HrStopwatch = require('./utils/hr-stopwatch');
-
-const {Workbook} = require('../excel');
+const {Workbook} = excel2;
 
 const filename = process.argv[2];
 
@@ -13,11 +13,11 @@ const ws = wb.addWorksheet('blort');
 ws.getCell('B2').value = 'Hello, World!';
 
 const imageId = wb.addImage({
-  filename: path.join(__dirname, 'data/image2.png'),
+  filename: path.join(import.meta.dirname, 'data/image2.png'),
   extension: 'png',
 });
 const backgroundId = wb.addImage({
-  buffer: fs.readFileSync(path.join(__dirname, 'data/bubbles.jpg')),
+  buffer: fs.readFileSync(path.join(import.meta.dirname, 'data/bubbles.jpg')),
   extension: 'jpeg',
 });
 ws.addImage(imageId, {

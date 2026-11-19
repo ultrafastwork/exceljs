@@ -1,6 +1,5 @@
-const testXformHelper = require('../test-xform-helper');
-
-const WorkbookPropertiesXform = verquire('xlsx/xform/book/workbook-properties-xform');
+import testXformHelper from '../test-xform-helper.js';
+import WorkbookPropertiesXform from '../../../../../lib/xlsx/xform/book/workbook-properties-xform.js';
 
 const expectations = [
   {

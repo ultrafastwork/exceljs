@@ -1,4 +1,4 @@
-const {serializeStyle, deserializeStyle} = require('../../../lib/utils/style-fast-serialize');
+import {serializeStyle, deserializeStyle} from '../../../lib/utils/style-fast-serialize.js';
 
 describe('Style Serialization and Deserialization', () => {
   it('should correctly serialize and deserialize font', () => {

@@ -1,6 +1,5 @@
-const testXformHelper = require('../test-xform-helper');
-
-const PageSetupXform = verquire('xlsx/xform/sheet/page-setup-xform');
+import testXformHelper from '../test-xform-helper.js';
+import PageSetupXform from '../../../../../lib/xlsx/xform/sheet/page-setup-xform.js';
 
 // -  "blackAndWhite": false
 // -  "cellComments": "None"

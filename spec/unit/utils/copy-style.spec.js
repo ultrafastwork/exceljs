@@ -1,6 +1,5 @@
-const testUtils = require('../../utils/index');
-
-const {copyStyle} = verquire('utils/copy-style');
+import testUtils from '../../utils/index.js';
+import {copyStyle} from '../../../lib/utils/copy-style.js';
 
 const style1 = {
   numFmt: testUtils.styles.numFmts.numFmt1,

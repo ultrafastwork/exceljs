@@ -1,6 +1,5 @@
-const {PassThrough} = require('readable-stream');
-
-const parseSax = verquire('utils/parse-sax');
+import {PassThrough} from 'node:stream';
+import parseSax from '../../../lib/utils/parse-sax.js';
 
 describe('parse-sax-utf8-characters', () => {
   it('should parse split UTF-8 character across chunk boundaries without corrupting', async () => {

@@ -1,6 +1,5 @@
-const testXformHelper = require('../test-xform-helper');
-
-const FillXform = verquire('xlsx/xform/style/fill-xform');
+import testXformHelper from '../test-xform-helper.js';
+import FillXform from '../../../../../lib/xlsx/xform/style/fill-xform.js';
 
 const expectations = [
   {

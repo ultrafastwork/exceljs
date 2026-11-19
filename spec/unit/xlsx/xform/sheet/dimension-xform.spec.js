@@ -1,6 +1,5 @@
-const testXformHelper = require('../test-xform-helper');
-
-const DimensionXform = verquire('xlsx/xform/sheet/dimension-xform');
+import testXformHelper from '../test-xform-helper.js';
+import DimensionXform from '../../../../../lib/xlsx/xform/sheet/dimension-xform.js';
 
 const expectations = [
   {

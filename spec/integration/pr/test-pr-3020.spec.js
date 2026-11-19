@@ -1,5 +1,5 @@
-const ExcelJS = verquire('exceljs');
-const JSZip = require('jszip');
+import ExcelJS from '../../../lib/exceljs.nodejs.js';
+import JSZip from 'jszip';
 
 describe('pr 3020 - Support HAN CELL Excel files', () => {
   it('should load a programmatically mocked HAN CELL file with x: namespace prefixes and unknown tags', async () => {

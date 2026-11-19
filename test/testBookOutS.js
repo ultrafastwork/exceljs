@@ -1,5 +1,5 @@
-const _ = require('../lib/utils/under-dash.js');
-const Excel = require('../excel');
+import _ from '../lib/utils/under-dash.js';
+import Excel from '../excel.js';
 
 // const { Workbook } = Excel;
 const {WorkbookWriter} = Excel.stream.xlsx;

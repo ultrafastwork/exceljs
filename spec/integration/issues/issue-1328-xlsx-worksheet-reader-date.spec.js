@@ -1,7 +1,7 @@
-const ExcelJS = verquire('exceljs');
-const fs = require('fs');
-const JSZip = require('jszip');
-const {PassThrough} = require('readable-stream');
+import ExcelJS from '../../../lib/exceljs.nodejs.js';
+import fs from 'node:fs';
+import JSZip from 'jszip';
+import {PassThrough} from 'node:stream';
 
 describe('github issues: Date field with cache style', () => {
   const rows = [];

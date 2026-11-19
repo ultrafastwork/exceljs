@@ -1,4 +1,4 @@
-const parseSax = verquire('utils/parse-sax');
+import parseSax from '../../../lib/utils/parse-sax.js';
 
 const asciiEncode = ascii => Array.from(ascii).map(c => c.codePointAt(0));
 

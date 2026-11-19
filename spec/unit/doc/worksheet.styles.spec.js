@@ -1,6 +1,5 @@
-const testUtils = require('../../utils/index');
-
-const Excel = verquire('exceljs');
+import testUtils from '../../utils/index.js';
+import Excel from '../../../lib/exceljs.nodejs.js';
 
 describe('Worksheet', () => {
   describe('Styles', () => {

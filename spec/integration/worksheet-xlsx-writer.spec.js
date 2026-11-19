@@ -1,7 +1,6 @@
-const path = require('path');
-const testutils = require('../utils/index');
-
-const ExcelJS = verquire('exceljs');
+import path from 'node:path';
+import testutils from '../utils/index.js';
+import ExcelJS from '../../lib/exceljs.nodejs.js';
 
 const CONCATENATE_HELLO_WORLD = 'CONCATENATE("Hello", ", ", "World!")';
 
@@ -484,7 +483,7 @@ describe('WorksheetWriter', () => {
 
   describe('Images/Drawings (PR #2201 / PR #2633)', () => {
     it('adds images and verifies worksheet drawings in streaming mode', async () => {
-      const filename = path.join(__dirname, '../out/wb-images.test.xlsx');
+      const filename = path.join(import.meta.dirname, '../out/wb-images.test.xlsx');
       const wb = new ExcelJS.stream.xlsx.WorkbookWriter({
         filename,
         useStyles: true,
@@ -494,7 +493,7 @@ describe('WorksheetWriter', () => {
       const ws2 = wb.addWorksheet('bar');
 
       const imageId1 = wb.addImage({
-        filename: path.join(__dirname, 'data/image.png'),
+        filename: path.join(import.meta.dirname, 'data/image.png'),
         extension: 'png',
       });
 

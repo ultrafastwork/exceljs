@@ -1,13 +1,12 @@
 // *Note*: `fs.promises` not supported before Node.js 11.14.0;
 // ExcelJS version range '>=8.3.0' (as of 2023-10-08).
-const fs = require('fs');
-const {promisify} = require('util');
+
+import fs from 'node:fs';
+import {promisify} from 'node:util';
+import JSZip from 'jszip';
+import ExcelJS from '../../../lib/exceljs.nodejs.js';
 
 const fsReadFileAsync = promisify(fs.readFile);
-
-const JSZip = require('jszip');
-
-const ExcelJS = verquire('exceljs');
 
 const PIVOT_TABLE_FILEPATHS = [
   'xl/pivotCache/pivotCacheRecords1.xml',

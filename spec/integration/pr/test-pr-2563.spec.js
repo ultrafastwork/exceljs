@@ -1,11 +1,11 @@
-const ExcelJS = verquire('exceljs');
-const JSZip = require('jszip');
+import ExcelJS from '../../../lib/exceljs.nodejs.js';
+import JSZip from 'jszip';
 
 const COMMENTS_AND_HTIMAGE_XLSX_FILE_NAME = './spec/out/comments-headerImage.test.xlsx';
 const COMMENTS_AND_HTIMAGE_AND_SHEETIMAGE_XLSX_FILE_NAME =
   './spec/out/comments-headerImage-sheetimage.test.xlsx';
 const TEST_HF_IMAGE_OUT = './spec/out/test-hf-image.xlsx';
-const IMAGE_FILENAME = `${__dirname}/../data/image.png`;
+const IMAGE_FILENAME = `${import.meta.dirname}/../data/image.png`;
 
 describe('pull request 2563', () => {
   it('pull request 2563 - header and footer support image', async () => {

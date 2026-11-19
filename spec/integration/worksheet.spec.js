@@ -1,10 +1,8 @@
-const path = require('path');
-
-const {expect} = require('chai');
-const testutils = require('../utils/index');
-
-const ExcelJS = verquire('exceljs');
-const Range = verquire('doc/range');
+import path from 'node:path';
+import {expect} from 'chai';
+import testutils from '../utils/index.js';
+import ExcelJS from '../../lib/exceljs.nodejs.js';
+import Range from '../../lib/doc/range.js';
 
 describe('Worksheet', () => {
   describe('Values', () => {
@@ -1036,7 +1034,7 @@ describe('Worksheet', () => {
   describe('When passed a non-Excel file', () => {
     it('Should not break when importing a .numbers file', () =>
       new ExcelJS.Workbook().xlsx
-        .readFile(path.resolve(__dirname, 'data', 'numbers.numbers'))
+        .readFile(path.resolve(import.meta.dirname, 'data', 'numbers.numbers'))
         .then(workbook => {
           expect(workbook).to.have.property('worksheets');
           expect(workbook.worksheets).to.have.length(0);
@@ -1045,7 +1043,7 @@ describe('Worksheet', () => {
 
   it('Should not break when importing an Excel file that contains a chartsheet', () =>
     new ExcelJS.Workbook().xlsx
-      .readFile(path.resolve(__dirname, 'data', 'chart-sheet.xlsx'))
+      .readFile(path.resolve(import.meta.dirname, 'data', 'chart-sheet.xlsx'))
       .then(workbook => {
         expect(workbook).to.have.property('worksheets');
         expect(workbook.worksheets).to.have.length(1);
@@ -1062,7 +1060,7 @@ describe('Worksheet', () => {
       it(`Should set hidden attribute correctly (${file})`, done => {
         const wb = new ExcelJS.Workbook();
         wb.xlsx
-          .readFile(path.resolve(__dirname, 'data', 'hidden-test', `${file}.xlsx`))
+          .readFile(path.resolve(import.meta.dirname, 'data', 'hidden-test', `${file}.xlsx`))
           .then(() => {
             const ws = wb.getWorksheet(1);
 

@@ -1,4 +1,4 @@
-const Excel = verquire('exceljs');
+import Excel from '../../../lib/exceljs.nodejs.js';
 
 function createTableWithName(name) {
   const wb = new Excel.Workbook();

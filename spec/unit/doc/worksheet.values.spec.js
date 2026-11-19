@@ -1,7 +1,6 @@
-const testUtils = require('../../utils/index');
-
-const _ = verquire('utils/under-dash');
-const Excel = verquire('exceljs');
+import testUtils from '../../utils/index.js';
+import _ from '../../../lib/utils/under-dash.js';
+import Excel from '../../../lib/exceljs.nodejs.js';
 
 describe('Worksheet', () => {
   describe('Values', () => {

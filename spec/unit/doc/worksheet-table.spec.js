@@ -1,5 +1,5 @@
-const colCache = verquire('utils/col-cache');
-const Excel = verquire('exceljs');
+import colCache from '../../../lib/utils/col-cache.js';
+import Excel from '../../../lib/exceljs.nodejs.js';
 
 const spliceArray = (a, index, count, ...rest) => {
   const clone = [...a];
@@ -361,7 +361,7 @@ describe('Worksheet', () => {
   });
 });
 
-module.exports = {
+export default {
   defaultTableValues: values,
   addTable,
   checkTable,

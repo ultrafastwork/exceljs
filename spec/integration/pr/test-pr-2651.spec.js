@@ -1,5 +1,5 @@
-const ExcelJS = verquire('exceljs');
-const JSZip = require('jszip');
+import ExcelJS from '../../../lib/exceljs.nodejs.js';
+import JSZip from 'jszip';
 
 describe('github issues', () => {
   it('pull request 2651 - renders negativeFillColor before negativeBorderColor in x14:dataBar', async () => {

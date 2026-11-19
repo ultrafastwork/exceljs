@@ -1,6 +1,5 @@
-const {PassThrough} = require('stream');
-
-const ExcelJS = verquire('exceljs.nodejs');
+import {PassThrough} from 'node:stream';
+import ExcelJS from '../../../lib/exceljs.nodejs.js';
 
 describe('CSV', () => {
   describe('read', () => {

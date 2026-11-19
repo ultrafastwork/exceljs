@@ -1,8 +1,7 @@
-const testXformHelper = require('../test-xform-helper');
-
-const RowXform = verquire('xlsx/xform/sheet/row-xform');
-const SharedStringsXform = verquire('xlsx/xform/strings/shared-strings-xform');
-const Enums = verquire('doc/enums');
+import testXformHelper from '../test-xform-helper.js';
+import RowXform from '../../../../../lib/xlsx/xform/sheet/row-xform.js';
+import SharedStringsXform from '../../../../../lib/xlsx/xform/strings/shared-strings-xform.js';
+import * as Enums from '../../../../../lib/doc/enums.js';
 
 const fakeStyles = {
   addStyleModel(style) {

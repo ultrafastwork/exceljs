@@ -1,24 +1,22 @@
-'use strict';
-
 /* eslint-disable no-console */
 
-const fs = require('fs');
-const express = require('express');
-const path = require('path');
-const ExcelJS = require('../../lib/exceljs.nodejs');
-const StreamBuf = require('../../lib/utils/stream-buf');
+import fs from 'node:fs';
+import express from 'express';
+import path from 'node:path';
+import ExcelJS from '../../lib/exceljs.nodejs.js';
+import StreamBuf from '../../lib/utils/stream-buf.js';
 
 console.log('Copying bundle.js to public folder');
-fs.createReadStream(`${__dirname}/../../dist/exceljs.min.js`).pipe(
-  fs.createWriteStream(`${__dirname}/public/exceljs.min.js`),
+fs.createReadStream(`${import.meta.dirname}/../../dist/exceljs.min.js`).pipe(
+  fs.createWriteStream(`${import.meta.dirname}/public/exceljs.min.js`),
 );
-fs.createReadStream(`${__dirname}/../../dist/exceljs.js`).pipe(
-  fs.createWriteStream(`${__dirname}/public/exceljs.js`),
+fs.createReadStream(`${import.meta.dirname}/../../dist/exceljs.js`).pipe(
+  fs.createWriteStream(`${import.meta.dirname}/public/exceljs.js`),
 );
 
 const app = express();
 
-app.use('/', express.static(path.join(__dirname, 'public')));
+app.use('/', express.static(path.join(import.meta.dirname, 'public')));
 
 app.post('/api/upload', (req, res) => {
   const wb = new ExcelJS.Workbook();

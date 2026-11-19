@@ -1,7 +1,6 @@
-const JSZip = require('jszip');
-const {Readable} = require('readable-stream');
-
-const ExcelJS = verquire('exceljs');
+import JSZip from 'jszip';
+import {Readable} from 'node:stream';
+import ExcelJS from '../../../lib/exceljs.nodejs.js';
 
 function createChunkedStream(buffer, chunkSize = 4096) {
   let offset = 0;

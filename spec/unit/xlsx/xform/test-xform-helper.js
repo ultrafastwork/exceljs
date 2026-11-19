@@ -1,10 +1,11 @@
-const {PassThrough} = require('readable-stream');
-const {cloneDeep, each} = require('../../../utils/under-dash');
-const CompyXform = require('./compy-xform');
+import {PassThrough} from 'node:stream';
+import underDash from '../../../utils/under-dash.js';
+import CompyXform from './compy-xform.js';
+import parseSax from '../../../../lib/utils/parse-sax.js';
+import XmlStream from '../../../../lib/utils/xml-stream.js';
+import BooleanXform from '../../../../lib/xlsx/xform/simple/boolean-xform.js';
 
-const parseSax = verquire('utils/parse-sax');
-const XmlStream = verquire('utils/xml-stream');
-const BooleanXform = verquire('xlsx/xform/simple/boolean-xform');
+const {cloneDeep, each} = underDash;
 
 function getExpectation(expectation, name) {
   if (!expectation.hasOwnProperty(name)) {
@@ -51,7 +52,7 @@ const its = {
       }));
   },
 
-  'prepare-render': function (expectation) {
+  'prepare-render'(expectation) {
     // when implementation details get in the way of testing the prepared result
     it('Prepare and Render to XML', () =>
       new Promise(resolve => {
@@ -201,4 +202,4 @@ function testXform(expectations) {
   });
 }
 
-module.exports = testXform;
+export default testXform;

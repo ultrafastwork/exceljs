@@ -1,6 +1,5 @@
-const JSZip = require('jszip');
-
-const ExcelJS = verquire('exceljs.nodejs');
+import JSZip from 'jszip';
+import ExcelJS from '../../../lib/exceljs.nodejs.js';
 
 describe('XLSX non-Office compatibility', () => {
   let originalWarn;

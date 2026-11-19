@@ -1,8 +1,7 @@
-const fs = require('fs');
-const path = require('path');
-
-const StreamBuf = verquire('utils/stream-buf');
-const StringBuf = verquire('utils/string-buf');
+import fs from 'node:fs';
+import path from 'node:path';
+import StreamBuf from '../../../lib/utils/stream-buf.js';
+import StringBuf from '../../../lib/utils/string-buf.js';
 
 describe('StreamBuf', () => {
   // StreamBuf is designed as a general-purpose writable-readable stream
@@ -38,7 +37,7 @@ describe('StreamBuf', () => {
 
   it('handles buffers', () =>
     new Promise((resolve, reject) => {
-      const s = fs.createReadStream(path.join(__dirname, 'data/image1.png'));
+      const s = fs.createReadStream(path.join(import.meta.dirname, 'data/image1.png'));
       const sb = new StreamBuf();
       sb.on('finish', () => {
         const buf = sb.toBuffer();

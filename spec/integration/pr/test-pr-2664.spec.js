@@ -1,6 +1,4 @@
-'use strict';
-
-const ExcelJS = verquire('exceljs');
+import ExcelJS from '../../../lib/exceljs.nodejs.js';
 
 const TEST_XLSX_FILE_NAME = './spec/out/test-pr-2664.xlsx';
 

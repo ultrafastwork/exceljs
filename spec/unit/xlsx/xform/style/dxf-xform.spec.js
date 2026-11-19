@@ -1,5 +1,5 @@
-const DxfXform = verquire('xlsx/xform/style/dxf-xform');
-const XmlStream = verquire('utils/xml-stream');
+import DxfXform from '../../../../../lib/xlsx/xform/style/dxf-xform.js';
+import XmlStream from '../../../../../lib/utils/xml-stream.js';
 
 describe('DxfXform', () => {
   it('renders numFmt when numFmt is a string', () => {

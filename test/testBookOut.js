@@ -1,8 +1,6 @@
-const _ = require('../lib/utils/under-dash.js');
-
-const HrStopwatch = require('./utils/hr-stopwatch');
-
-const ExcelJS = require('../excel');
+import _ from '../lib/utils/under-dash.js';
+import HrStopwatch from './utils/hr-stopwatch.js';
+import ExcelJS from '../excel.js';
 
 const {Workbook} = ExcelJS;
 

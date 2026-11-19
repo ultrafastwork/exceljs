@@ -1,8 +1,7 @@
-const {PassThrough} = require('readable-stream');
-
-const ExcelJS = verquire('exceljs');
-const StylesXform = verquire('xlsx/xform/style/styles-xform');
-const parseSax = verquire('utils/parse-sax');
+import {PassThrough} from 'node:stream';
+import ExcelJS from '../../../lib/exceljs.nodejs.js';
+import StylesXform from '../../../lib/xlsx/xform/style/styles-xform.js';
+import parseSax from '../../../lib/utils/parse-sax.js';
 
 describe('PR #2095 - conditional formatting font styles preservation', () => {
   it('parses dxf font styles with val="0" as false/undefined in StylesXform', async () => {

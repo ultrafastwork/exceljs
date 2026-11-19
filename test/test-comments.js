@@ -1,8 +1,8 @@
-const Excel = require('../lib/exceljs.nodejs');
+import Excel from '../lib/exceljs.nodejs.js';
 
 const wb = new Excel.Workbook();
 wb.xlsx
-  .readFile(require.resolve('./data/comments.xlsx'))
+  .readFile(new URL('./data/comments.xlsx', import.meta.url))
   .then(() => {
     wb.worksheets.forEach(sheet => {
       console.info(sheet.getCell('A1').model);
@@ -100,6 +100,6 @@ wb.xlsx
       // sheet.getCell('D2').comment = 'Plain Text Comment';
     });
 
-    return wb.xlsx.writeFile(`${__dirname}/data/test.xlsx`);
+    return wb.xlsx.writeFile(`${import.meta.dirname}/data/test.xlsx`);
   })
   .catch(console.error);

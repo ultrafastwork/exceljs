@@ -1,9 +1,8 @@
-const {createReadStream} = require('fs');
-const path = require('path');
+import {createReadStream} from 'node:fs';
+import path from 'node:path';
+import ExcelJS from '../../../lib/exceljs.nodejs.js';
 
-const ExcelJS = verquire('exceljs');
-
-const fileName = path.join(__dirname, '../data/third-party-export.xlsx');
+const fileName = path.join(import.meta.dirname, '../data/third-party-export.xlsx');
 
 const cellValues = {
   A1: 'Record ID',

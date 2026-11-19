@@ -1,8 +1,12 @@
-const tools = require('./tools');
-const testValues = tools.fix(require('./data/sheet-values.json'));
+import tools from './tools.js';
+import utils from '../../lib/utils/utils.js';
+import ExcelJS from '../../lib/exceljs.nodejs.js';
+import sheetValues from './data/sheet-values.json' with {type: 'json'};
+import styles2 from './data/styles.json' with {type: 'json'};
+import sheetProperties from './data/sheet-properties.json' with {type: 'json'};
+import pageSetup2 from './data/page-setup.json' with {type: 'json'};
 
-const utils = verquire('utils/utils');
-const ExcelJS = verquire('exceljs');
+const testValues = tools.fix(sheetValues);
 
 function fillFormula(f) {
   return Object.assign({formula: undefined}, f);
@@ -16,11 +20,11 @@ const streamedValues = {
   F1: {sharedString: 1},
   G1: {sharedString: 2},
 };
-module.exports = {
-  testValues: tools.fix(require('./data/sheet-values.json')),
-  styles: tools.fix(require('./data/styles.json')),
-  properties: tools.fix(require('./data/sheet-properties.json')),
-  pageSetup: tools.fix(require('./data/page-setup.json')),
+export default {
+  testValues: tools.fix(sheetValues),
+  styles: tools.fix(styles2),
+  properties: tools.fix(sheetProperties),
+  pageSetup: tools.fix(pageSetup2),
 
   checkBook(filename) {
     const wb = new ExcelJS.stream.xlsx.WorkbookReader();

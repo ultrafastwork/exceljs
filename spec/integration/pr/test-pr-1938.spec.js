@@ -1,5 +1,5 @@
-const ExcelJS = verquire('exceljs');
-const Table = verquire('doc/table');
+import ExcelJS from '../../../lib/exceljs.nodejs.js';
+import Table from '../../../lib/doc/table.js';
 
 describe('github issues', () => {
   describe('pull request 1938 - Load table rows and ref', () => {

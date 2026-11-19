@@ -1,6 +1,5 @@
-const Stream = require('readable-stream');
-
-const Excel = verquire('exceljs');
+import Stream from 'node:stream';
+import Excel from '../../../lib/exceljs.nodejs.js';
 
 describe('Workbook Writer', () => {
   it('returns undefined for non-existant sheet', () => {

@@ -1,8 +1,8 @@
-const path = require('path');
+import path from 'node:path';
+import HrStopwatch from './utils/hr-stopwatch.js';
+import exceljsNodejs from '../lib/exceljs.nodejs.js';
 
-const HrStopwatch = require('./utils/hr-stopwatch');
-
-const {Workbook} = require('../lib/exceljs.nodejs');
+const {Workbook} = exceljsNodejs;
 
 const filename = process.argv[2];
 
@@ -10,7 +10,7 @@ const wb = new Workbook();
 const ws = wb.addWorksheet('blort');
 
 const imageId = wb.addImage({
-  filename: path.join(__dirname, 'data/image2.png'),
+  filename: path.join(import.meta.dirname, 'data/image2.png'),
   extension: 'png',
 });
 ws.addImage(

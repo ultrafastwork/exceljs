@@ -1,6 +1,5 @@
-const fs = require('fs');
-
-const ExcelJS = verquire('exceljs');
+import fs from 'node:fs';
+import ExcelJS from '../../../lib/exceljs.nodejs.js';
 
 // this file to contain integration tests created from github issues
 const TEST_XLSX_FILE_NAME = './spec/out/wb-issue-880.test.xlsx';
@@ -14,7 +13,7 @@ describe('github issues', () => {
           useStyles: true,
           useSharedStrings: true,
         })
-        .then(function (buffer) {
+        .then(buffer => {
           const wstream = fs.createWriteStream(TEST_XLSX_FILE_NAME);
           wstream.write(buffer);
           wstream.end();

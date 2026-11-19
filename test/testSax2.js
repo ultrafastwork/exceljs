@@ -1,6 +1,6 @@
-const events = require('events');
-const Sax = require('sax');
-const utils = require('./utils/utils');
+import events from 'node:events';
+import Sax from 'sax';
+import utils from './utils/utils.js';
 
 const Row = function(r) {
   this.number = r;

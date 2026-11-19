@@ -1,7 +1,7 @@
-const {EventEmitter} = require('events');
-const {PassThrough, Readable} = require('readable-stream');
-
-const iterateStream = verquire('utils/iterate-stream');
+import {EventEmitter} from 'node:events';
+import {PassThrough, Readable} from 'node:stream';
+import iterateStream from '../../../lib/utils/iterate-stream.js';
+import nodeStream from 'node:stream';
 
 describe('iterateStream', () => {
   it('yields all chunks from an async stream', async () => {
@@ -61,7 +61,7 @@ describe('iterateStream', () => {
   });
 
   it('returns immediately if stream is already readableEnded', async () => {
-    const {PassThrough: NativePassThrough} = require('stream');
+    const {PassThrough: NativePassThrough} = nodeStream;
     const stream = new NativePassThrough();
     const ended = new Promise(resolve => stream.once('end', resolve));
     stream.end();

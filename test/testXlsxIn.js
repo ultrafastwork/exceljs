@@ -1,7 +1,5 @@
-'use strict';
-
-const HrStopwatch = require('./utils/hr-stopwatch');
-const Excel = require('../excel');
+import HrStopwatch from './utils/hr-stopwatch.js';
+import Excel from '../excel.js';
 
 const filename = process.argv[2];
 const wb = new Excel.Workbook();

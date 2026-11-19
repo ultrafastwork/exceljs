@@ -1,7 +1,6 @@
-const {PassThrough} = require('readable-stream');
-const JSZip = require('jszip');
-
-const ExcelJS = verquire('exceljs');
+import {PassThrough} from 'node:stream';
+import JSZip from 'jszip';
+import ExcelJS from '../../../lib/exceljs.nodejs.js';
 
 describe('github issues: PR #2671', () => {
   it('preserves worksheet names when workbook.xml.rels uses /xl/worksheets/ targets (openpyxl style)', async () => {

@@ -1,7 +1,6 @@
-const testXformHelper = require('./test-xform-helper');
-
-const ListXform = verquire('xlsx/xform/list-xform');
-const IntegerXform = verquire('xlsx/xform/simple/integer-xform');
+import testXformHelper from './test-xform-helper.js';
+import ListXform from '../../../../lib/xlsx/xform/list-xform.js';
+import IntegerXform from '../../../../lib/xlsx/xform/simple/integer-xform.js';
 
 const expectations = [
   {
