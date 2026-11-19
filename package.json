@@ -71,8 +71,7 @@
     "benchmark": "node --expose-gc benchmark.js",
     "benchmark:debug": "node --expose-gc --inspect-brk --trace-deopt benchmark.js",
     "preversion": "pnpm clean && pnpm test",
-    "postversion": "git push --no-verify && git push --tags --no-verify",
-    "prepare": "husky"
+    "postversion": "git push --no-verify && git push --tags --no-verify"
   },
   "lint-staged": {
     "*.js": [
