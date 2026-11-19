@@ -1,16 +1,15 @@
-# progress-handoff (v1.0.0+91) - Active
+# progress-handoff (v1.0.0+92) - Active
 
 ## Status
 - **Status**: Active
-- **Current Session**: `v1.0.0+91`
+- **Current Session**: `v1.0.0+92`
 - **Developer**: bagus
 
 ## Pending Tasks
-- [ ] **Close the `dist/` gap before releasing 5.0.0.** The `exports` `browser` condition points to `dist/exceljs.browser.mjs`, so browser bundlers resolving a git-tag install fail until `dist/` ships. **Ask the user**: (a) a release tag commit that includes the built `dist/`, (b) a `prepare` build step (needs devDependencies; esbuild only, so it is much lighter than before), or (c) GitHub Release tarballs from `pnpm pack`.
-- [ ] Release as **`5.0.0`** with `/vbump-and-push major` after the user reviews commits `6316ab5` and `29b2809`. Move `CHANGELOG.md` `[Unreleased]` under `[5.0.0]`.
-- [ ] Run the suites on **Node 24** (session `v1.0.0+90` only ran Node 26), e.g. `fnm exec --using=24 pnpm test`.
-- [ ] Update the ES5/Browserify sections of `README_zh.md` to match `README.md`.
-- [ ] Consider tracking `pnpm-lock.yaml` (currently gitignored). **Ask the user first.**
+- [ ] GitHub Actions did not run on the `v5.0.0` push (only old `pull_request` runs are listed, the last from 2026-09-10). Check the `tests.yml` triggers / Actions settings and ask the user whether CI should run on pushes to `master`.
+- [ ] Ask the user whether to create a GitHub Release for `v5.0.0` with the CHANGELOG notes (`gh release create v5.0.0`).
+- [ ] Help migrate client projects to `github:ultrafastwork/exceljs#v5.0.0` (Node >= 24; deep `exceljs/lib/...` imports are blocked by the `exports` map; `exceljs/dist/es5` is gone).
+- [ ] For future releases: bump commit `chore: release vX.Y.Z` → `node scripts/release-tag.js` → `git push origin master` → `git push origin vX.Y.Z`. The `vbump-and-push` skill does not know about the tag script, so run the script in place of its `git tag` step.
 - [ ] Optional cleanups: modernize the manual `test/` scripts (converted to ESM but not run in CI), consider replacing `under-dash` helpers with native code, and convert `makePivotTable` into a class (`ai-docs/planned.md` item 1).
 
 ## Recent Accomplishments

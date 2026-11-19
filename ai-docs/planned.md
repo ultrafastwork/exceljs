@@ -25,7 +25,7 @@
    - [x] `grunt-contrib-jasmine` and Grunt were replaced by `spec/browser/run.js` (Mocha + Chai in headless Chrome via Puppeteer, testing the script and module bundles). The Puppeteer override was dropped. Done in session `v1.0.0+90`.
 3. **ZIP Dependency & Node Engine Strategy**:
    - [x] `unzipper` → `^0.12.5`, `archiver` → `^8.0.0` (ESM-only, now `new ZipArchive(options)`). Done in session `v1.0.0+89`.
-   - [x] Minimum Node.js raised to `>=24` (user decision, session `v1.0.0+89`). This needs a **major** release (`5.0.0`), see `CHANGELOG.md` `[Unreleased]`.
+   - [x] Minimum Node.js raised to `>=24` (user decision, session `v1.0.0+89`). Released as **`5.0.0`** (tag `v5.0.0`, 2026-11-19, session `v1.0.0+91`).
    - Revisit a streaming ZIP alternative such as `yauzl-promise` (see `#2687` / `#2869`) if unzipper stalls again.
    - [x] `dist/es5`, Babel and the core-js/regenerator polyfills were removed. The codebase is native ESM, and browser bundles are built by esbuild (`scripts/build.js`) for Chrome/Edge 111+, Firefox 115+ and Safari 16.4+. Done in session `v1.0.0+90`.
 4. **ESM Modernization** (user request, session `v1.0.0+90`):
