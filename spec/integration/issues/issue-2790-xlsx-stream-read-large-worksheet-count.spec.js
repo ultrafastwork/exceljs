@@ -18,7 +18,7 @@ function createChunkedStream(buffer, chunkSize = 4096) {
 }
 
 describe('github issues', () => {
-  describe('issue 2790 - WorkbookReader missing worksheets when count > 100', function() {
+  describe('issue 2790 - WorkbookReader missing worksheets when count > 100', function () {
     this.timeout(10000);
     const SHEET_COUNT = 188;
     let workbookBuffer;
@@ -33,14 +33,11 @@ describe('github issues', () => {
     });
 
     it('reads all 188 worksheets via WorkbookReader.read()', async () => {
-      const reader = new ExcelJS.stream.xlsx.WorkbookReader(
-        createChunkedStream(workbookBuffer),
-        {
-          worksheets: 'emit',
-          sharedStrings: 'cache',
-          styles: 'cache',
-        }
-      );
+      const reader = new ExcelJS.stream.xlsx.WorkbookReader(createChunkedStream(workbookBuffer), {
+        worksheets: 'emit',
+        sharedStrings: 'cache',
+        styles: 'cache',
+      });
 
       let worksheetCount = 0;
       let firstValue = null;
@@ -70,13 +67,10 @@ describe('github issues', () => {
     });
 
     it('emits all 188 worksheets via async iterator without consuming each worksheet', async () => {
-      const reader = new ExcelJS.stream.xlsx.WorkbookReader(
-        createChunkedStream(workbookBuffer),
-        {
-          worksheets: 'emit',
-          sharedStrings: 'cache',
-        }
-      );
+      const reader = new ExcelJS.stream.xlsx.WorkbookReader(createChunkedStream(workbookBuffer), {
+        worksheets: 'emit',
+        sharedStrings: 'cache',
+      });
 
       let worksheetCount = 0;
       // eslint-disable-next-line no-unused-vars
@@ -101,17 +95,14 @@ describe('github issues', () => {
       }
       reorderedZip.file(
         'xl/sharedStrings.xml',
-        await originalZip.files['xl/sharedStrings.xml'].async('nodebuffer')
+        await originalZip.files['xl/sharedStrings.xml'].async('nodebuffer'),
       );
 
       const reorderedBuffer = await reorderedZip.generateAsync({type: 'nodebuffer'});
-      const reader = new ExcelJS.stream.xlsx.WorkbookReader(
-        createChunkedStream(reorderedBuffer),
-        {
-          worksheets: 'emit',
-          sharedStrings: 'cache',
-        }
-      );
+      const reader = new ExcelJS.stream.xlsx.WorkbookReader(createChunkedStream(reorderedBuffer), {
+        worksheets: 'emit',
+        sharedStrings: 'cache',
+      });
 
       let worksheetCount = 0;
       let firstValue = null;

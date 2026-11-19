@@ -1,9 +1,7 @@
 const XmlStream = verquire('utils/xml-stream');
 const testXformHelper = require('../test-xform-helper');
 
-const SheetPropertiesXform = verquire(
-  'xlsx/xform/sheet/sheet-properties-xform'
-);
+const SheetPropertiesXform = verquire('xlsx/xform/sheet/sheet-properties-xform');
 
 const expectations = [
   {
@@ -55,8 +53,7 @@ const expectations = [
       tabColor: {argb: 'FFFF0000'},
       pageSetup: {fitToPage: true},
     },
-    xml:
-      '<sheetPr><tabColor rgb="FFFF0000"/><pageSetUpPr fitToPage="1"/></sheetPr>',
+    xml: '<sheetPr><tabColor rgb="FFFF0000"/><pageSetUpPr fitToPage="1"/></sheetPr>',
     parsedModel: {
       tabColor: {argb: 'FFFF0000'},
       pageSetup: {fitToPage: true},
@@ -72,8 +69,7 @@ const expectations = [
       tabColor: {argb: 'FFFF0000'},
       outlineProperties: {summaryBelow: false},
     },
-    xml:
-      '<sheetPr><tabColor rgb="FFFF0000"/><outlinePr summaryBelow="0"/></sheetPr>',
+    xml: '<sheetPr><tabColor rgb="FFFF0000"/><outlinePr summaryBelow="0"/></sheetPr>',
     parsedModel: {
       tabColor: {argb: 'FFFF0000'},
       outlineProperties: {summaryBelow: false},
@@ -89,8 +85,7 @@ const expectations = [
       pageSetup: {fitToPage: true},
       outlineProperties: {summaryBelow: false},
     },
-    xml:
-      '<sheetPr><outlinePr summaryBelow="0"/><pageSetUpPr fitToPage="1"/></sheetPr>',
+    xml: '<sheetPr><outlinePr summaryBelow="0"/><pageSetUpPr fitToPage="1"/></sheetPr>',
     parsedModel: {
       pageSetup: {fitToPage: true},
       outlineProperties: {summaryBelow: false},
@@ -107,8 +102,7 @@ const expectations = [
       outlineProperties: {summaryBelow: false},
       pageSetup: {fitToPage: true},
     },
-    xml:
-      '<sheetPr><tabColor rgb="FFFF0000"/><outlinePr summaryBelow="0"/><pageSetUpPr fitToPage="1"/></sheetPr>',
+    xml: '<sheetPr><tabColor rgb="FFFF0000"/><outlinePr summaryBelow="0"/><pageSetUpPr fitToPage="1"/></sheetPr>',
     parsedModel: {
       tabColor: {argb: 'FFFF0000'},
       outlineProperties: {summaryBelow: false},
@@ -130,7 +124,7 @@ describe('SheetPropertiesXform', () => {
       outlineProperties: {summaryBelow: false},
     });
     expect(xmlStream1.xml).to.equal(
-      '<sheetPr><outlinePr summaryBelow="0"/><pageSetUpPr fitToPage="1"/></sheetPr>'
+      '<sheetPr><outlinePr summaryBelow="0"/><pageSetUpPr fitToPage="1"/></sheetPr>',
     );
 
     const xmlStream2 = new XmlStream();
@@ -140,7 +134,7 @@ describe('SheetPropertiesXform', () => {
       pageSetup: {fitToPage: true},
     });
     expect(xmlStream2.xml).to.equal(
-      '<sheetPr><tabColor rgb="FFFF0000"/><outlinePr summaryBelow="0"/><pageSetUpPr fitToPage="1"/></sheetPr>'
+      '<sheetPr><tabColor rgb="FFFF0000"/><outlinePr summaryBelow="0"/><pageSetUpPr fitToPage="1"/></sheetPr>',
     );
   });
 });

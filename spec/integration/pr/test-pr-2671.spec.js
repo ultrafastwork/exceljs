@@ -15,7 +15,10 @@ describe('github issues: PR #2671', () => {
     const zip = await JSZip.loadAsync(buffer);
 
     const relsXml = await zip.file('xl/_rels/workbook.xml.rels').async('string');
-    const openpyxlRelsXml = relsXml.replace(/Target="worksheets\/(sheet\d+\.xml)"/g, 'Target="/xl/worksheets/$1"');
+    const openpyxlRelsXml = relsXml.replace(
+      /Target="worksheets\/(sheet\d+\.xml)"/g,
+      'Target="/xl/worksheets/$1"',
+    );
     expect(openpyxlRelsXml).to.include('Target="/xl/worksheets/sheet1.xml"');
     zip.file('xl/_rels/workbook.xml.rels', openpyxlRelsXml);
 

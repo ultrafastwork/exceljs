@@ -138,11 +138,7 @@ const expectations = [
       name: 'TestTable',
       displayName: 'TestTable',
       tableRef: 'A1:C5',
-      columns: [
-        {name: 'Col1'},
-        {name: 'Col2'},
-        {name: 'Col3'},
-      ],
+      columns: [{name: 'Col1'}, {name: 'Col2'}, {name: 'Col3'}],
       style: null,
     },
     tests: ['parse'],

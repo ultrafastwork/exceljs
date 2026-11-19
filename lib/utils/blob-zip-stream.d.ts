@@ -137,7 +137,10 @@ declare class BlobZipStream extends EventEmitter {
 
   entries(): {[name: string]: ZipEntry};
 
-  stream(entry: string | ZipEntry, callback: (err: any | null, stream?: NodeJS.ReadableStream) => void): void;
+  stream(
+    entry: string | ZipEntry,
+    callback: (err: any | null, stream?: NodeJS.ReadableStream) => void,
+  ): void;
 
   openEntry(entry: string | ZipEntry, callback: (err: any | null, entry?: ZipEntry) => void): void;
 

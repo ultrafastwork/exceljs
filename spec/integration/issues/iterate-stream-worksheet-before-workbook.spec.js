@@ -32,7 +32,7 @@ describe('github issues: WorkbookReader early termination in Node 22', () => {
         filePromises.push(
           file.async('nodebuffer').then(data => {
             reorderedZip.file(key, data);
-          })
+          }),
         );
       }
     }
@@ -44,7 +44,7 @@ describe('github issues: WorkbookReader early termination in Node 22', () => {
         filePromises.push(
           file.async('nodebuffer').then(data => {
             reorderedZip.file(key, data);
-          })
+          }),
         );
       }
     }

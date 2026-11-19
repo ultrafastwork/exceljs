@@ -11,9 +11,7 @@ describe('DxfXform', () => {
       numFmtId: 10,
     });
 
-    expect(xmlStream.xml).xml.to.equal(
-      '<dxf><numFmt numFmtId="10" formatCode="0.00%"/></dxf>'
-    );
+    expect(xmlStream.xml).xml.to.equal('<dxf><numFmt numFmtId="10" formatCode="0.00%"/></dxf>');
   });
 
   it('renders numFmt when numFmt is an object with formatCode', () => {
@@ -27,7 +25,7 @@ describe('DxfXform', () => {
 
     expect(xmlStream.xml).to.not.include('[object Object]');
     expect(xmlStream.xml).xml.to.equal(
-      '<dxf><numFmt numFmtId="164" formatCode="&quot;$&quot;#,##0.00"/></dxf>'
+      '<dxf><numFmt numFmtId="164" formatCode="&quot;$&quot;#,##0.00"/></dxf>',
     );
   });
 });

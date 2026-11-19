@@ -42,8 +42,7 @@ const expectations = [
       filterButton: false,
       customFilters: [{val: '*brandywine*'}],
     },
-    xml:
-      '<filterColumn colId="0" hiddenButton="1"><customFilters><customFilter val="*brandywine*"/></customFilters></filterColumn>',
+    xml: '<filterColumn colId="0" hiddenButton="1"><customFilters><customFilter val="*brandywine*"/></customFilters></filterColumn>',
     get parsedModel() {
       return this.initialModel;
     },
@@ -56,8 +55,7 @@ const expectations = [
       return new FilterColumnXform();
     },
     initialModel: {filterButton: true},
-    xml:
-      '<filterColumn colId="0" hiddenButton="0"><dynamicFilter type="today"/></filterColumn>',
+    xml: '<filterColumn colId="0" hiddenButton="0"><dynamicFilter type="today"/></filterColumn>',
     get parsedModel() {
       return this.initialModel;
     },

@@ -93,9 +93,7 @@ describe('Workbook', () => {
       await workbook.xlsx.writeFile(TEST_XLSX_FILEPATH);
       const buffer = await fsReadFileAsync(TEST_XLSX_FILEPATH);
       const zip = await JSZip.loadAsync(buffer);
-      const pivotXml = await zip.files['xl/pivotTables/pivotTable1.xml'].async(
-        'string'
-      );
+      const pivotXml = await zip.files['xl/pivotTables/pivotTable1.xml'].async('string');
       expect(pivotXml).to.include('applyWidthHeightFormats="1"');
     });
 
@@ -120,9 +118,7 @@ describe('Workbook', () => {
       await workbook.xlsx.writeFile(TEST_XLSX_FILEPATH);
       const buffer = await fsReadFileAsync(TEST_XLSX_FILEPATH);
       const zip = await JSZip.loadAsync(buffer);
-      const pivotXml = await zip.files['xl/pivotTables/pivotTable1.xml'].async(
-        'string'
-      );
+      const pivotXml = await zip.files['xl/pivotTables/pivotTable1.xml'].async('string');
       expect(pivotXml).to.include('applyWidthHeightFormats="0"');
 
       const wb2 = new ExcelJS.Workbook();
@@ -139,7 +135,7 @@ describe('Workbook', () => {
       worksheet1.addRows([
         ['Company & Name', 'Category <Type>', 'Notes', 'Sales & Revenue'],
         ['Smith & Co', 'Price < $100', 'Size > 10"', 100],
-        ['Ben & Jerry\'s', '<tag>', 'The "best" option', 200],
+        ["Ben & Jerry's", '<tag>', 'The "best" option', 200],
       ]);
 
       const worksheet2 = workbook.addWorksheet('Sheet2');
@@ -154,9 +150,8 @@ describe('Workbook', () => {
       const buffer = await workbook.xlsx.writeBuffer();
       const zip = await JSZip.loadAsync(buffer);
 
-      const cacheDefXml = await zip.files[
-        'xl/pivotCache/pivotCacheDefinition1.xml'
-      ].async('string');
+      const cacheDefXml =
+        await zip.files['xl/pivotCache/pivotCacheDefinition1.xml'].async('string');
       expect(cacheDefXml).to.include('name="Company &amp; Name"');
       expect(cacheDefXml).to.include('name="Category &lt;Type&gt;"');
       expect(cacheDefXml).to.include('name="Sales &amp; Revenue"');
@@ -165,17 +160,12 @@ describe('Workbook', () => {
       expect(cacheDefXml).to.include('<s v="Price &lt; $100" />');
       expect(cacheDefXml).to.include('<s v="&lt;tag&gt;" />');
 
-      const cacheRecordsXml = await zip.files[
-        'xl/pivotCache/pivotCacheRecords1.xml'
-      ].async('string');
+      const cacheRecordsXml =
+        await zip.files['xl/pivotCache/pivotCacheRecords1.xml'].async('string');
       expect(cacheRecordsXml).to.include('<s v="Size &gt; 10&quot;" />');
-      expect(cacheRecordsXml).to.include(
-        '<s v="The &quot;best&quot; option" />'
-      );
+      expect(cacheRecordsXml).to.include('<s v="The &quot;best&quot; option" />');
 
-      const pivotXml = await zip.files['xl/pivotTables/pivotTable1.xml'].async(
-        'string'
-      );
+      const pivotXml = await zip.files['xl/pivotTables/pivotTable1.xml'].async('string');
       expect(pivotXml).to.include('name="Sum of Sales &amp; Revenue"');
     });
 
@@ -202,18 +192,16 @@ describe('Workbook', () => {
       const buffer = await workbook.xlsx.writeBuffer();
       const zip = await JSZip.loadAsync(buffer);
 
-      const cacheDefXml = await zip.files[
-        'xl/pivotCache/pivotCacheDefinition1.xml'
-      ].async('string');
+      const cacheDefXml =
+        await zip.files['xl/pivotCache/pivotCacheDefinition1.xml'].async('string');
       expect(cacheDefXml).to.not.include('<s v="null" />');
       expect(cacheDefXml).to.not.include('<s v="undefined" />');
       expect(cacheDefXml).to.include('<s v="Widget" />');
       expect(cacheDefXml).to.include('<s v="Gadget" />');
       expect(cacheDefXml).to.include('<s v="Electronics" />');
 
-      const cacheRecordsXml = await zip.files[
-        'xl/pivotCache/pivotCacheRecords1.xml'
-      ].async('string');
+      const cacheRecordsXml =
+        await zip.files['xl/pivotCache/pivotCacheRecords1.xml'].async('string');
       expect(cacheRecordsXml).to.include('<m />');
     });
 
@@ -268,24 +256,17 @@ describe('Workbook', () => {
       const buffer = await workbook.xlsx.writeBuffer();
       const zip = await JSZip.loadAsync(buffer);
 
-      const contentTypesXml = await zip.files['[Content_Types].xml'].async(
-        'string'
-      );
+      const contentTypesXml = await zip.files['[Content_Types].xml'].async('string');
       const workbookXml = await zip.files['xl/workbook.xml'].async('string');
-      const workbookRelsXml = await zip.files[
-        'xl/_rels/workbook.xml.rels'
-      ].async('string');
+      const workbookRelsXml = await zip.files['xl/_rels/workbook.xml.rels'].async('string');
 
       const xmlContents = await Promise.all(
         [1, 2, 3].map(async n => ({
           n,
-          sheetRelsXml: await zip.files[
-            `xl/worksheets/_rels/sheet${n + 1}.xml.rels`
-          ].async('string'),
-          pivotTableXml: await zip.files[
-            `xl/pivotTables/pivotTable${n}.xml`
-          ].async('string'),
-        }))
+          sheetRelsXml:
+            await zip.files[`xl/worksheets/_rels/sheet${n + 1}.xml.rels`].async('string'),
+          pivotTableXml: await zip.files[`xl/pivotTables/pivotTable${n}.xml`].async('string'),
+        })),
       );
 
       const uids = new Set();
@@ -298,31 +279,20 @@ describe('Workbook', () => {
           `xl/pivotTables/_rels/pivotTable${n}.xml.rels`,
         ];
         for (const filepath of expectedFiles) {
-          expect(
-            zip.files[filepath],
-            `missing ${filepath}`
-          ).to.not.be.undefined();
+          expect(zip.files[filepath], `missing ${filepath}`).to.not.be.undefined();
         }
 
         expect(contentTypesXml).to.include(
-          `PartName="/xl/pivotCache/pivotCacheDefinition${n}.xml"`
+          `PartName="/xl/pivotCache/pivotCacheDefinition${n}.xml"`,
         );
-        expect(contentTypesXml).to.include(
-          `PartName="/xl/pivotCache/pivotCacheRecords${n}.xml"`
-        );
-        expect(contentTypesXml).to.include(
-          `PartName="/xl/pivotTables/pivotTable${n}.xml"`
-        );
+        expect(contentTypesXml).to.include(`PartName="/xl/pivotCache/pivotCacheRecords${n}.xml"`);
+        expect(contentTypesXml).to.include(`PartName="/xl/pivotTables/pivotTable${n}.xml"`);
 
         const cacheId = String(9 + n);
         expect(workbookXml).to.include(`cacheId="${cacheId}"`);
-        expect(workbookRelsXml).to.include(
-          `Target="pivotCache/pivotCacheDefinition${n}.xml"`
-        );
+        expect(workbookRelsXml).to.include(`Target="pivotCache/pivotCacheDefinition${n}.xml"`);
 
-        expect(sheetRelsXml).to.include(
-          `Target="../pivotTables/pivotTable${n}.xml"`
-        );
+        expect(sheetRelsXml).to.include(`Target="../pivotTables/pivotTable${n}.xml"`);
 
         expect(pivotTableXml).to.include(`name="PivotTable${n}"`);
         expect(pivotTableXml).to.include(`cacheId="${cacheId}"`);
@@ -360,15 +330,9 @@ describe('Workbook', () => {
       const buffer = await workbook.xlsx.writeBuffer();
       const zip = await JSZip.loadAsync(buffer);
 
-      const sheetRelsXml = await zip.files[
-        'xl/worksheets/_rels/sheet2.xml.rels'
-      ].async('string');
-      expect(sheetRelsXml).to.include(
-        'Target="../pivotTables/pivotTable1.xml"'
-      );
-      expect(sheetRelsXml).to.include(
-        'Target="../pivotTables/pivotTable2.xml"'
-      );
+      const sheetRelsXml = await zip.files['xl/worksheets/_rels/sheet2.xml.rels'].async('string');
+      expect(sheetRelsXml).to.include('Target="../pivotTables/pivotTable1.xml"');
+      expect(sheetRelsXml).to.include('Target="../pivotTables/pivotTable2.xml"');
     });
 
     it('supports the "count" metric in pivotTable1.xml', async () => {
@@ -388,9 +352,7 @@ describe('Workbook', () => {
 
       const buffer = await workbook.xlsx.writeBuffer();
       const zip = await JSZip.loadAsync(buffer);
-      const pivotXml = await zip.files['xl/pivotTables/pivotTable1.xml'].async(
-        'string'
-      );
+      const pivotXml = await zip.files['xl/pivotTables/pivotTable1.xml'].async('string');
       expect(pivotXml).to.include('name="Count of E"');
       expect(pivotXml).to.include('subtotal="count"');
     });
@@ -411,9 +373,7 @@ describe('Workbook', () => {
 
       const buffer = await workbook.xlsx.writeBuffer();
       const zip = await JSZip.loadAsync(buffer);
-      const pivotXml = await zip.files['xl/pivotTables/pivotTable1.xml'].async(
-        'string'
-      );
+      const pivotXml = await zip.files['xl/pivotTables/pivotTable1.xml'].async('string');
       expect(pivotXml).to.include('name="Sum of E"');
       expect(pivotXml).to.not.include('subtotal="count"');
     });
@@ -474,7 +434,9 @@ describe('Workbook', () => {
           columns: ['C'],
           values: ['D', 'E'],
         });
-      }).to.throw('It is currently not possible to have multiple values when columns are specified.');
+      }).to.throw(
+        'It is currently not possible to have multiple values when columns are specified.',
+      );
     });
 
     it('throws an error when no values are specified (PR #2578)', () => {

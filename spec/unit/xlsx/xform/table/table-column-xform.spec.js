@@ -28,8 +28,7 @@ const expectations = [
     create() {
       return new TableColumnXform();
     },
-    xml:
-      '<tableColumn id="1" name="Foo"><calculatedColumnFormula>Bar</calculatedColumnFormula></tableColumn>',
+    xml: '<tableColumn id="1" name="Foo"><calculatedColumnFormula>Bar</calculatedColumnFormula></tableColumn>',
     parsedModel: {name: 'Foo'},
     tests: ['parse'],
   },

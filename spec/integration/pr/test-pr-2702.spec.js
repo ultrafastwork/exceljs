@@ -22,7 +22,7 @@ async function createStrictDateWorkbookBuffer() {
       '<row r="2"><c r="A2" t="d"><v>2024-02-09T12:34:56.000Z</v></c></row>',
       '<row r="3"><c r="A3" t="d"><f>TODAY()</f><v>2024-02-09</v></c></row>',
       '</sheetData>',
-    ].join('')
+    ].join(''),
   );
 
   zip.file('xl/worksheets/sheet1.xml', updatedXml);

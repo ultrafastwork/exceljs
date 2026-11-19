@@ -28,7 +28,7 @@ describe('github issues', () => {
     const sheetPrMatch = sheetXml.match(/<sheetPr>[\s\S]*?<\/sheetPr>/);
     expect(sheetPrMatch).to.be.ok();
     expect(sheetPrMatch[0]).to.equal(
-      '<sheetPr><tabColor rgb="FFFF0000"/><outlinePr summaryBelow="0"/><pageSetUpPr fitToPage="1"/></sheetPr>'
+      '<sheetPr><tabColor rgb="FFFF0000"/><outlinePr summaryBelow="0"/><pageSetUpPr fitToPage="1"/></sheetPr>',
     );
 
     const readWb = new ExcelJS.Workbook();

@@ -11,10 +11,7 @@ const expectations = [
       return new WorkbookXform();
     },
     preparedModel: require('./data/book.1.1.json'),
-    xml: fs
-      .readFileSync(`${__dirname}/data/book.1.2.xml`)
-      .toString()
-      .replace(/\r\n/g, '\n'),
+    xml: fs.readFileSync(`${__dirname}/data/book.1.2.xml`).toString().replace(/\r\n/g, '\n'),
     parsedModel: require('./data/book.1.3.json'),
     tests: ['render', 'renderIn', 'parse'],
   },
@@ -23,10 +20,7 @@ const expectations = [
     create() {
       return new WorkbookXform();
     },
-    xml: fs
-      .readFileSync(`${__dirname}/data/book.2.2.xml`)
-      .toString()
-      .replace(/\r\n/g, '\n'),
+    xml: fs.readFileSync(`${__dirname}/data/book.2.2.xml`).toString().replace(/\r\n/g, '\n'),
     parsedModel: require('./data/book.2.3.json'),
     tests: ['parse'],
   },
@@ -56,7 +50,7 @@ describe('WorkbookXform', () => {
       {
         name: '_xlnm.Print_Area',
         localSheetId: 0,
-        ranges: ['\'Sheet1\'!$A1:$B5', '\'Sheet1\'!$A6:$B10'],
+        ranges: ["'Sheet1'!$A1:$B5", "'Sheet1'!$A6:$B10"],
       },
     ]);
 
@@ -68,16 +62,15 @@ describe('WorkbookXform', () => {
         {
           name: '_xlnm.Print_Area',
           localSheetId: 0,
-          ranges: ['\'Sheet1\'!$A$1:$B$5', '\'Sheet1\'!$A$6:$B$10'],
+          ranges: ["'Sheet1'!$A$1:$B$5", "'Sheet1'!$A$6:$B$10"],
         },
       ],
       media: [],
     };
 
     xform.reconcile(reconcileModel);
-    expect(
-      reconcileModel.worksheetHash['xl/worksheets/sheet1.xml'].pageSetup
-        .printArea
-    ).to.equal('A1:B5&&A6:B10');
+    expect(reconcileModel.worksheetHash['xl/worksheets/sheet1.xml'].pageSetup.printArea).to.equal(
+      'A1:B5&&A6:B10',
+    );
   });
 });

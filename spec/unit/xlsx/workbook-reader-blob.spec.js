@@ -18,9 +18,7 @@ describe('WorkbookReaderBlob and XLSX troubleshooting log', () => {
       const wb = new Workbook();
       await wb.xlsx.load(buffer);
       expect(warnings.length).to.equal(1);
-      expect(warnings[0]).to.include(
-        'Every workbook must have at least one worksheet.'
-      );
+      expect(warnings[0]).to.include('Every workbook must have at least one worksheet.');
     } finally {
       console.warn = origWarn;
     }
@@ -55,10 +53,7 @@ describe('WorkbookReaderBlob and XLSX troubleshooting log', () => {
       readAsArrayBuffer(blob) {
         setImmediate(() => {
           const buf = blob._buffer;
-          this.result = buf.buffer.slice(
-            buf.byteOffset,
-            buf.byteOffset + buf.byteLength
-          );
+          this.result = buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength);
           if (this.onload) {
             this.onload();
           }

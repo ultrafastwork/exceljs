@@ -33,8 +33,7 @@ const expectations = [
         },
       ],
     },
-    xml:
-      '<si><r><rPr><b/><color theme="1"/><family val="2"/><scheme val="minor"/><sz val="11"/><rFont val="Calibri"/></rPr><t>Bold,</t></r></si>',
+    xml: '<si><r><rPr><b/><color theme="1"/><family val="2"/><scheme val="minor"/><sz val="11"/><rFont val="Calibri"/></rPr><t>Bold,</t></r></si>',
     parsedModel: {
       richText: [
         {
@@ -73,8 +72,7 @@ const expectations = [
       text: 'Hello, World!',
       phoneticText: {text: 'Helow woruld'},
     },
-    xml:
-      '<si><t>Hello, World!</t><rPh eb="0" sb="0"><t>Helow woruld</t></rPh></si>',
+    xml: '<si><t>Hello, World!</t><rPh eb="0" sb="0"><t>Helow woruld</t></rPh></si>',
     parsedModel: 'Hello, World!',
     tests: ['parse'],
   },
@@ -92,8 +90,7 @@ const expectations = [
         properties: {fontId: 1},
       },
     },
-    xml:
-      '<si><t>役割</t><rPh sb="0" eb="2"><t>ヤクワリ</t></rPh><phoneticPr fontId="1" /></si>',
+    xml: '<si><t>役割</t><rPh sb="0" eb="2"><t>ヤクワリ</t></rPh><phoneticPr fontId="1" /></si>',
     parsedModel: '役割',
     tests: ['parse'],
   },
@@ -128,8 +125,7 @@ const expectations = [
         },
       ],
     },
-    xml:
-      '<si><r><rPr><color rgb="FFFF0000"/><sz val="10"/></rPr><t>Test 1</t></r><r><rPr><color rgb="FF0000FF"/><sz val="10"/></rPr><t>Test 2</t></r></si>',
+    xml: '<si><r><rPr><color rgb="FFFF0000"/><sz val="10"/></rPr><t>Test 1</t></r><r><rPr><color rgb="FF0000FF"/><sz val="10"/></rPr><t>Test 2</t></r></si>',
     tests: ['render', 'renderIn'],
   },
   {
@@ -138,14 +134,9 @@ const expectations = [
       return new SharedStringXform();
     },
     preparedModel: {
-      richText: [
-        {text: 'Test 1'},
-        {text: ' '},
-        {text: 'Test 2'},
-      ],
+      richText: [{text: 'Test 1'}, {text: ' '}, {text: 'Test 2'}],
     },
-    xml:
-      '<si><r><t>Test 1</t></r><r><t xml:space="preserve"> </t></r><r><t>Test 2</t></r></si>',
+    xml: '<si><r><t>Test 1</t></r><r><t xml:space="preserve"> </t></r><r><t>Test 2</t></r></si>',
     tests: ['render', 'renderIn'],
   },
   {
@@ -154,10 +145,7 @@ const expectations = [
       return new SharedStringXform();
     },
     preparedModel: {
-      richText: [
-        {font: {size: 10}, text: ''},
-        {text: ''},
-      ],
+      richText: [{font: {size: 10}, text: ''}, {text: ''}],
     },
     xml: '<si><t/></si>',
     tests: ['render', 'renderIn'],
@@ -167,8 +155,7 @@ const expectations = [
     create() {
       return new SharedStringXform();
     },
-    xml:
-      '<si><t></t><r><rPr><sz val="10"/><color theme="10"/><rFont val="Calibri"/><family val="2"/></rPr><t>https://github.com/exceljs/exceljs</t></r></si>',
+    xml: '<si><t></t><r><rPr><sz val="10"/><color theme="10"/><rFont val="Calibri"/><family val="2"/></rPr><t>https://github.com/exceljs/exceljs</t></r></si>',
     parsedModel: {
       richText: [
         {

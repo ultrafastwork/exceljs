@@ -25,7 +25,7 @@ describe('Workbook', () => {
             },
           },
         },
-        'B2:D6'
+        'B2:D6',
       );
 
       return wb.xlsx
@@ -73,7 +73,7 @@ describe('Workbook', () => {
           tl: {col: 0.1125, row: 0.4},
           br: {col: 2.101046875, row: 3.4},
           editAs: 'oneCell',
-        }
+        },
       );
 
       return wb.xlsx
@@ -111,7 +111,7 @@ describe('Parsing text body', () => {
         textBody,
         type: 'rect',
       },
-      'B2:D6'
+      'B2:D6',
     );
     return ws.getShapes()[0];
   }
@@ -134,10 +134,7 @@ describe('Parsing text body', () => {
       ['baz', 'qux'],
     ]);
     expect(shape.props.textBody).to.deep.equal({
-      paragraphs: [
-        {runs: [{text: 'foo'}, {text: 'bar'}]},
-        {runs: [{text: 'baz'}, {text: 'qux'}]},
-      ],
+      paragraphs: [{runs: [{text: 'foo'}, {text: 'bar'}]}, {runs: [{text: 'baz'}, {text: 'qux'}]}],
     });
   });
   it('object', () => {

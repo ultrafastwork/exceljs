@@ -373,12 +373,8 @@ describe('Workbook', () => {
           expect(imageDesc.range.br).to.not.be.undefined();
 
           // Verify scaling calculations are accurate upon reload
-          expect(imageDesc.range.tl.colWidth).to.equal(
-            Math.floor(12 * (640000 / 8.43))
-          );
-          expect(imageDesc.range.tl.rowHeight).to.equal(
-            Math.floor(24 * (180000 / 15))
-          );
+          expect(imageDesc.range.tl.colWidth).to.equal(Math.floor(12 * (640000 / 8.43)));
+          expect(imageDesc.range.tl.rowHeight).to.equal(Math.floor(24 * (180000 / 15)));
         });
     });
   });
@@ -396,9 +392,7 @@ describe('Workbook', () => {
 
         const sheetImageId = ws.addImage(imageId, 'C3:E6');
         expect(sheetImageId).to.be.a('string');
-        expect(
-          ws.getImages().some(img => img.sheetImageId === sheetImageId)
-        ).to.be.true();
+        expect(ws.getImages().some(img => img.sheetImageId === sheetImageId)).to.be.true();
       });
 
       it('should return sheetImageId for existing images in a file', () => {
@@ -599,7 +593,7 @@ describe('Workbook', () => {
           title: 'image title',
           description: 'image alt text',
           decorative: 1,
-        }
+        },
       );
 
       expect(ws.getImages()[0].props).to.deep.equal({
@@ -615,7 +609,7 @@ describe('Workbook', () => {
       expect(drawingXml).to.include('title="image title"');
       expect(drawingXml).to.include('descr="image alt text"');
       expect(drawingXml).to.include(
-        '<adec:decorative xmlns:adec="http://schemas.microsoft.com/office/drawing/2017/decorative" val="1"/>'
+        '<adec:decorative xmlns:adec="http://schemas.microsoft.com/office/drawing/2017/decorative" val="1"/>',
       );
     });
 
@@ -625,13 +619,13 @@ describe('Workbook', () => {
         wb.addImage({
           filename: IMAGE_FILENAME,
           extension: 'bmp',
-        })
+        }),
       ).to.throw('Extension values must be included "jpeg", "png", "gif"');
 
       expect(() =>
         wb.addImage({
           filename: IMAGE_FILENAME,
-        })
+        }),
       ).to.throw('Extension values must be included "jpeg", "png", "gif"');
     });
   });

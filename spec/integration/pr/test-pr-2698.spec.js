@@ -50,8 +50,6 @@ describe('github issues', () => {
     const ws3 = wb3.getWorksheet('Sheet1');
     expect(ws3.conditionalFormattings).to.have.lengthOf(1);
     expect(ws3.conditionalFormattings[0].rules[0].style.numFmt).to.exist();
-    expect(
-      ws3.conditionalFormattings[0].rules[0].style.numFmt.formatCode
-    ).to.equal(formatCode);
+    expect(ws3.conditionalFormattings[0].rules[0].style.numFmt.formatCode).to.equal(formatCode);
   });
 });

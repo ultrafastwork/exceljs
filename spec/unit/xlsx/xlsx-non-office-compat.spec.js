@@ -61,7 +61,7 @@ describe('XLSX non-Office compatibility', () => {
     const zip = await JSZip.loadAsync(baseBuffer);
     zip.file(
       'docProps/core.xml',
-      '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><invalidCore><dc:creator>3rdParty</dc:creator></invalidCore>'
+      '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><invalidCore><dc:creator>3rdParty</dc:creator></invalidCore>',
     );
     const modifiedBuffer = await zip.generateAsync({type: 'nodebuffer'});
 

@@ -9,7 +9,7 @@ describe('github issues', () => {
         sharedStrings: 'cache',
         styles: 'cache',
         worksheets: 'emit',
-      }
+      },
     );
     for await (const worksheetReader of reader) {
       worksheetReader.on('mergeCell', mergeCell => {

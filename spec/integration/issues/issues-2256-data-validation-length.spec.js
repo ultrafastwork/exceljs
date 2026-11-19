@@ -34,7 +34,7 @@ describe('github issues', () => {
         .to.be.an('error')
         .with.property(
           'message',
-          'The input cannot be larger than 255 characters. Please check the value of dataValidation.formulae'
+          'The input cannot be larger than 255 characters. Please check the value of dataValidation.formulae',
         );
     });
 

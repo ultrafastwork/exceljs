@@ -2,11 +2,7 @@ const fs = require('fs');
 const {promisify} = require('util');
 
 const testUtils = require('../../utils/index');
-const {
-  addTable,
-  checkTable,
-  defaultTableValues,
-} = require('../../unit/doc/worksheet-table.spec');
+const {addTable, checkTable, defaultTableValues} = require('../../unit/doc/worksheet-table.spec');
 
 const ExcelJS = verquire('exceljs');
 
@@ -30,10 +26,7 @@ describe('WorkbookWriter', () => {
         filename: TEST_XLSX_FILE_NAME,
         useStyles: true,
       };
-      const wb = testUtils.createTestBook(
-        new ExcelJS.stream.xlsx.WorkbookWriter(options),
-        'xlsx'
-      );
+      const wb = testUtils.createTestBook(new ExcelJS.stream.xlsx.WorkbookWriter(options), 'xlsx');
 
       return wb
         .commit()
@@ -126,10 +119,7 @@ describe('WorkbookWriter', () => {
         filename: TEST_XLSX_FILE_NAME,
         useStyles: false,
       };
-      const wb = testUtils.createTestBook(
-        new ExcelJS.stream.xlsx.WorkbookWriter(options),
-        'xlsx'
-      );
+      const wb = testUtils.createTestBook(new ExcelJS.stream.xlsx.WorkbookWriter(options), 'xlsx');
 
       return wb
         .commit()
@@ -180,46 +170,30 @@ describe('WorkbookWriter', () => {
         })
         .then(wb2 => {
           const ws2 = wb2.getWorksheet('blort');
-          ['A1', 'B1', 'C1', 'A2', 'B2', 'C2', 'A3', 'B3', 'C3'].forEach(
-            address => {
-              expect(ws2.getCell(address).value).to.equal(address);
-            }
-          );
-          expect(ws2.getCell('B1').font).to.deep.equal(
-            testUtils.styles.fonts.comicSansUdB16
-          );
+          ['A1', 'B1', 'C1', 'A2', 'B2', 'C2', 'A3', 'B3', 'C3'].forEach(address => {
+            expect(ws2.getCell(address).value).to.equal(address);
+          });
+          expect(ws2.getCell('B1').font).to.deep.equal(testUtils.styles.fonts.comicSansUdB16);
           expect(ws2.getCell('B1').alignment).to.deep.equal(
-            testUtils.styles.namedAlignments.middleCentre
+            testUtils.styles.namedAlignments.middleCentre,
           );
-          expect(ws2.getCell('A2').font).to.deep.equal(
-            testUtils.styles.fonts.broadwayRedOutline20
-          );
-          expect(ws2.getCell('B2').font).to.deep.equal(
-            testUtils.styles.fonts.broadwayRedOutline20
-          );
-          expect(ws2.getCell('C2').font).to.deep.equal(
-            testUtils.styles.fonts.broadwayRedOutline20
-          );
-          expect(ws2.getCell('B3').font).to.deep.equal(
-            testUtils.styles.fonts.comicSansUdB16
-          );
+          expect(ws2.getCell('A2').font).to.deep.equal(testUtils.styles.fonts.broadwayRedOutline20);
+          expect(ws2.getCell('B2').font).to.deep.equal(testUtils.styles.fonts.broadwayRedOutline20);
+          expect(ws2.getCell('C2').font).to.deep.equal(testUtils.styles.fonts.broadwayRedOutline20);
+          expect(ws2.getCell('B3').font).to.deep.equal(testUtils.styles.fonts.comicSansUdB16);
           expect(ws2.getCell('B3').alignment).to.deep.equal(
-            testUtils.styles.namedAlignments.middleCentre
+            testUtils.styles.namedAlignments.middleCentre,
           );
 
-          expect(ws2.getColumn(2).font).to.deep.equal(
-            testUtils.styles.fonts.comicSansUdB16
-          );
+          expect(ws2.getColumn(2).font).to.deep.equal(testUtils.styles.fonts.comicSansUdB16);
           expect(ws2.getColumn(2).alignment).to.deep.equal(
-            testUtils.styles.namedAlignments.middleCentre
+            testUtils.styles.namedAlignments.middleCentre,
           );
           expect(ws2.getColumn(2).width).to.equal(9);
 
           expect(ws2.getColumn(4).width).to.equal(undefined);
 
-          expect(ws2.getRow(2).font).to.deep.equal(
-            testUtils.styles.fonts.broadwayRedOutline20
-          );
+          expect(ws2.getRow(2).font).to.deep.equal(testUtils.styles.fonts.broadwayRedOutline20);
         });
     });
 
@@ -349,7 +323,7 @@ describe('WorkbookWriter', () => {
         });
     });
 
-    it('A lot of sheets', function() {
+    it('A lot of sheets', function () {
       this.timeout(5000);
 
       let i;
@@ -457,11 +431,9 @@ describe('WorkbookWriter', () => {
 
     it('serializes and deserializes dataValidations', () => {
       const options = {filename: TEST_XLSX_FILE_NAME};
-      const wb = testUtils.createTestBook(
-        new ExcelJS.stream.xlsx.WorkbookWriter(options),
-        'xlsx',
-        ['dataValidations']
-      );
+      const wb = testUtils.createTestBook(new ExcelJS.stream.xlsx.WorkbookWriter(options), 'xlsx', [
+        'dataValidations',
+      ]);
 
       return wb
         .commit()
@@ -482,11 +454,9 @@ describe('WorkbookWriter', () => {
           zlib: {level: 9}, // Sets the compression level.
         },
       };
-      const wb = testUtils.createTestBook(
-        new ExcelJS.stream.xlsx.WorkbookWriter(options),
-        'xlsx',
-        ['dataValidations']
-      );
+      const wb = testUtils.createTestBook(new ExcelJS.stream.xlsx.WorkbookWriter(options), 'xlsx', [
+        'dataValidations',
+      ]);
 
       return wb
         .commit()
@@ -656,11 +626,9 @@ describe('WorkbookWriter', () => {
         useStyles: true,
         useSharedStrings: true,
       };
-      const wb = testUtils.createTestBook(
-        new ExcelJS.stream.xlsx.WorkbookWriter(options),
-        'xlsx',
-        ['conditionalFormatting']
-      );
+      const wb = testUtils.createTestBook(new ExcelJS.stream.xlsx.WorkbookWriter(options), 'xlsx', [
+        'conditionalFormatting',
+      ]);
 
       return wb
         .commit()
