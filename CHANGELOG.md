@@ -67,7 +67,8 @@ Codebase, dependency and tooling modernization. Requires a **major** version bum
 - `pnpm-lock.yaml` is now tracked in git.
 - Release tags include the built `dist/`: `scripts/release-tag.js` builds the bundles and tags a detached commit
   that adds them on top of the version bump, so git-tag installs get the browser bundles while `master` stays
-  free of build output.
+  free of build output. The tag commit also drops the dev-only `prepare` (husky) script: pnpm refuses git-hosted
+  packages with a `prepare` script unless the consumer allowlists them.
 
 ## [4.5.0] - 2026-11-19
 
