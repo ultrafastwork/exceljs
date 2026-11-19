@@ -19,10 +19,12 @@ npm install exceljs
 This fork (`ultrafastwork/exceljs`) is distributed through git tags rather than npm. The package name stays `exceljs`, so `import`/`require('exceljs')` is unchanged:
 
 ```shell
-pnpm add github:ultrafastwork/exceljs#v4.5.0
+pnpm add github:ultrafastwork/exceljs#v5.0.0
 ```
 
-Note: `dist/` (the browser bundles) is not committed. Git-tag installs currently provide the Node.js entry point only.
+Release tags (from `v5.0.0`) point to a commit that includes the built `dist/` browser bundles, so bundlers
+resolving the `browser` condition work with git-tag installs. The `master` branch does not contain `dist/`;
+run `pnpm build` to create it locally.
 
 # New Features!
 
@@ -2905,11 +2907,10 @@ Please note: I have tested ExcelJS with bluebird specifically (since up until re
 
 ## Dist Folder[⬆](#contents)<!-- Link generated with jump2header -->
 
-Before publishing this module, the source code is transpiled and otherwise processed
-before being placed in a dist/ folder.
-This README identifies two files - a browserified bundle and minified version.
-No other contents of the dist/ folder are guaranteed in any way other than the file
-specified as "main" in the package.json
+The browser bundles in the dist/ folder are built by esbuild (`scripts/build.js`).
+The files named in this README (`exceljs.browser.mjs`, `exceljs.js`, `exceljs.min.js`
+and their `bare` aliases) are supported; no other contents of the dist/ folder are
+guaranteed.
 
 
 # Known Issues[⬆](#contents)<!-- Link generated with jump2header -->

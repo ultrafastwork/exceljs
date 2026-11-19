@@ -14,6 +14,14 @@
 npm install exceljs
 ```
 
+本分支（`ultrafastwork/exceljs`）通过 git 标签而非 npm 发布。包名仍为 `exceljs`，因此 `import`/`require('exceljs')` 保持不变：
+
+```shell
+pnpm add github:ultrafastwork/exceljs#v5.0.0
+```
+
+发布标签（从 `v5.0.0` 起）指向包含已构建 `dist/` 浏览器包的提交，因此使用 git 标签安装时，解析 `browser` 条件的打包工具也能正常工作。`master` 分支不包含 `dist/`，请运行 `pnpm build` 在本地生成。
+
 # 新的功能!
 
 * Merged [fix: styles rendering in case when "numFmt" is present in conditional formatting rules (resolves #1814) #1815](https://github.com/exceljs/exceljs/pull/1815). <br/> Many thanks to [@andreykrupskii](https://github.com/andreykrupskii) for this contribution!
@@ -172,69 +180,43 @@ npm install exceljs
 
 # 导入[⬆](#目录)<!-- Link generated with jump2header -->
 
+ExcelJS 是一个 ES 模块，需要 Node.js 24 或更高版本。
+
+```javascript
+import ExcelJS from 'exceljs';
+// 或者只导入需要的部分
+import {Workbook, ValueType, stream} from 'exceljs';
+```
+
+CommonJS 代码可以继续使用 `require`。Node.js 24 可以通过 `require()` 同步加载 ES 模块，因此现有代码无需修改：
+
 ```javascript
 const ExcelJS = require('exceljs');
 ```
 
-## ES5 导入[⬆](#目录)<!-- Link generated with jump2header -->
-
-要使用 ES5 编译代码，请使用 *dist/es5* 路径。
-
-```javascript
-const ExcelJS = require('exceljs/dist/es5');
-```
-
-**注意：**ES5 版本对许多 polyfill 都具有隐式依赖，而 exceljs 不再明确添加。
-您需要在依赖项中添加 `core-js` 和 `regenerator-runtime`，并在导入 `exceljs` 之前在代码中包含以下引用：
-
-```javascript
-// exceljs 所需的 polyfills
-require('core-js/modules/es.promise');
-require('core-js/modules/es.string.includes');
-require('core-js/modules/es.object.assign');
-require('core-js/modules/es.object.keys');
-require('core-js/modules/es.symbol');
-require('core-js/modules/es.symbol.async-iterator');
-require('regenerator-runtime/runtime');
-
-const ExcelJS = require('exceljs/dist/es5');
-```
-
-对于 IE 11，您还需要一个 polyfill 以支持 unicode regex 模式。 例如，
-
-```js
-const rewritePattern = require('regexpu-core');
-const {generateRegexpuOptions} = require('@babel/helper-create-regexp-features-plugin/lib/util');
-
-const {RegExp} = global;
-try {
-  new RegExp('a', 'u');
-} catch (err) {
-  global.RegExp = function(pattern, flags) {
-    if (flags && flags.includes('u')) {
-      return new RegExp(rewritePattern(pattern, flags, generateRegexpuOptions({flags, pattern})));
-    }
-    return new RegExp(pattern, flags);
-  };
-  global.RegExp.prototype = RegExp.prototype;
-}
-```
+ES5 版本（`exceljs/dist/es5`）及其 polyfill 要求已在 5.0.0 中移除。
 
 ## 浏览器端[⬆](#目录)<!-- Link generated with jump2header -->
 
-ExcelJS 在 *dist/* 文件夹内发布了两个支持浏览器的包：
+*dist/* 文件夹包含面向现代浏览器（Chrome/Edge 111+、Firefox 115+、Safari 16.4+）的独立包，无需任何 polyfill。
 
-一个是隐式依赖 `core-js` polyfills 的...
+使用打包工具（Vite、webpack、esbuild 等）时，直接 `import ExcelJS from 'exceljs'` 即可：`browser` 导出条件会自动选择 `dist/exceljs.browser.mjs`。在不使用打包工具的页面中，请使用 ES 模块版本：
+
 ```html
-<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.js"></script>
-<script src="exceljs.js"></script>
+<script type="module">
+  import ExcelJS from './exceljs.browser.mjs';
+</script>
 ```
 
-另一个则没有...
+或者使用经典脚本版本，它会定义全局变量 `ExcelJS`：
+
 ```html
-<script src="--your-project's-pollyfills-here--"></script>
-<script src="exceljs.bare.js"></script>
+<script src="exceljs.min.js"></script>
 ```
+
+`exceljs.bare.js` 和 `exceljs.bare.min.js` 作为 `exceljs.js` 和 `exceljs.min.js` 的别名保留，以兼容现有页面。
+
+在浏览器中，文件系统方法（`readFile`、`writeFile`）不可用。请使用 `load`/`writeBuffer`，或将 `Blob` 传给 `stream.xlsx.WorkbookReader` 进行流式读取。
 
 
 # 接口[⬆](#目录)<!-- Link generated with jump2header -->
@@ -2724,7 +2706,7 @@ ExcelJS.config.setValue('promise', require('bluebird'));
 
 ## Dist 文件夹[⬆](#目录)<!-- Link generated with jump2header -->
 
-在发布此模块之前，先对源代码进行编译和其他处理，然后再将它们放置在 *dist/* 文件夹中。该自述文件标识两个文件-浏览器捆绑和压缩版本。除了在 package.json 中指定为  `"main"` 的文件外，不能保证 *dist/* 文件夹的其他内容。
+*dist/* 文件夹中的浏览器包由 esbuild（`scripts/build.js`）生成。本自述文件中列出的文件（`exceljs.browser.mjs`、`exceljs.js`、`exceljs.min.js` 及其 `bare` 别名）受支持；*dist/* 文件夹的其他内容不作任何保证。
 
 
 # 已知的问题[⬆](#目录)<!-- Link generated with jump2header -->
