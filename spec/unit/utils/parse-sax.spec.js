@@ -37,10 +37,9 @@ const parse = async chunks => {
 };
 
 const utf8FragTest = async text => {
-  /* eslint-disable node/no-unsupported-features/node-builtins */
-  const encoder =
-    typeof TextEncoder === 'undefined' ? utf8Encoder : new TextEncoder('utf-8');
-  /* eslint-enable node/no-unsupported-features/node-builtins */
+  /* eslint-disable n/no-unsupported-features/node-builtins */
+  const encoder = typeof TextEncoder === 'undefined' ? utf8Encoder : new TextEncoder('utf-8');
+  /* eslint-enable n/no-unsupported-features/node-builtins */
 
   const bytes = encoder.encode(text);
 
@@ -63,9 +62,7 @@ const utf8FragTest = async text => {
   for (let len = 1; len < bytes.length; len++) {
     const chunks = [];
     for (let p = 0; p < bytes.length; p += len) {
-      chunks.push(
-        bytes.subarray(p, p + len < bytes.length ? p + len : bytes.length)
-      );
+      chunks.push(bytes.subarray(p, p + len < bytes.length ? p + len : bytes.length));
     }
     promises.push(parse(chunks));
   }

@@ -3,6 +3,37 @@
 All notable changes to this fork of [exceljs/exceljs](https://github.com/exceljs/exceljs) are documented here.
 Upstream releases up to `4.4.0` are listed in the [README release history](./README.md#release-history).
 
+## [Unreleased]
+
+Dependency and tooling modernization. Requires a **major** version bump because the minimum Node.js version changes.
+
+### Breaking
+
+- **Node.js 24 or newer is required** (`engines.node: ">=24"`, was `>=8.3.0`). Several runtime dependencies are now
+  ESM-only and load through `require(esm)`.
+
+### Changed
+
+- Runtime dependencies: `archiver` 5 → 8, `unzipper` 0.10 → 0.12, `readable-stream` 3 → 4, `saxes` 5 → 6,
+  `fast-csv` 4 → 5, `jszip` 3.10.1 → 3.10.2 (CSP patch regenerated), `dayjs` 1.11.23, `tmp` 0.2.7.
+- The `uuid` dependency was removed. UUIDs now come from `crypto.randomUUID()`, falling back to
+  `crypto.getRandomValues()` in insecure browser contexts (`lib/utils/uuid.js`).
+- `StreamBuf` exposes `readable`/`writable` flags so archiver 8 accepts it as a stream.
+- The web `WritableStream` adapter no longer masks the original write error with a lock-release error
+  (readable-stream 4 enables `autoDestroy`).
+
+### Tooling
+
+- Babel 8, Mocha 12, Chai 6, TypeScript 7 (type-check with `tsc`, specs run with `tsx`), Express 5, lint-staged 17.
+- Prettier 3 (`.prettierrc.json`) is now the only formatter, and the codebase was reformatted with it once
+  (the commit is listed in `.git-blame-ignore-revs`). New scripts: `pnpm format` / `pnpm format:check`.
+- ESLint 10 flat config (`eslint.config.js`, `@eslint/js` + `eslint-plugin-n`) checks correctness only, with no
+  formatting rules. Replaces airbnb-base, `eslint-config-prettier`, `eslint-plugin-node`, `eslint-plugin-import`
+  and `prettier-eslint`. Stale `eslint-disable` directives were removed.
+- `babelify` was replaced by a local Babel 8 browserify transform (`scripts/babelify.js`). `got` and `ts-node` were
+  removed.
+- CI tests Node 24 and 26 with pnpm.
+
 ## [4.5.0] - 2026-11-19
 
 First fork release. Based on upstream `4.4.0` and adds all 135 open upstream pull requests,

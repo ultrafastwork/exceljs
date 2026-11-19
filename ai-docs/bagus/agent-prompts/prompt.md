@@ -1,17 +1,13 @@
-# AI Agent Prompt: Make Git-Tag Installs Complete (dist/ for Consumers)
+# AI Agent Prompt: Release 5.0.0 and Make Git-Tag Installs Complete
 
 ## Objective
-The fork is distributed via git tags (`github:ultrafastwork/exceljs#vX.Y.Z`) with the package name unchanged (`exceljs`). `dist/` is gitignored, so git-tag consumers get no browser bundle (`package.json` `browser` → `dist/exceljs.min.js`) and no `exceljs/dist/es5`. Close this gap without changing the public API.
+Session `v1.0.0+89` upgraded every dependency to its latest major (Node floor now `>=24`, ESLint 10 flat config, Babel 8, Mocha 12, Chai 6, TypeScript 7, archiver 8, readable-stream 4, …). Release it as `5.0.0`, then close the `dist/` gap for git-tag consumers (`github:ultrafastwork/exceljs#vX.Y.Z`) without changing the public API.
 
 ## Instructions
-1. Read `ai-docs/bagus/progress-handoffs/progress-handoff.md` and `ai-docs/planned.md` (Known Environment Caveats) for context.
-2. Confirm the gap. In a scratch project, run `pnpm add github:ultrafastwork/exceljs#v4.5.0` and check that `node_modules/exceljs/dist` is missing while `require('exceljs')` works.
-3. Present options to the user and **wait for a decision** before implementing:
-   - (a) a release tag commit that force-adds the built `dist/` (e.g. on a `release` branch), keeping `master` clean;
-   - (b) a `prepare` script that runs `grunt build` on install (heavy: it needs devDependencies, Puppeteer, and the jszip patch);
-   - (c) GitHub Release tarballs from `pnpm pack`, installed by URL.
-   Note that the jszip CSP patch (`patchedDependencies`) only applies inside this workspace, so built bundles are the only way consumers get the CSP-safe jszip.
-4. Implement the chosen option and document the release steps (README install section and `ai-docs/planned.md`). Verify from a scratch consumer project that `dist/exceljs.min.js` and `exceljs/dist/es5` resolve, and that the bundle has no `new Function`.
-5. Ask whether `pnpm-lock.yaml` should be tracked (currently gitignored).
-6. Run `pnpm lint`, the native + ES5 (`$env:EXCEL_BUILD = "es5"`) unit, integration, and end-to-end suites, dist, `test:typescript`, and `test:jasmine`. On Node 26, if Chrome is missing, see the caveat in `planned.md`.
-7. Commit per `AGENTS.md` rules and complete the session handoff.
+1. Read `ai-docs/bagus/progress-handoffs/progress-handoff-v1.0.0+89-complete.md`, `ai-docs/planned.md` and `CHANGELOG.md` `[Unreleased]` for context.
+2. Check `git status`. If the `v1.0.0+89` modernization is still uncommitted, ask the user to review it, then commit per `AGENTS.md` (summary under 50 characters, e.g. `chore: modernize deps, require Node 24`).
+3. Re-verify on Node 24 and 26: `pnpm install`, `pnpm lint`, `pnpm test` (build, unit, integration, end-to-end, Jasmine, TypeScript), `pnpm test:dist`, and the ES5 unit/integration suites (`$env:EXCEL_BUILD = "es5"`).
+4. With the user's go-ahead, release `5.0.0` via `/vbump-and-push major`, moving the `[Unreleased]` changelog section under `[5.0.0]`.
+5. Close the `dist/` gap: present the options and **wait for a decision**: (a) a release tag commit that force-adds the built `dist/` (e.g. on a `release` branch), (b) a `prepare` build script (heavy: needs devDependencies, Puppeteer, the jszip patch), or (c) GitHub Release tarballs from `pnpm pack`. Verify from a scratch consumer project that `dist/exceljs.min.js` and `exceljs/dist/es5` resolve and that the bundle has no `new Function`.
+6. Ask whether `pnpm-lock.yaml` should be tracked (currently gitignored).
+7. Complete the session handoff per `AGENTS.md`.

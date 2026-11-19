@@ -1,15 +1,16 @@
 allowBuilds:
   core-js: true
+  esbuild: true
   husky: true
   puppeteer: true
 
-# Strip jszip's `new Function` setImmediate fallback so browser bundles
-# stay CSP-compliant (no 'unsafe-eval'). See upstream PR #2672.
 overrides:
   # grunt-contrib-jasmine@4.0.0 (latest) pins puppeteer@^19, whose yargs@17.7.1
   # fails to load on Node 26 ("require is not defined in ES module scope").
   # Puppeteer 22+ also defaults to the new headless mode.
   grunt-contrib-jasmine>puppeteer: ^24.43.1
 
+# Strip jszip's `new Function` setImmediate fallback so browser bundles
+# stay CSP-compliant (no 'unsafe-eval'). See upstream PR #2672.
 patchedDependencies:
-  jszip@3.10.1: patches/jszip@3.10.1.patch
+  jszip@3.10.2: patches/jszip@3.10.2.patch

@@ -1,6 +1,6 @@
 import 'regenerator-runtime/runtime';
 
-import { expect } from 'chai';
+import {expect} from 'chai';
 import * as ExcelJS from '../../index';
 
 describe('typescript', () => {
@@ -15,7 +15,7 @@ describe('typescript', () => {
 
     const wb2 = new ExcelJS.Workbook();
     await wb2.xlsx.load(buffer);
-    const ws2 = wb2.getWorksheet('blort');
+    const ws2 = wb2.getWorksheet('blort')!;
     expect(ws2.getCell('A1').value).to.equal(7);
   });
   it('can create and stream xlsx', async () => {
@@ -23,17 +23,17 @@ describe('typescript', () => {
     const ws = wb.addWorksheet('blort');
     ws.getCell('A1').value = 7;
 
-    const { PassThrough } = require('stream');
+    const {PassThrough} = require('stream');
     const stream = new PassThrough();
     const wb2 = new ExcelJS.Workbook();
-    
+
     // Write to stream and read from it
     const writePromise = wb.xlsx.write(stream);
     const readPromise = wb2.xlsx.read(stream);
-    
+
     await Promise.all([writePromise, readPromise]);
-    
-    const ws2 = wb2.getWorksheet('blort');
+
+    const ws2 = wb2.getWorksheet('blort')!;
     expect(ws2.getCell('A1').value).to.equal(7);
   });
   it('can create and stream xlsx with web-native streams', async () => {
@@ -59,7 +59,7 @@ describe('typescript', () => {
 
     const wb2 = new ExcelJS.Workbook();
     await wb2.xlsx.read(readable);
-    const ws2 = wb2.getWorksheet('blort');
+    const ws2 = wb2.getWorksheet('blort')!;
     expect(ws2.getCell('A1').value).to.equal(7);
   });
   it('can create and stream csv with web-native streams', async () => {
@@ -101,7 +101,7 @@ describe('typescript', () => {
             fill: {
               type: 'pattern',
               pattern: 'solid',
-              bgColor: { argb: 'FFFF0000' },
+              bgColor: {argb: 'FFFF0000'},
             },
           },
         },
@@ -110,7 +110,7 @@ describe('typescript', () => {
           priority: 2,
           stopIfTrue: false,
           style: {
-            font: { bold: true },
+            font: {bold: true},
           },
         },
       ],
@@ -119,7 +119,7 @@ describe('typescript', () => {
     const buffer = await wb.xlsx.writeBuffer();
     const wb2 = new ExcelJS.Workbook();
     await wb2.xlsx.load(buffer);
-    const ws2 = wb2.getWorksheet('cf');
+    const ws2 = wb2.getWorksheet('cf')!;
     expect(ws2.conditionalFormattings).to.have.lengthOf(1);
     expect(ws2.conditionalFormattings[0].rules[0].stopIfTrue).to.equal(true);
     expect(ws2.conditionalFormattings[0].rules[0].priority).to.be.a('number');
@@ -179,13 +179,13 @@ describe('typescript', () => {
     const ws = wb.addWorksheet('databar');
     const dataBarRule: ExcelJS.DataBarRuleType = {
       type: 'dataBar',
-      color: { argb: 'FFFF0000' },
-      borderColor: { argb: 'FF0000FF' },
-      negativeBorderColor: { argb: 'FF00FF00' },
-      negativeFillColor: { argb: 'FFFF00FF' },
-      axisColor: { argb: 'FF000000' },
+      color: {argb: 'FFFF0000'},
+      borderColor: {argb: 'FF0000FF'},
+      negativeBorderColor: {argb: 'FF00FF00'},
+      negativeFillColor: {argb: 'FFFF00FF'},
+      axisColor: {argb: 'FF000000'},
       gradient: false,
-      cfvo: [{ type: 'min' }, { type: 'max' }],
+      cfvo: [{type: 'min'}, {type: 'max'}],
     };
 
     ws.addConditionalFormatting({
@@ -196,7 +196,7 @@ describe('typescript', () => {
     const buffer = await wb.xlsx.writeBuffer();
     const wb2 = new ExcelJS.Workbook();
     await wb2.xlsx.load(buffer);
-    const ws2 = wb2.getWorksheet('databar');
+    const ws2 = wb2.getWorksheet('databar')!;
     expect(ws2.conditionalFormattings).to.have.lengthOf(1);
     const rule = ws2.conditionalFormattings[0].rules[0] as ExcelJS.DataBarRuleType;
     expect(rule.type).to.equal('dataBar');
@@ -221,8 +221,8 @@ describe('typescript', () => {
     });
 
     ws.addImage(imageId, {
-      tl: { col: 0, row: 0 },
-      ext: { width: 100, height: 100 },
+      tl: {col: 0, row: 0},
+      ext: {width: 100, height: 100},
       editAs: 'oneCell',
       hyperlinks: {
         hyperlink: 'http://www.somewhere.com',
@@ -234,7 +234,7 @@ describe('typescript', () => {
     const buffer = await wb.xlsx.writeBuffer();
     const wb2 = new ExcelJS.Workbook();
     await wb2.xlsx.load(buffer);
-    const ws2 = wb2.getWorksheet('media');
+    const ws2 = wb2.getWorksheet('media')!;
 
     const wbMediaList: ExcelJS.WorkbookMedia[] = wb2.model.media;
     const baseMediaList: ExcelJS.Media[] = wbMediaList;
@@ -256,23 +256,23 @@ describe('typescript', () => {
     const ws = wb.addWorksheet('dimensions');
 
     const emptyRow = ws.getRow(1);
-    const emptyDimensions: { min: number; max: number } | null = emptyRow.dimensions;
+    const emptyDimensions: {min: number; max: number} | null = emptyRow.dimensions;
     expect(emptyDimensions).to.equal(null);
 
     const populatedRow = ws.getRow(2);
     populatedRow.getCell(2).value = 'first';
     populatedRow.getCell(4).value = 'last';
 
-    const populatedDimensions: { min: number; max: number } | null = populatedRow.dimensions;
-    expect(populatedDimensions).to.deep.equal({ min: 2, max: 4 });
+    const populatedDimensions: {min: number; max: number} | null = populatedRow.dimensions;
+    expect(populatedDimensions).to.deep.equal({min: 2, max: 4});
   });
   it('supports Column.values and Row.values types (PR #2587, PR #1886)', () => {
     const wb = new ExcelJS.Workbook();
     const ws = wb.addWorksheet('values');
 
     ws.columns = [
-      { header: 'Id', key: 'id' },
-      { header: 'Name', key: 'name' },
+      {header: 'Id', key: 'id'},
+      {header: 'Name', key: 'name'},
     ];
 
     const colA = ws.getColumn('A');
@@ -287,12 +287,12 @@ describe('typescript', () => {
     expect(row2Values).to.deep.equal([, 10, 'Alice']);
 
     const row3 = ws.getRow(3);
-    row3.values = { id: 20, name: 'Bob' };
+    row3.values = {id: 20, name: 'Bob'};
     const row3Values: ExcelJS.CellValue[] = row3.values;
     expect(row3Values).to.deep.equal([, 20, 'Bob']);
   });
   it('supports boolean, string, and null for FastCsvParserOptionsArgs.quote (PR #2127)', async () => {
-    const { Readable } = require('stream');
+    const {Readable} = require('stream');
 
     const optionsFalse: Partial<ExcelJS.CsvReadOptions> = {
       parserOptions: {
@@ -346,8 +346,8 @@ describe('typescript', () => {
       totalsRow: true,
       style: styleNone,
       columns: [
-        { name: 'Date', totalsRowLabel: 'Totals:', filterButton: true },
-        { name: 'Amount', totalsRowFunction: 'sum', filterButton: false },
+        {name: 'Date', totalsRowLabel: 'Totals:', filterButton: true},
+        {name: 'Amount', totalsRowFunction: 'sum', filterButton: false},
       ],
       rows: [
         [new Date('2019-07-20'), 70.1],
@@ -362,8 +362,8 @@ describe('typescript', () => {
       totalsRow: false,
       style: styleNull,
       columns: [
-        { name: 'Category', filterButton: true },
-        { name: 'Value', filterButton: false },
+        {name: 'Category', filterButton: true},
+        {name: 'Value', filterButton: false},
       ],
       rows: [['A', 1]],
     });
@@ -371,7 +371,7 @@ describe('typescript', () => {
     const buffer = await wb.xlsx.writeBuffer();
     const wb2 = new ExcelJS.Workbook();
     await wb2.xlsx.load(buffer);
-    const ws2 = wb2.getWorksheet('tables');
+    const ws2 = wb2.getWorksheet('tables')!;
 
     const tableNone: any = ws2.getTable('TableNone');
     expect(tableNone.table.style.theme).to.equal('None');
@@ -387,7 +387,7 @@ describe('typescript', () => {
     ws.getCell('A1').value = 'hello';
     const buffer = await wb.xlsx.writeBuffer();
 
-    const { Readable } = require('stream');
+    const {Readable} = require('stream');
 
     const readerWithoutOptions = new ExcelJS.stream.xlsx.WorkbookReader(Readable.from(buffer));
     const valuesWithoutOptions: ExcelJS.CellValue[] = [];
@@ -412,15 +412,15 @@ describe('typescript', () => {
   });
   it('exposes WorksheetReader properties and getters (PR #1901)', async () => {
     const wb = new ExcelJS.Workbook();
-    const ws = wb.addWorksheet('SheetWithProps', { state: 'visible' });
+    const ws = wb.addWorksheet('SheetWithProps', {state: 'visible'});
     ws.columns = [
-      { header: 'Id', key: 'id', width: 10 },
-      { header: 'Name', key: 'name', width: 20 },
+      {header: 'Id', key: 'id', width: 10},
+      {header: 'Name', key: 'name', width: 20},
     ];
-    ws.addRow({ id: 1, name: 'Alice' });
+    ws.addRow({id: 1, name: 'Alice'});
     const buffer = await wb.xlsx.writeBuffer();
 
-    const { Readable } = require('stream');
+    const {Readable} = require('stream');
     const workbookReader = new ExcelJS.stream.xlsx.WorkbookReader(Readable.from(buffer));
 
     for await (const worksheetReader of workbookReader) {
@@ -560,9 +560,7 @@ describe('typescript', () => {
       outline: {weight: 2, color: {rgb: '446699'}, dash: 'sysDash'},
       textBody: {
         vertAlign: 'ctr',
-        paragraphs: [
-          {alignment: 'l', runs: [{text: 'Hello Shape'}]},
-        ],
+        paragraphs: [{alignment: 'l', runs: [{text: 'Hello Shape'}]}],
       },
     };
     ws1.addShape(shapeProps, 'B2:H8', {
@@ -640,7 +638,7 @@ describe('typescript', () => {
     ws.addImage(
       imageId,
       {tl: {col: 0, row: 3}, ext: {width: 100, height: 50}},
-      {title: 'Title', description: 'Alt text', decorative: 1}
+      {title: 'Title', description: 'Alt text', decorative: 1},
     );
     expect(ws.getImages()[0].props?.title).to.equal('Title');
 

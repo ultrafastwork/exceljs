@@ -2,3 +2,9 @@ build
 dist
 out
 spec/manual/public/
+ai-docs/
+test/
+pnpm-lock.yaml
+*.md
+**/data/
+.github/lock.yml

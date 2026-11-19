@@ -24,5 +24,11 @@
    - [x] Jasmine `3.8.0` → `4.6.1`, `customBootFile` removed, Puppeteer `19` → `24` via pnpm override (new headless mode is the default since Puppeteer 22, so no `headless` option is needed). Done in session `v1.0.0+88`.
    - `grunt-contrib-jasmine@4.0.0` is the final release and is unmaintained. Consider replacing it with a direct Puppeteer/`jasmine-browser-runner` setup, and drop the override once that is done.
 3. **ZIP Dependency & Node Engine Strategy**:
-   - Monitor `unzipper` (`^0.10.14`) and `archiver` (`^5.3.2`) for security/maintenance updates or revisit a streaming alternative such as `yauzl-promise` (see `#2687` / `#2869`).
-   - Evaluate bumping minimum supported Node.js version in `package.json` (`engines.node: ">=8.3.0"`) and deprecating legacy `dist/es5` polyfill targets in a future major release.
+   - [x] `unzipper` → `^0.12.5`, `archiver` → `^8.0.0` (ESM-only, now `new ZipArchive(options)`). Done in session `v1.0.0+89`.
+   - [x] Minimum Node.js raised to `>=24` (user decision, session `v1.0.0+89`). This needs a **major** release (`5.0.0`), see `CHANGELOG.md` `[Unreleased]`.
+   - Revisit a streaming ZIP alternative such as `yauzl-promise` (see `#2687` / `#2869`) if unzipper stalls again.
+   - Consider deprecating the legacy `dist/es5` build and the core-js/regenerator polyfills in `lib/exceljs.browser.js` now that Node 24 is the floor. Browser targets come from `.browserslistrc`.
+4. **Lint/Format Split** (user decision, session `v1.0.0+89`):
+   - [x] Prettier owns all formatting. The whole codebase was reformatted once, and that commit is in `.git-blame-ignore-revs`. Markdown, `**/data/` fixtures and `.github/lock.yml` are excluded in `.prettierignore`.
+   - [x] ESLint is kept for correctness only (undefined/unused variables, `eqeqeq`, Node API support against `engines` via `eslint-plugin-n`). `@stylistic`, `eslint-config-prettier` and the airbnb style preferences were removed, along with 75 stale `eslint-disable` directives.
+   - When porting upstream PRs, run `pnpm format` on the touched files. Upstream code uses the old style (`function()`, etc.), so expect formatting-only conflicts.

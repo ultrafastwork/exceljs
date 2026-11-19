@@ -47,8 +47,9 @@ This project is a fork of **exceljs/exceljs**, a robust Excel Workbook Manager. 
 - Use strict typing when modifying `.ts` declaration files or specs.
 
 ### 3. Formatting and linting
-- Run `pnpm lint` and `pnpm lint:fix` to check and fix ESLint/Prettier issues.
-- Maintain existing code style as defined in `.eslintrc` and `.prettierignore`.
+- **Formatting is owned entirely by Prettier** (`.prettierrc.json`, `.prettierignore`): `pnpm format` to write, `pnpm format:check` to verify.
+- **ESLint is for correctness only** (`eslint.config.js`), with no formatting rules: `pnpm lint` to check, `pnpm lint:fix` to auto-fix.
+- The pre-commit hook (lint-staged) runs Prettier on staged files and ESLint on staged `.js` files.
 
 ---
 
