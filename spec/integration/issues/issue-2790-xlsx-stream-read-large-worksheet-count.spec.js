@@ -89,7 +89,6 @@ describe('github issues', () => {
       for (const key of keys) {
         const file = originalZip.files[key];
         if (!file.dir && key !== 'xl/sharedStrings.xml') {
-          // eslint-disable-next-line no-await-in-loop
           reorderedZip.file(key, await file.async('nodebuffer'));
         }
       }

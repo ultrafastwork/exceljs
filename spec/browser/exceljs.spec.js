@@ -48,7 +48,6 @@ describe('ExcelJS', () => {
     wb.xlsx
       .writeBuffer()
       .then(async buffer => {
-        // eslint-disable-next-line no-undef
         const blob = new Blob([buffer], {
           type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.comments+xml',
         });

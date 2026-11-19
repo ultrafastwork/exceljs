@@ -52,14 +52,12 @@ describe('github issues: Date field with cache style', () => {
     ];
     for (const key of firstKeys) {
       if (originalZip.files[key] && !originalZip.files[key].dir) {
-        // eslint-disable-next-line no-await-in-loop
         reorderedZip.file(key, await originalZip.files[key].async('nodebuffer'));
       }
     }
     for (const key of Object.keys(originalZip.files)) {
       const file = originalZip.files[key];
       if (!file.dir && !firstKeys.includes(key)) {
-        // eslint-disable-next-line no-await-in-loop
         reorderedZip.file(key, await file.async('nodebuffer'));
       }
     }

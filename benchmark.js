@@ -80,7 +80,7 @@ async function runProfiling(name, run) {
     console.log('####################################################');
     console.log(`RUN ${i}: ${name} profiling started`);
     const startTime = Date.now();
-    await run(); // eslint-disable-line no-await-in-loop
+    await run();
     console.log(`RUN ${i}: ${name} profiling finished in ${Date.now() - startTime}ms`);
     console.log(
       `RUN ${i}: Current memory usage (before GC): ${currentMemoryUsage({

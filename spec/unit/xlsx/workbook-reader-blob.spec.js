@@ -1,4 +1,3 @@
-/* eslint-disable max-classes-per-file */
 const JSZip = require('jszip');
 
 const Workbook = verquire('doc/workbook');

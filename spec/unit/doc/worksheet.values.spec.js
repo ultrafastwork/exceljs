@@ -679,13 +679,7 @@ describe('Worksheet', () => {
       ws.getCell('B2').value = 'B2';
       ws.getCell('A4').value = 'end';
 
-      expect(ws.getSheetValues()).to.deep.equal([
-        ,
-        [, 11, , 'C1'],
-        [, 21, 'B2'], // eslint-disable-line comma-style
-        ,
-        [, 'end'],
-      ]);
+      expect(ws.getSheetValues()).to.deep.equal([, [, 11, , 'C1'], [, 21, 'B2'], , [, 'end']]);
     });
 
     it('calculates rowCount and actualRowCount', () => {

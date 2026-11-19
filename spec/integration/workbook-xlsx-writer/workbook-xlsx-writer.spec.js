@@ -732,7 +732,6 @@ describe('WorkbookWriter', () => {
       const headers = Array.from({length: 10}, (_, i) => `test${i + 1}`);
       for (let i = 0; i < 50; i++) {
         const rowValues = headers.map(header => `${header}|${i}`);
-        // eslint-disable-next-line no-await-in-loop
         await ws.addRow(rowValues).commit();
       }
 
@@ -782,11 +781,9 @@ describe('WorkbookWriter', () => {
         };
         row.commit();
         ws.commit();
-        // eslint-disable-next-line no-await-in-loop
         await wb.commit();
 
         const wb2 = new ExcelJS.Workbook();
-        // eslint-disable-next-line no-await-in-loop
         await wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
         const ws2 = wb2.getWorksheet('Styled');
         expect(ws2.getCell('A1').value).to.equal(42.5);

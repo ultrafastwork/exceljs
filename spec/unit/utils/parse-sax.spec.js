@@ -37,9 +37,7 @@ const parse = async chunks => {
 };
 
 const utf8FragTest = async text => {
-  /* eslint-disable n/no-unsupported-features/node-builtins */
   const encoder = typeof TextEncoder === 'undefined' ? utf8Encoder : new TextEncoder('utf-8');
-  /* eslint-enable n/no-unsupported-features/node-builtins */
 
   const bytes = encoder.encode(text);
 
@@ -91,7 +89,6 @@ describe('parse-sax (PR #1665 and PR #2081)', () => {
     const testString = '凡是能够说的，都能够说清楚；凡是不能说的，必须保持沉默';
     const testBuffer = Buffer.from(`<t>${testString}</t>`, 'utf8');
 
-    /* eslint-disable no-await-in-loop */
     for (const chunkSize of [1, 2, 3, 5, 7, 16, 32]) {
       const chunks = [];
       let start = 0;
@@ -111,6 +108,5 @@ describe('parse-sax (PR #1665 and PR #2081)', () => {
       }
       expect(textParts.join('')).to.equal(testString);
     }
-    /* eslint-enable no-await-in-loop */
   });
 });
